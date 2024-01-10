@@ -5,7 +5,4 @@
       <sourceFolder url="file://$MODULE_DIR$/../../healthcare/www/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
     </content>
   </component>
-  <component name="SonarLintModuleSettings">
-    <option name="uniqueId" value="f5f52045-be05-4dde-b0b3-4b1fad2beaea" />
-  </component>
 </module>
