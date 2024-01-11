@@ -119,6 +119,7 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 
+
 # Log file
 *.log
 
