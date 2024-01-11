@@ -118,9 +118,7 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
 
-### Java ###
-# Compiled class file
-*.class
+
 
 # Log file
 *.log
