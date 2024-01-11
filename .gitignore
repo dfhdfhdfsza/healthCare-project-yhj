@@ -118,10 +118,8 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
 
-<<<<<<< HEAD
 
-=======
->>>>>>> c5254585de8d77d3a467c2407f26cbd2e371952e
+
 # Log file
 *.log
 
