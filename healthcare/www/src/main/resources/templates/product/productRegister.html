@@ -4,8 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/product/css/product.css}" />
 </head>
 <body>
-    <h1 th:text="${'하이'}"></h1>
+
+    <form action="/product/productRegister" method="post" enctype="multipart/form-data">
+        <main class="product-register-container">
+            <h1>상품등록</h1>
+            <div class="product-register-box">
+                <div>
+                    <span>상품유형</span>
+                    <span>
+                        <select name="productType">
+                            <option value="건강식품">건강식품</option>
+                            <option value="보충제">보충제</option>
+                        </select>
+                    </span>
+                </div>
+                <div>
+                    <span>상품명</span>
+                    <div><input type="text" name="productName" class="input"></div>
+                </div>
+                <div>
+                    <span>상품정보</span>
+                    <div><input type="text" name="productInfo" class="input"></div>
+                </div>
+                <div>
+                    <span>상품가격</span>
+                    <div><input type="text" name="price" class="input"></div>
+                </div>
+                <div>
+                    <button type="submit" class="button">등록</button>
+                </div>
+            </div>
+        </main>
+    </form>
+
 </body>
 </html>
