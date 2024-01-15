@@ -42,6 +42,7 @@ public class SecurityConfig {
             .requestMatchers("/user/modify").hasRole("ADMIN")
             .anyRequest().authenticated());
 
+
     //세션 설정 /세션을 STATELESS 상태로 설정
     http
         .sessionManagement((session) -> session
