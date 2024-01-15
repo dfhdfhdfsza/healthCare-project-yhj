@@ -18,6 +18,7 @@ public class UserController {
 
   @GetMapping("/user/login")
   public String moveLogin(){
+    log.info("체크~~~~~~~~~~~");
     return "user/login";
   }
 
