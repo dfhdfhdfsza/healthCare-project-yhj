@@ -29,11 +29,13 @@ class ProductTest {
         Product p = Product.builder().
                 productName("모둠견과류").
                 productType("건강식품").
+                productInfo("하루 필수 영양소를 골고루 섭취 가능").
                 price(20000).
                 build();
         Product p2 = Product.builder().
                 productName("단백질보충제").
                 productType("보충제").
+                productInfo("순수 분리유청단백질 첨가된 보충제").
                 price(55000).
                 build();
         List<Product> productList = new ArrayList<>();
@@ -68,12 +70,14 @@ class ProductTest {
                 productNo(1L).
                 productName("견과류").
                 productType("건강").
+                productInfo("하루 필수 영양소를 골고루 섭취 가능").
                 price(30000).
                 build();
         Product p2 = Product.builder().
                 productNo(2L).
                 productName("탄수화물보충제").
                 productType("보충").
+                productInfo("식물성 탄수화물이 첨가된 보충제").
                 price(75000).
                 build();
         // when
