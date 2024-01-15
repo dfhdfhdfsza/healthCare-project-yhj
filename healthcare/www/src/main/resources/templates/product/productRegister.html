@@ -7,38 +7,55 @@
     <link type="text/css" rel="stylesheet" th:href="@{/product/css/product.css}" />
 </head>
 <body>
-
-    <form action="/product/productRegister" method="post" enctype="multipart/form-data">
+    <form th:action="@{/product/productRegister}" th:object="${productDTO}" method="post" enctype="multipart/form-data">
         <main class="product-register-container">
-            <h1>상품등록</h1>
             <div class="product-register-box">
-                <div>
-                    <span>상품유형</span>
-                    <span>
-                        <select name="productType">
-                            <option value="건강식품">건강식품</option>
-                            <option value="보충제">보충제</option>
-                        </select>
-                    </span>
+                <h1 class="product-management-title">상품등록</h1>
+
+                <div class="input-box">
+                    <div>
+                        <span class="label">상품변호</span>
+                        <span><input type="text" hidden="hidden" th:field="*{productNo}">123</span>
+                    </div>
                 </div>
-                <div>
-                    <span>상품명</span>
-                    <div><input type="text" name="productName" class="input"></div>
+                <div class="input-box">
+                    <div>
+                        <span class="label">상품명</span>
+                        <span>
+                            <select th:field="*{productType}">
+                                <option value="">상품유형</option>
+                                <option th:each="typed : ${typed}" th:value="${typed.type}" th:text="${typed.type}">{</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div><input type="text" th:field="*{productName}"></div>
                 </div>
-                <div>
-                    <span>상품정보</span>
-                    <div><input type="text" name="productInfo" class="input"></div>
+
+                <div class="input-box">
+                    <span class="label">상품설명</span>
+                    <textarea th:field="*{productInfo}"></textarea>
                 </div>
-                <div>
-                    <span>상품가격</span>
-                    <div><input type="text" name="price" class="input"></div>
+
+                <div class="input-box">
+                    <span class="label">상품가격</span>
+                    <input type="text" th:field="*{price}">
                 </div>
-                <div>
-                    <button type="submit" class="button">등록</button>
+
+                <div class="button-box">
+                    <button id="productImageBtn" type="button">이미지등록</button>
+                    <button type="submit" class="">상품등록</button>
                 </div>
+
             </div>
+            
+            <!-- 버튼 클릭으로 오픈  -->
+            <input type="file" id="hiddenInputFile" hidden="hidden" multiple="multiple" name="files">
         </main>
     </form>
-
+<script>
+    let error = `[[${notValid}]]`;
+    if(error) alert(error);
+</script>
+<script th:src="@{/product/js/productRegister.js}"></script>
 </body>
 </html>

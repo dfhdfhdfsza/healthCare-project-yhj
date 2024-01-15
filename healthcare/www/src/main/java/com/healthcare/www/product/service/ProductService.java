@@ -1,7 +1,8 @@
 package com.healthcare.www.product.service;
 
-import com.healthcare.www.product.ProductDTO;
+import com.healthcare.www.dto.ProductDTO;
 
 public interface ProductService {
-    void save(ProductDTO productDTO);
+
+    void addProduct(ProductDTO productDTO);
 }

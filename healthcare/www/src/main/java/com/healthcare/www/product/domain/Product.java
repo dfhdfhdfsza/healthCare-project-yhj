@@ -4,6 +4,8 @@ import com.healthcare.www.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.lang.reflect.Type;
+
 @Entity
 @Getter
 @Builder
@@ -20,7 +22,7 @@ public class Product extends BaseTimeEntity { // BaseTimeEntity 를 상속받아
     // 상품 유형
     @Column(name = "product_type")
     private String productType;
-    // 상품 정보
+    // 상품 설명
     @Column(name = "product_info")
     private String productInfo;
     // 상품 가격
@@ -28,9 +30,3 @@ public class Product extends BaseTimeEntity { // BaseTimeEntity 를 상속받아
 
 }
 
-// 타입 지정용 enum 클래스
-@Getter
-enum Types {
-    HEALTHY, SUPPLEMENT;
-    private static final String[] VALUE = {"건강식품", "보충제"};
-}

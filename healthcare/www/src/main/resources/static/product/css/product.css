@@ -1,3 +1,61 @@
-.product-register-container{
+body, h1{
+    margin:0;
+}
 
+.product-register-container{
+    width:100%;
+    background:antiquewhite;
+}
+.product-register-box{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    gap:1.2rem;
+}
+.input-box{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:0.5rem;
+}
+.input-box input, .input-box textarea{
+    width:450px;
+    padding:1rem;
+    box-sizing:border-box;
+    border:1px solid #1c1c1c;
+/*    border-radius:5px;*/
+}
+.input-box input:hover, .input-box input:focus
+, .input-box textarea:hover, .input-box textarea:focus{
+    outline:1px solid #1c1c1c;
+}
+.input-box input{
+    height:35px;
+}
+.input-box textarea{
+    height:100px;
+    resize:none;
+}
+.input-box div{
+    display:flex;
+    justify-content:space-between
+}
+.button-box{
+    width:450px;
+    display:flex;
+    justify-content:space-between;
+}
+.button-box button{
+    width:100px;
+    height:30px;
+    border:none;
+/*    border-radius:10px;*/
+    cursor:pointer;
+    background:#3D3B40;
+    color:#fff;
 }
