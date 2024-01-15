@@ -3,10 +3,10 @@ package com.healthcare.www.user.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.Length;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -41,7 +41,8 @@ public class User{
   @Column(name = "user_age")
   private String userAge;
 
-
+  @Column(name="user_role")
+  private String role;
 
 
 
