@@ -2,9 +2,25 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>HealthPlan</title>
+  <link rel="stylesheet" th:href="@{/css/health/healthplan.css}" />
 </head>
 <body>
 
+<!--  <div th:replace="common/nav.html :: nav"></div>-->
+  <div id='calendar'></div>
+
+
+
+
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+  <!-- jquery CDN -->  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- fullcalendar CDN -->
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+  <script src='fullcalendar/dist/index.global.js'></script>
+  <!-- fullcalendar 언어 CDN -->
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+  <script type="text/javascript" th:src="@{/js/health/healthplan.js}"></script>
 </body>
 </html>
