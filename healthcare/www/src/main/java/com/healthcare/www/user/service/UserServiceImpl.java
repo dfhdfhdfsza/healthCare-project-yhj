@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService{
 
   @Override
   public void addUser(JoinDTO joinDTO) {
-    String userName = joinDTO.getUserName();
-    String userPassword = joinDTO.getUserPassword();
+    String userName = joinDTO.getUsername();
+    String userPassword = joinDTO.getPassword();
 
     Boolean isOk = userRepository.existsByUserName(userName);
 
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
     User user = new User();
     user.setUserName(userName);
     user.setUserPassword(bCryptPasswordEncoder.encode(userPassword));
-    user.setRole("ROLE_ADMIN");
+    user.setUserRole("ROLE_ADMIN");
 
     userRepository.save(user);
   }

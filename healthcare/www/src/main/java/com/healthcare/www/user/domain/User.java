@@ -42,7 +42,7 @@ public class User{
   private String userAge;
 
   @Column(name="user_role")
-  private String role;
+  private String userRole;
 
 
 

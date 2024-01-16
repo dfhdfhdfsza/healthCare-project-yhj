@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 public interface UserService {
 
-  void addUser(JoinDTO jdto);
+  void addUser(JoinDTO joinDTO);
 }
