@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService{
   private final UserRepository userRepository;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-  public void joinProcess(JoinDTO joinDTO){
-
+  @Override
+  public void addUser(JoinDTO joinDTO) {
     String userName = joinDTO.getUserName();
     String userPassword = joinDTO.getUserPassword();
 
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
       // 아이디가 존재한다면
       return;
     }
-      // 아이디가 존재하지 않는다면
+    // 아이디가 존재하지 않는다면
     User user = new User();
     user.setUserName(userName);
     user.setUserPassword(bCryptPasswordEncoder.encode(userPassword));
