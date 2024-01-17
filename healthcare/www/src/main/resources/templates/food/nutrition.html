@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head lang="en" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <input type="text" id="keywordInput" onkeyup="findFood()">
+    <div id="serchresult"> </div>
+    <div>
+        <div>
+            <h1>ㅇㅇ님의 식단 알아보기</h1>
+            <div>
+                <div></div>
+                <div>
+                    <ul>
+                        <li>아침</li>
+                        <li>점심</li>
+                        <li>저녁</li>
+                        <li>간식</li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h1>하루 영양소</h1>
+            <ul>
+                <li>탄수화물</li>
+                <li>단백질</li>
+                <li>지방</li>
+            </ul>
+        </div>
+
+        <div>
+            <h1>나의 식사</h1>
+            <div id="morning">아침</div>
+            <div>점심</div>
+            <div>저녁</div>
+            <div>간식</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" th:src="@{/js/food/food.js}"></script>
+</html>

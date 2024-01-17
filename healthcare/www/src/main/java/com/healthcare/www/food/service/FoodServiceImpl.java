@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class FoodServiceImpl implements FoodService {
@@ -60,6 +61,13 @@ public class FoodServiceImpl implements FoodService {
             e.printStackTrace();
             // 예외 처리 로직 추가
         }
+    }
+
+    @Override
+    @Transactional
+    public List<Food> findFoodContaining(String keyword) {
+        List<Food> foodList = foodRepository.findFoodContaining(keyword);
+        return foodList;
     }
 
     private double getNumericCellValue(Cell cell) {
