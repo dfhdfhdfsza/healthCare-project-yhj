@@ -1,0 +1,119 @@
+.plan-div{
+    width: 80%;
+    padding-left: 300px;
+    padding-top: 100px;
+}
+.planlist{
+    display: none;
+}
+.exercise-select{
+    display: none;
+}
+.set-setting{
+    display: none;
+}
+
+#modal.modal-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(1.5px);
+    z-index: 9999;
+}
+
+#modal .modal-window {
+    background: black;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 500px;
+    height: 600px;
+    position: relative;
+    padding: 10px;
+}
+
+#modal .title {
+    padding-left: 10px;
+    display: inline;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+
+}
+
+#modal .title h2 {
+    display: inline;
+}
+
+#modal .close-area {
+    display: inline;
+    float: right;
+    padding-right: 10px;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+}
+
+#modal .content {
+    margin-top: 20px;
+    padding: 0px 10px;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+}
+
+.modal-footer,.set-adddel{
+    display: flex;
+    justify-content: center;
+}
+.modal-footer button,.set-adddel button{
+    border: none;
+    font-size: 20px;
+    font-weight: 800;
+    background-color: black;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.set-adddel button{
+    color: dimgray;
+}
+.set-adddel button i{
+    margin-right: 10px;
+}
+.exercise-add,.setBtn,.submit{
+    color: green;
+}
+
+.backBtn{
+    color: red;
+}
+
+.set-table{
+    text-align: center;
+    width: 100%;
+}
+.set-table tbody{
+    margin-top: 15px;
+}
+
+.set-table tr{
+    margin-bottom: 15px;
+}
+.set-table td{
+
+    width: 25%;
+}
+
+.set-table input{
+    width: 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: darkgrey;
+    padding: 5px 5px 5px 5px;
+}
+
