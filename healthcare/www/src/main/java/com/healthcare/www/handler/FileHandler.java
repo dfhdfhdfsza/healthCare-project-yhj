@@ -56,7 +56,6 @@ public class FileHandler {
                         .productFileType(file.getContentType()) // 파일 타입
                         .build();
 
-
                 if(isImageFile(new File(directory, fileName))) {
                     File thumbNail = new File(directory, uuid.toString()+"_th_"+fileName);
                     Thumbnails.of(file.getInputStream()).size(75, 75).toFile(thumbNail);

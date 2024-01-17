@@ -26,7 +26,7 @@ public class ProductDTO {
     private String productInfo;
     // 상품 가격
     @NotNull
-    private int price;
+    private Integer price;
     // 첨부파일 리스트
     private List<ProductFileDTO> productFileList;
 }
