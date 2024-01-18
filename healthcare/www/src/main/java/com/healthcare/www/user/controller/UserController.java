@@ -20,12 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userServiceImpl;
     private final UserService userService;
 
     @PostMapping("/user/signup")
-    public String addSignup(JoinDTO jdto){
-      userService.addUser(jdto);
+    public String addSignup(JoinDTO joinDTO){
+      userService.addUser(joinDTO);
       return "ok";
     }
 
