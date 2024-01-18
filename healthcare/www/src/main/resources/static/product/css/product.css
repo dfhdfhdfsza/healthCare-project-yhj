@@ -1,16 +1,37 @@
 body, h1{
     margin:0;
 }
-
-.product-register-container{
-    width:100%;
-    background:antiquewhite;
+form{
+    width:450px;
+    margin:0;
 }
-.product-register-box{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
+
+.product-management-container{
+    position:relative;
+    width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background-color:#000;
+    color:#000;
+}
+.product-management-title{
+    padding-bottom:1rem;
+    border-bottom: 1px solid #000;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+
+.product-management-toggle{
+    background-color:#fff;
+}
+.product-register-box, .product-modify-box{
+    width:450px;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -28,7 +49,7 @@ body, h1{
     padding:1rem;
     box-sizing:border-box;
     border:1px solid #1c1c1c;
-/*    border-radius:5px;*/
+    font-size:1.2rem;
 }
 .input-box input:hover, .input-box input:focus
 , .input-box textarea:hover, .input-box textarea:focus{
@@ -40,6 +61,7 @@ body, h1{
 .input-box textarea{
     height:100px;
     resize:none;
+    font-weight:bold;
 }
 .input-box div{
     display:flex;
@@ -56,6 +78,203 @@ body, h1{
     border:none;
 /*    border-radius:10px;*/
     cursor:pointer;
-    background:#3D3B40;
+    background:#000;
     color:#fff;
+}
+.button-box button:hover{
+    background-color:#C51605;
+    transition:0.3s;
+}
+.label{
+    display:flex;
+    align-items:center;
+}
+.label-productNo{
+    margin-right:1.5rem;
+}
+
+/* 커스텀 셀렉트바 */
+.select-wrap{
+    position:relative;
+    width:130px;
+    height:35px;
+/*    border:1px solid #000;*/
+}
+.fa-caret-down{
+    position:absolute;
+    right:10px;
+    top:25%;
+    transform: rotate(0deg);
+}
+select {
+    width:130px;
+    height:35px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 8px;
+/*    border: 1px solid #fff;*/
+    outline: none;
+    cursor: pointer;
+    background-color: #fff;
+    text-align:center;
+    transition:0.3s;
+    box-sizing:border-box;
+}
+/* 선택된 옵션의 스타일링 */
+select:focus {
+    background-color:#e50914;
+    color:#fff;
+}
+/* 드롭다운 옵션의 스타일링 */
+select option {
+    font-size: inherit;
+}
+/* 드롭다운 옵션에 호버 효과 */
+select option:hover {
+    background-color: #000;
+}
+
+.arrowUp{
+    transform:rotate(180deg);
+}
+.arrowDown{
+    transform:rotate(0deg);
+}
+
+
+/* 슬라이드 */
+.select-management-close{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    display:flex;
+    justify-content:space-between;
+    gap:1.5rem;
+    transition:0.5s;
+    z-index:1;
+}
+.select-management-toggle{
+    gap:1.2rem;
+    top:150px;
+}
+.menu-button{
+    width:250px;
+    height:250px;
+    background:#e50914;
+    color:#fff;
+    font-weight:normal;
+    cursor:pointer;
+    font-size:2rem;
+    border:1px solid #000;
+    box-shadow:0px 0px 10px 3px #fff;
+    border-radius:10px;
+    transition:0.3s;
+}
+.menu-button-toggle{
+    width:150px;
+    height:45px;
+    border-radius:0;
+    border:none;
+    box-shadow:0px 0px 10px 3px #fff;
+    background:#000;
+    color:#fff;
+    font-size:1rem;
+}
+.menu-button:hover{
+    background:#C51605;
+}
+.management-wrapper{
+    position:relative;
+    overflow: hidden;
+    width:450px;
+    padding:1rem;
+    transition:1s;
+    opacity:0;
+}
+.management-wrapper-toggle{
+    opacity:1;
+}
+.management-slider{
+    display:flex;
+    visibility:hidden;
+    flex-wrap: nowrap;
+    position: relative;
+    gap:450px;
+}
+
+/* 상품찾기 모달 오픈 버튼 */
+#searchModalOpen{
+    width:70px;
+    height:30px;
+    background-color:#fff;
+    border:1px solid #000;
+    cursor:pointer;
+}
+#searchModalOpen:hover{
+    background-color:#C51605;
+    color:#fff;
+}
+
+/* 상품찾기 모달 */
+.search-modal-back{
+    position:relative;
+    position:absolute;
+    top:0;
+    width:100%;
+    height:100vh;
+    background-color: rgba(0,0,0,0.9);
+    z-index:1;
+}
+.search-modal{
+    position:fixed;
+    top:25%;
+    left:50%;
+    transform:translate(-50%, -25%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    border: 1px solid #D8D8D8;
+    border-radius:5px;
+    padding: 20px 20px 35px 20px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.75);
+}
+.search-box{
+    display:flex;
+    align-items:center;
+}
+.search-box input, .seach-box select, .search-box button{
+    border:none;
+    height:35px;
+    box-sizing:border-box;
+
+}
+.search-box input{
+    width:390px;
+    padding-left:20px;
+    font-size:1rem;
+}
+.search-box input:focus{
+    outline:none;
+}
+.search-box button{
+    border:none;
+    width:100px;
+    cursor:pointer;
+    background-color:#e50914;
+    color:#fff;
+}.search-box button:hover{
+    background-color:#C51605;
+    transition:0.3s;
+}
+.seach-box select{
+    border:none;
+}
+table{
+    color:#fff;
+    margin-top:1.5rem;
+    width:620px;
+    border-collapse:collapse;
+    box-sizing:border-box;
 }
