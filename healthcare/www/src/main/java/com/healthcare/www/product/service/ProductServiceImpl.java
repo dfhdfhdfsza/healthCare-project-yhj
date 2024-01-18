@@ -24,7 +24,6 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
     private final ProductFileRepository productFileRepository;
-    private final JPAQueryFactory queryFactory;
 
     // 상품을 DB에 등록하는 메서드
     @Override
