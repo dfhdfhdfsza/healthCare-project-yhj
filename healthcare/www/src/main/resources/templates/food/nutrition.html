@@ -6,6 +6,9 @@
 </head>
 <body>
     <input type="text" id="keywordInput" onkeyup="findFood()">
+    <form th:action="@{/food/checkFood}"  method="post">
+        <button type="submit">+</button>
+    </form>
     <div id="serchresult"> </div>
     <div>
         <div>
@@ -14,10 +17,10 @@
                 <div></div>
                 <div>
                     <ul>
-                        <li>아침</li>
-                        <li>점심</li>
-                        <li>저녁</li>
-                        <li>간식</li>
+                        <li id="addBreakFirst">아침</li>
+                        <li id="addLunch">점심</li>
+                        <li id="addDinner">저녁</li>
+                        <li id="addDessert">간식</li>
 
                     </ul>
 
@@ -28,9 +31,9 @@
         <div>
             <h1>하루 영양소</h1>
             <ul>
-                <li>탄수화물</li>
-                <li>단백질</li>
-                <li>지방</li>
+                <li id="totalCarbohydrate">탄수화물</li>
+                <li id="totalProtein">단백질</li>
+                <li id="totalProvince">지방</li>
             </ul>
         </div>
 

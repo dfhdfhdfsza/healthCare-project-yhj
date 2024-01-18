@@ -3,6 +3,8 @@ package com.healthcare.www.food.service;
 import com.healthcare.www.dto.FoodDTO;
 import com.healthcare.www.food.domain.Food;
 import com.healthcare.www.food.repository.FoodRepository;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.BeanUtils;
@@ -25,6 +27,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     @Transactional
+
     public void readExcelAndSaveToDatabase(String filePath) {
         try (FileInputStream fileInputStream = new FileInputStream(filePath);
              Workbook workbook = new XSSFWorkbook(fileInputStream)) {
@@ -73,13 +76,21 @@ public class FoodServiceImpl implements FoodService {
     private double getNumericCellValue(Cell cell) {
         if (cell != null) {
             if (cell.getCellType() == CellType.NUMERIC) {
-                return cell.getNumericCellValue();
+                double value = Math.round(cell.getNumericCellValue() *10 / 10.0);
+                return value;
             } else {
-                // 숫자 타입이 아닌 경우에 대한 처리 로직 추가 (예를 들어 0.0으로 기본값 설정)
-                return 0.0;
+
+                String stringValue = getStringCellValue(cell);
+                try {
+                    double numericValue =  Math.round(Double.parseDouble(stringValue)*10 / 10.0);
+                    return numericValue;
+                } catch (NumberFormatException e) {
+                    return 0.0;
+                }
             }
         } else {
-            // cell이 null인 경우에 대한 처리 로직 추가 (예를 들어 0.0으로 기본값 설정)
+            // cell이 null인 경우에 대한 처리 로직 추가
+            System.out.println("DEBUG: Cell is null");
             return 0.0;
         }
     }
