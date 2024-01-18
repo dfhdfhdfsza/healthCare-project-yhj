@@ -68,10 +68,9 @@ public class SecurityConfig {
     //경로별 인가 작업
     http
         .authorizeHttpRequests((auth) -> auth
-            .requestMatchers("/user/login", "/", "/user/signup","/css/**",
-
-                "/js/**","/health/**","/product/**","/food/**").permitAll()
-            .requestMatchers("/user/modify").hasRole("ADMIN")
+            .requestMatchers("/user/login", "/", "/user/signup","/css/**","/image/**","/main/**",
+                "/js/**","/health/**","/product/**","/login").permitAll()
+            .requestMatchers("/admin").hasRole("ADMIN")
             .anyRequest().authenticated());
 
     // JWT 필터 등록

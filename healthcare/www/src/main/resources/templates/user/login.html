@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
+  <link rel="stylesheet" th:href="@{/css/user/login.css}" />
 </head>
 <body>
-  <h1>로그인화면</h1>
+<div th:replace="common/nav.html :: nav"></div>
+
+    <div class="main-container">
+
+      <div class="sub-container">
+        <img src="/image/logo.png" class="logo">
+
+        <div class="loginDiv">
+          <input type="text" placeholder="아이디" id="userID"> <br>
+
+          <input type="password" placeholder="비밀번호" id="userPWD"> <br>
+
+          <button type="button" id="loginBtn">로그인</button>
+        </div>
+
+      </div>
+    </div>
+<script type="text/javascript" th:src="@{/js/user/login.js}"></script>
 </body>
 </html>
