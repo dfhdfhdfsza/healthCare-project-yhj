@@ -69,8 +69,9 @@ public class SecurityConfig {
     http
         .authorizeHttpRequests((auth) -> auth
             .requestMatchers("/user/login", "/", "/user/signup","/css/**",
-                "/js/**","/health/**","/product/**","/login").permitAll()
-            .requestMatchers("/admin").hasRole("ADMIN")
+
+                "/js/**","/health/**","/product/**","/food/**").permitAll()
+            .requestMatchers("/user/modify").hasRole("ADMIN")
             .anyRequest().authenticated());
 
     // JWT 필터 등록
