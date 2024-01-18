@@ -91,7 +91,6 @@ public class ProductServiceImpl implements ProductService{
         SearchTyped searchTyped =SearchTyped.valueOf(productDTO.getCategory());
         // 가져온 필드의 type값 가져오기 => PRODUCT_NO("productNo", "상품번호") 중 productNo = this.type
         String type = searchTyped.getType();
-
         return null;
     }
 
