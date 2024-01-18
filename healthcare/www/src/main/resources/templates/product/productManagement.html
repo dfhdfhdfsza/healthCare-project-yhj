@@ -27,11 +27,12 @@
                         <div class="input-box">
                             <div>
                                 <span class="label">상품명</span>
-                                <span>
-                                    <select th:field="*{productType}">
+                                <span class="select-wrap">
+                                    <select th:field="*{productType}" class="select">
                                         <option value="">상품유형</option>
-                                        <option th:each="typed : ${typed}" th:value="${typed.type}" th:text="${typed.type}">{</option>
+                                        <option th:each="typed : ${productTyped}" th:value="${typed.type}" th:text="${typed.type}">{</option>
                                     </select>
+                                    <i class="fa-solid fa-caret-down"></i>
                                 </span>
                             </div>
                             <div><input type="text" th:field="*{productName}"></div>
@@ -60,12 +61,14 @@
                 <!-- 상품 수정 form -->
                 <form th:action="@{/product/productModify}" th:object="${productDTO}" method="post" enctype="multipart/form-data">
                     <div class="product-modify-box items">
-                        <h1 class="product-management-title">상품수정</h1>
-
+                        <h1 class="product-management-title">
+                            <span>상품수정</span>
+                            <button type="button" id="searchModalOpen">상품검색</button>
+                        </h1>
                         <div class="input-box">
                             <div>
-                                <span class="label">상품변호</span>
-                                <span><input type="text" hidden="hidden" th:field="*{productNo}">123</span>
+                                <span class="label label-productNo">상품변호</span>
+                                <span><input type="text" hidden="hidden" th:field="*{productNo}">[[${productNo}]]</span>
                             </div>
                         </div>
                         <div class="input-box">
@@ -75,9 +78,9 @@
                                     <!-- 커스텀 셀렉트 -->
                                     <select th:field="*{productType}" class="select">
                                         <option value="">상품유형</option>
-                                        <option th:each="typed : ${typed}" th:value="${typed.type}" th:text="${typed.type}">{</option>
+                                        <option th:each="typed : ${productTyped}" th:value="${typed.type}" th:text="${typed.type}"></option>
                                     </select>
-                                    <i class="fa-solid fa-caret-down" id="arrowUp"></i>
+                                    <i class="fa-solid fa-caret-down"></i>
                                 </span>
                             </div>
                             <div><input type="text" th:field="*{productName}"></div>
@@ -104,6 +107,27 @@
             </div>
         </div>
     </main>
+    <!-- search modal -->
+    <div class="search-modal-back">
+        <div class="search-modal">
+            <div class="search-box">
+                <span class="select-wrap">
+                    <select id="searchCategory" class="select">
+                        <option value="">검색유형</option>
+                        <option th:each="search : ${searchTyped}" th:value="${search.category}" th:text="${search.category}"></option>
+                    </select>
+                    <i class="fa-solid fa-caret-down"></i>
+                </span>
+                <input type="text" id="searchKeyword" placeholder="조회할 상품정보를 입력하세요.">
+                <button type="button" id="searchBtn">상품찾기</button>
+            </div>
+            <div class="search-list">
+                <table id="productList">
+
+                </table>
+            </div>
+        </div>
+    </div>
 <script th:src="@{/product/js/managementSlider.js}"></script>
 <script>
     let error = `[[${notValid}]]`;
@@ -112,5 +136,6 @@
 </script>
 
 <script th:src="@{/product/js/productManagement.js}"></script>
+<script th:src="@{/product/js/productAsync.js}"></script>
 </body>
 </html>

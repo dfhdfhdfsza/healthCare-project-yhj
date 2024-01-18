@@ -1,6 +1,6 @@
 package com.healthcare.www.handler;
 
-import com.healthcare.www.dto.ProductFileDTO;
+import com.healthcare.www.product.dto.ProductFileDTO;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.tika.Tika;

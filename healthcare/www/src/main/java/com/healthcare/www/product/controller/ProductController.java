@@ -1,24 +1,27 @@
 package com.healthcare.www.product.controller;
 
-import com.healthcare.www.dto.ProductDTO;
-import com.healthcare.www.dto.ProductFileDTO;
 import com.healthcare.www.handler.FileHandler;
-import com.healthcare.www.product.domain.Typed;
+import com.healthcare.www.product.domain.ProductTyped;
+import com.healthcare.www.product.domain.SearchTyped;
+import com.healthcare.www.product.dto.ProductDTO;
+import com.healthcare.www.product.dto.ProductFileDTO;
 import com.healthcare.www.product.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -31,18 +34,19 @@ public class ProductController {
     private final FileHandler fh; // 파일핸들러(파일 저장 및 파일 객체 생성)
 
     // 상품등록 페이지로 이동하는 메서드
-    @GetMapping("productRegister")
-    public void getProductRegister(ProductDTO productDTO, Model model){
-        model.addAttribute("typed", Typed.values());
+    @GetMapping("productManagement")
+    public void getProductManagement(ProductDTO productDTO, Model model){
+        model.addAttribute("productTyped", ProductTyped.values());
+        model.addAttribute("searchTyped", SearchTyped.values());
     }
 
     // 상품등록 메서드(상품 및 첨부파일 등록)
-    @PostMapping("productRegister")
+    @PostMapping(name = "productRegister")
     public String productRegister(@Valid ProductDTO productDTO, BindingResult bindingResult
             , @RequestParam(name = "files", required = false)MultipartFile[] files, RedirectAttributes re) {
         if(bindingResult.hasErrors()){ // 유효성 검증 에러 발생시
             re.addFlashAttribute("notValid", "상품정보를 입력하세요.");
-            return "redirect:/product/productRegister";
+            return "redirect:/product/productManagement";
         }
         log.info("첨부파일 개수 >>>>>> {}", files.length);
         // 첨부파일이 존재하면..
@@ -51,7 +55,55 @@ public class ProductController {
             productDTO.setProductFileList(productFileList);
         }
         productService.addProduct(productDTO);
+        return "redirect:/product/productManagement";
+    }
+
+    // 상품수정 메서드(상품 및 첨부파일 수정)
+    @PostMapping("productModify")
+    public String productModify(@Valid ProductDTO productDTO, BindingResult bindingResult
+            , @RequestParam(name = "files", required = false)MultipartFile[] files, RedirectAttributes re) {
+        if(bindingResult.hasErrors()){ // 유효성 검증 에러 발생시
+            re.addFlashAttribute("notValid", "상품정보를 입력하세요.");
+            return "redirect:/product/productManagement";
+        }
+        log.info("첨부파일 개수 >>>>>> {}", files.length);
+        // 첨부파일이 존재하면..
+        if(files[0].getSize() > 0) {
+            List<ProductFileDTO> productFileList = fh.uploadFile(files);
+            productDTO.setProductFileList(productFileList);
+        }
+        productService.updateProduct(productDTO);
         return "redirect:/";
     }
+
+    // 상품검색 메서드
+    @GetMapping(name = "/product/searchProduct", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ProductDTO>> searchProductList
+        (@RequestParam("category")String category, @RequestParam("keyword")String keyword){
+        ProductDTO productDTO = ProductDTO.builder().
+                category(category).
+                keyword(keyword).
+                build();
+        List<ProductDTO> productDTOList = productService.searchProductList(productDTO);
+        return new ResponseEntity<>(productDTOList, HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
