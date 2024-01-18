@@ -1,4 +1,4 @@
-package com.healthcare.www.dto;
+package com.healthcare.www.product.dto;
 
 import lombok.*;
 

@@ -1,6 +1,6 @@
 package com.healthcare.www.handler;
 
-import com.healthcare.www.dto.ProductFileDTO;
+import com.healthcare.www.product.dto.ProductFileDTO;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.tika.Tika;
@@ -55,7 +55,6 @@ public class FileHandler {
                         .productFileSaveDir(directory.getPath()) // 파일 경로 => c:/fileUpload/2024/01/25
                         .productFileType(file.getContentType()) // 파일 타입
                         .build();
-
 
                 if(isImageFile(new File(directory, fileName))) {
                     File thumbNail = new File(directory, uuid.toString()+"_th_"+fileName);
