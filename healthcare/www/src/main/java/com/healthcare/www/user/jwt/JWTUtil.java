@@ -1,6 +1,9 @@
 package com.healthcare.www.user.jwt;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -51,5 +54,6 @@ public class JWTUtil {
         .signWith(secretKey) // 암호화 진행
         .compact();
   }
+
 }
 

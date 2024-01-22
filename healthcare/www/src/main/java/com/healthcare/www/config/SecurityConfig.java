@@ -58,8 +58,8 @@ public class SecurityConfig {
         .csrf((auth) -> auth.disable());
 
     //From 로그인 방식 disable
-    http
-        .formLogin((auth) -> auth.disable());
+//    http
+//        .formLogin((auth) -> auth.disable());
 
     //http basic 인증 방식 disable
     http
@@ -69,7 +69,7 @@ public class SecurityConfig {
     http
         .authorizeHttpRequests((auth) -> auth
             .requestMatchers("/user/login", "/", "/user/signup","/css/**","/image/**","/main/**",
-                "/js/**","/health/**","/product/**","/login").permitAll()
+                "/js/**","/health/**","/product/**","/login","/user/logout").permitAll()
             .requestMatchers("/admin").hasRole("ADMIN")
             .anyRequest().authenticated());
 

@@ -11,14 +11,16 @@
     <div class="main-container">
 
       <div class="sub-container">
-        <img src="/image/logo.png" class="logo">
+        <img src="/image/logo.png" class="logo" alt="사진없음">
 
         <div class="loginDiv">
-          <input type="text" placeholder="아이디" id="userID"> <br>
+          <form th:action="@{/user/login}" th:object="${loginDTO}" method="post">
 
-          <input type="password" placeholder="비밀번호" id="userPWD"> <br>
+          <input type="text" placeholder="아이디" th:field="*{id}"> <br>
+          <input type="password" placeholder="비밀번호" th:field="*{pwd}"> <br>
 
-          <button type="button" id="loginBtn">로그인</button>
+          <button type="submit" id="loginBtn">로그인</button>
+          </form>
         </div>
 
       </div>

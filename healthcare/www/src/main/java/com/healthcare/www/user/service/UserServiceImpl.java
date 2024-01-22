@@ -2,6 +2,7 @@ package com.healthcare.www.user.service;
 
 import com.healthcare.www.user.domain.User;
 import com.healthcare.www.user.dto.JoinDTO;
+import com.healthcare.www.user.dto.LoginDTO;
 import com.healthcare.www.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +48,26 @@ public class UserServiceImpl implements UserService{
     userRepository.save(user);
   }
 
+  @Override
+  public User login(LoginDTO loginDTO) {
+    System.out.println("로그인 DTO 체크 =>"+loginDTO);
+    User user = userRepository.findByUserName(loginDTO.getId());
+    System.out.println("유저 정보 체크 => "+user);
+    if(user == null){
+      // 존재하지 않는 계정일 경우
+      System.out.println("존재하지 않는 계정");
+        return null;
+    }
+    if(bCryptPasswordEncoder.matches(user.getUserPassword(),loginDTO.getPwd())){
+      // 비밀번호가 다른경우'
+      System.out.println("비밀번호가 다름");
+      return null;
+    }
 
+
+
+    return user;
+  }
 
 
 }
