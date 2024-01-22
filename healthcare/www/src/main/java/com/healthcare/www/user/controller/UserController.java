@@ -67,6 +67,7 @@ public class UserController {
     if(user == null){
       //bindingResult.reject("loginFail", "로그인 아이디 또는 비밀번호가 틀렸습니다.");
       System.out.println(user+" < 유저 << 로그인 실패!");
+      return "index";
     }
 
 //    if(bindingResult.hasErrors()){

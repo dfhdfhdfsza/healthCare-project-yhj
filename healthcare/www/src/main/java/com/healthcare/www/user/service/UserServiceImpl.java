@@ -52,14 +52,18 @@ public class UserServiceImpl implements UserService{
   public User login(LoginDTO loginDTO) {
     System.out.println("로그인 DTO 체크 =>"+loginDTO);
     User user = userRepository.findByUserName(loginDTO.getId());
+
     System.out.println("유저 정보 체크 => "+user);
     if(user == null){
       // 존재하지 않는 계정일 경우
       System.out.println("존재하지 않는 계정");
         return null;
     }
-    if(bCryptPasswordEncoder.matches(user.getUserPassword(),loginDTO.getPwd())){
-      // 비밀번호가 다른경우'
+    String checkPassword = bCryptPasswordEncoder.encode(loginDTO.getPwd());
+
+    if(bCryptPasswordEncoder.matches(user.getUserPassword(),checkPassword)){
+
+      // 비밀번호가 다른경우
       System.out.println("비밀번호가 다름");
       return null;
     }
