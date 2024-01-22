@@ -60,8 +60,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     // JWTUtil 에 토큰을 만들어달라고 요청(id,role,유지시간)
     String token = jwtUtil.createJWT(username,role,60*60*10L);
 
-    log.info(token+"토큰<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-
 
     // HTTP 인증방식 : Authorization: Bearer 인증토큰string
     response.addHeader("Authorization", "Bearer " + token);

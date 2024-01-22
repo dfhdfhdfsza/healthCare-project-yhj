@@ -2,16 +2,19 @@ package com.healthcare.www.user.controller;
 
 
 import com.healthcare.www.user.domain.User;
+import com.healthcare.www.user.dto.CustomUserDetails;
 import com.healthcare.www.user.dto.JoinDTO;
 import com.healthcare.www.user.dto.LoginDTO;
 import com.healthcare.www.user.jwt.JWTUtil;
 import com.healthcare.www.user.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +33,8 @@ public class UserController {
   private final BCryptPasswordEncoder passwordEncoder;
   private final JWTUtil jwtUtil;
 
+  private String jwtCookie;
+
   @GetMapping("/signup")
     public String moveSignup(){
       // 회원가입 페이지로 이동
@@ -42,37 +47,50 @@ public class UserController {
       m.addAttribute("loginDTO",loginDTO);
       return "/user/login";
     }
+
+    @GetMapping("/myPage")
+    public String moveMyPage(HttpServletRequest request){
+
+      Cookie[] cookies = request.getCookies();
+
+      // 만약 쿠키가 있다면 jwtToken 쿠키의 값을 가져오기
+      if (cookies != null) {
+        for (Cookie cookie : cookies) {
+          if (cookie.getName().equals("jwtToken")) {
+            String jwtTokenValue = cookie.getValue();
+            String userInfo = jwtUtil.getUsername(jwtTokenValue);
+
+            System.out.println(userInfo);
+          }
+        }
+      }
+
+
+
+
+      return "/user/myPage";
+    }
     @PostMapping("/signup")
     public String addSignup(@Validated JoinDTO joinDTO, BindingResult bindingResult, Model model){
-    // 회원가입
-//      if(bindingResult.hasErrors()){
-//        // 에러가 있으면 걸리는거
-//        System.out.println("회원가입에러요");
-//        return "/user/signup";
-//      }
+
       // 회원가입
       userService.addUser(joinDTO);
 
-
-
       return "index";
     }
+
   @PostMapping("/login")
-  public String postLogin(LoginDTO loginDTO,BindingResult bindingResult , HttpServletResponse response){
+  public String postLogin(LoginDTO loginDTO, HttpServletResponse response, Model model){
 
 
     // 로그인
     User user = userService.login(loginDTO);
 
     if(user == null){
-      //bindingResult.reject("loginFail", "로그인 아이디 또는 비밀번호가 틀렸습니다.");
-      System.out.println(user+" < 유저 << 로그인 실패!");
-      return "index";
+      model.addAttribute("loginErr",1);
+      return "/user/login";
     }
 
-//    if(bindingResult.hasErrors()){
-//      return "login";
-//    }
 
     // 로그인 성공 후 -> 토큰 발급
     long expireTimeMs = 1000 * 60 * 60;     // Token 유효 시간 = 60분
@@ -82,7 +100,10 @@ public class UserController {
     // 클라이언트는 다음 요청부터 jwt 토큰이 담긴 쿠키를 전송 => 이 값으로 인증 , 인가
     Cookie cookie = new Cookie("jwtToken",jwtToken);
     cookie.setMaxAge(60 * 60); // 쿠키 유효 시간 : 1시간
+    cookie.setPath("/");
     response.addCookie(cookie);
+
+
     return "index";
   }
 
@@ -90,6 +111,7 @@ public class UserController {
   public String logout(HttpServletResponse response){
     Cookie cookie = new Cookie("jwtToken", null);
     cookie.setMaxAge(0);
+    cookie.setPath("/");
     response.addCookie(cookie);
     return "redirect:/user/login";
   }
