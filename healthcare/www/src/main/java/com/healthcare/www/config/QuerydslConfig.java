@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class QuerydslConfig { // Querydsl 사용 config 설정 클래스
 
     private final EntityManager entityManager;
-
+  
     public JPAQueryFactory jpaQueryFactory(){
         return new JPAQueryFactory(entityManager);
     }

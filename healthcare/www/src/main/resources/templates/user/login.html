@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
+  <link rel="stylesheet" th:href="@{/css/user/login.css}" />
 </head>
 <body>
-  <h1>로그인화면</h1>
+<div th:replace="common/nav.html :: nav"></div>
+
+    <div class="main-container">
+
+      <div class="sub-container">
+        <img src="/image/logo.png" class="logo" alt="사진없음">
+
+        <div class="loginDiv">
+          <form th:action="@{/user/login}" th:object="${loginDTO}" method="post">
+
+          <input type="text" placeholder="아이디" th:field="*{id}"> <br>
+          <input type="password" placeholder="비밀번호" th:field="*{pwd}"> <br>
+
+          <button type="submit" id="loginBtn">로그인</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+<script type="text/javascript" th:src="@{/js/user/login.js}"></script>
 </body>
 </html>

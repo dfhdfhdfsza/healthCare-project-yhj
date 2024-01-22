@@ -1,10 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Signup</title>
+  <title>SignUp</title>
+  <link rel="stylesheet" th:href="@{/css/user/signup.css}" />
 </head>
 <body>
-  <h1>회원가입페이지</h1>
+<div th:replace="common/nav.html :: nav"></div>
+
+<div class="main-container">
+  <div class="signupForm">
+    <img src="/image/logo.png" class="logo">
+
+    <div>
+      <form action="/user/signup" method="post">
+
+        <input type="text" name="userId" placeholder="아이디"> <br>
+        <input type="text" name="userPassword" placeholder="비밀번호"> <br>
+        <input type="text" name="userName" placeholder="사용자 이름"> <br>
+        <input type="text" name="userAddress" placeholder="주소"> <br>
+        <input type="text" name="userNumber" placeholder="전화번호"> <br>
+        <input type="text" name="userAge" placeholder="나이"> <br>
+        성별 : 남자<input type="radio" value="남자" name="userMail"> 여자<input type="radio" value="여자" name="userMail"> <br>
+
+        <button type="submit" class="signupBtn">회원가입</button>
+
+      </form>
+    </div>
+  </div>
+</div>
 </body>
 </html>

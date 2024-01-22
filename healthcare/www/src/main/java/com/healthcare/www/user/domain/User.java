@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class User{
   /*
     columnDefinition = "varchar(2500) default" / type , default 값 설정
@@ -33,17 +34,19 @@ public class User{
   private String userName; // 유저명
 
   @Column(name = "user_address")
-  private String userAddress;
+  private String userAddress; // 주소
 
   @Column(name = "user_number")
-  private String userNumber;
+  private String userNumber; // 전화번호
 
   @Column(name = "user_age")
-  private String userAge;
+  private int userAge; // 나이
+
+  @Column(name="user_mail")
+  private String userMail; // 성별
 
   @Column(name="user_role")
   private String userRole;
-
 
 
 }

@@ -5,6 +5,7 @@ import com.healthcare.www.user.dto.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -12,9 +13,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
+@Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
   private final AuthenticationManager authenticationManager;
@@ -48,7 +51,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     String username = customUserDetails.getUsername();
 
-    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+    Collection<? extends GrantedAuthority> authorities  = authentication.getAuthorities();
     Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
     GrantedAuthority auth = iterator.next();
 
@@ -56,8 +59,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     // JWTUtil 에 토큰을 만들어달라고 요청(id,role,유지시간)
     String token = jwtUtil.createJWT(username,role,60*60*10L);
+
+    log.info(token+"토큰<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+
     // HTTP 인증방식 : Authorization: Bearer 인증토큰string
     response.addHeader("Authorization", "Bearer " + token);
+
   }
 
   //로그인 실패시 실행하는 메소드

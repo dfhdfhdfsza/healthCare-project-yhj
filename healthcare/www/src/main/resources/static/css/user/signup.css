@@ -1,0 +1,31 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.main-container{
+    width: 100%;
+}
+.logo{
+    padding-bottom: 20px;
+}
+.signupForm{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
+.signupForm{
+    
+    padding: 50px;
+    background-color: #fff;
+}
+.signupBtn{
+    width: 200px;
+    height: 40px;
+    color: black;
+    background-color: #fff;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 9px;
+}
