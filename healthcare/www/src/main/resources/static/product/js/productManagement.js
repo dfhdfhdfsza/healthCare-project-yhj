@@ -39,4 +39,16 @@ mainContainer.addEventListener('click', (e) =>{
 });
 
 
-let searchBtn = document.querySelector('#searchBtn');   
+let openModal = document.querySelector('#searchModalOpen'), // 검색 모달창 오픈
+    modalBack = document.querySelector('.search-modal-back'), // 모달 백그라운드
+    modal = document.querySelector('.search-modal'), // 모달창
+    closeBtn = document.querySelector('#searchModalClose'); // x버튼
+
+    openModal.addEventListener('click', () => {
+        modalBack.classList.add('search-modal-back-on');
+    });
+
+    closeBtn.addEventListener('click', () => {
+        console.log("close");
+        modalBack.classList.remove('search-modal-back-on');
+    });

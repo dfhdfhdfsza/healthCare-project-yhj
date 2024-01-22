@@ -10,10 +10,15 @@ searchBtn.addEventListener('click', () => {
 
 // 서버에 상품검색 비동기 요청
 async function searchProductFromServer(dataValue){
-    const url = `/product/searchProduct?category=${dataValue.category}&keyword=${dataValue.keyword}`;
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(dataValue);
+    try {
+        const url = `/product/searchProduct?category=${dataValue.category}&keyword=${dataValue.keyword}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        console.log(result);
+        return result;
+    } catch (error) {
+        console.log(error);        
+    }
 }
 
 // 상품검색 함수
@@ -22,19 +27,20 @@ function searchProduct(){
         category: category.value,
         keyword: keyword.value
     }
-    searchProductFromServer(dataValue).then(list =>{
+    console.log(dataValue);
+    searchProductFromServer(dataValue).then(result =>{
         let str = `<tr>
                         <th>상품번호</th>
                         <th>상품유형</th>
                         <th>상품명</th>
                         <th>상품가격</th>
                    </tr>`;
-        for (const productDTO of list) {
+        for (let product of result) {
             str += `<tr
-                        <td>${productDTO.productNo}</td>
-                        <td>${productDTO.productType}</td>
-                        <td>${productDTO.productName}</td>
-                        <td>${productDTO.price}</td>
+                        <td>${product.productNo}</td>
+                        <td>${product.productType}</td>
+                        <td>${product.productName}</td>
+                        <td>${product.price}</td>
                     </tr>`;
             productList.innerHTML += str;
         } 

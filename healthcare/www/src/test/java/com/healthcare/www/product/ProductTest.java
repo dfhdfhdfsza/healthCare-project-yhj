@@ -1,19 +1,18 @@
 package com.healthcare.www.product;
 
 import com.healthcare.www.product.domain.Product;
+import com.healthcare.www.product.dto.ProductDTO;
 import com.healthcare.www.product.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.logging.LogLevel;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -115,16 +114,18 @@ class ProductTest {
     @DisplayName(value = "상품조회")
     void select(){
         // given
-        List<Product> productList = getProduct();
+/*        List<Product> productList = getProduct();
         productRepository.save(productList.get(0));
-        productRepository.save(productList.get(1));
+        productRepository.save(productList.get(1));*/
 
         // when
-        Product p = productRepository.findByProductNameIgnoreCase("모둠견과류");
-
+        List<Product> p1 = productRepository.findByProductNameIgnoreCase("모둠견과류");
+        List<Product> p2 = productRepository.findByProductType("건강식품");
+        List<Product> p3 = productRepository.findByProductNo(1L);
         // then
-        Assertions.assertEquals("모둠견과류", p.getProductName());
-
+        assertEquals("모둠견과류", p1.get(0).getProductName());
+        assertEquals("건강식품", p2.get(0).getProductType());
+        assertEquals(1, p3.size());
     }
 
 }
