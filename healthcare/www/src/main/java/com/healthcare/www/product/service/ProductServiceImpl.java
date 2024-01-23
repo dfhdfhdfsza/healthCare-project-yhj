@@ -7,15 +7,17 @@ import com.healthcare.www.product.dto.ProductDTO;
 import com.healthcare.www.product.dto.ProductFileDTO;
 import com.healthcare.www.product.repository.ProductFileRepository;
 import com.healthcare.www.product.repository.ProductRepository;
-import com.querydsl.core.QueryFactory;
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.healthcare.www.product.repository.QueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Where;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,7 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
     private final ProductFileRepository productFileRepository;
+    private final QueryRepository queryRepository;
 
     // 상품을 DB에 등록하는 메서드
     @Override
@@ -64,6 +67,7 @@ public class ProductServiceImpl implements ProductService{
                 productType(productDTO.getProductType()).
                 price(productDTO.getPrice()).
                 build();
+        log.info("product >>>>>> {}", product);
         long resultProductNo = productRepository.save(product).getProductNo(); // 상품정보 DB 수정
 
         List<ProductFile> productFileList  = new ArrayList<>(); // 첨부파일 domain 객체 리스트
@@ -84,17 +88,26 @@ public class ProductServiceImpl implements ProductService{
         }
     }
 
+    // 상품검색 메서드(관리자 상품 수정용)
     @Override
-    public List<ProductDTO> searchProductList(ProductDTO productDTO) {
-        // 해당하는 카테고리의 enum 필드 가져오기
-        SearchTyped searchTyped =SearchTyped.valueOf(productDTO.getCategory());
-        // 가져온 필드의 type값 가져오기 => PRODUCT_NO("productNo", "상품번호") 중 productNo = this.type
-        String type = searchTyped.getType();
-        return null;
+    public List<Product> searchProductList(ProductDTO productDTO) {
+        // enum 필드값과 일치하는지 확인
+        for(SearchTyped typed : SearchTyped.values()){
+            if(typed.getCategory().equals(productDTO.getCategory())){
+                String type = typed.getType();
+                if(type.equals(SearchTyped.PRODUCT_NO.getType())){
+                    return productRepository.findByProductNo(Long.valueOf(productDTO.getKeyword()));
+                } else if (type.equals(SearchTyped.PRODUCT_NAME.getType())) {
+                    return productRepository.findByProductNameIgnoreCaseContaining(productDTO.getKeyword());
+                } else if (type.equals(SearchTyped.PRODUCT_TYPE.getType())) {
+                    return productRepository.findByProductTypeContaining(productDTO.getKeyword());
+                } else if (type.equals(SearchTyped.ALL.getType())) {
+                    return productRepository.findAll();
+                }
+            }
+        }
+        return Collections.emptyList();
     }
-
-
-
 
 
 

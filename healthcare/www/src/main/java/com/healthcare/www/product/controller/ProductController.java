@@ -1,6 +1,8 @@
 package com.healthcare.www.product.controller;
 
 import com.healthcare.www.handler.FileHandler;
+import com.healthcare.www.handler.FileType;
+import com.healthcare.www.product.domain.Product;
 import com.healthcare.www.product.domain.ProductTyped;
 import com.healthcare.www.product.domain.SearchTyped;
 import com.healthcare.www.product.dto.ProductDTO;
@@ -41,7 +43,7 @@ public class ProductController {
     }
 
     // 상품등록 메서드(상품 및 첨부파일 등록)
-    @PostMapping(name = "productRegister")
+    @PostMapping("productRegister")
     public String productRegister(@Valid ProductDTO productDTO, BindingResult bindingResult
             , @RequestParam(name = "files", required = false)MultipartFile[] files, RedirectAttributes re) {
         if(bindingResult.hasErrors()){ // 유효성 검증 에러 발생시
@@ -51,7 +53,7 @@ public class ProductController {
         log.info("첨부파일 개수 >>>>>> {}", files.length);
         // 첨부파일이 존재하면..
         if(files[0].getSize() > 0) {
-            List<ProductFileDTO> productFileList = fh.uploadFile(files);
+            List<ProductFileDTO> productFileList = fh.uploadFile(files, FileType.PRODUCT);
             productDTO.setProductFileList(productFileList);
         }
         productService.addProduct(productDTO);
@@ -69,23 +71,24 @@ public class ProductController {
         log.info("첨부파일 개수 >>>>>> {}", files.length);
         // 첨부파일이 존재하면..
         if(files[0].getSize() > 0) {
-            List<ProductFileDTO> productFileList = fh.uploadFile(files);
+            List<ProductFileDTO> productFileList = fh.uploadFile(files, FileType.PRODUCT);
             productDTO.setProductFileList(productFileList);
         }
         productService.updateProduct(productDTO);
-        return "redirect:/";
+        return "redirect:/product/productManagement";
     }
 
-    // 상품검색 메서드
-    @GetMapping(name = "/product/searchProduct", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ProductDTO>> searchProductList
+    // 상품검색 메서드(관리자 상품 수정용)
+    @GetMapping(value = "searchProduct" ,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Product>> searchProductList
         (@RequestParam("category")String category, @RequestParam("keyword")String keyword){
+        log.info("검색 하러 왔음");
         ProductDTO productDTO = ProductDTO.builder().
                 category(category).
                 keyword(keyword).
                 build();
-        List<ProductDTO> productDTOList = productService.searchProductList(productDTO);
-        return new ResponseEntity<>(productDTOList, HttpStatus.OK);
+        List<Product> productList = productService.searchProductList(productDTO);
+        return ResponseEntity.ok(productList);
     }
 
 
