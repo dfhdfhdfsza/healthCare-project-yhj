@@ -43,6 +43,7 @@ public class FoodController {
     private String checkFood(){
          return "redirect:/nutrition";
     }
+
     //음식 검색
     @GetMapping(value="/findFood", produces = {MediaType.APPLICATION_JSON_VALUE} )
     public ResponseEntity<List<Food>> findFood(@RequestParam String keyword) {
