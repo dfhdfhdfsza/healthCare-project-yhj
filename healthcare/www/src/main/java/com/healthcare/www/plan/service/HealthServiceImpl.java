@@ -1,9 +1,6 @@
 package com.healthcare.www.plan.service;
 
-import com.healthcare.www.plan.domain.ExerciseSet;
-import com.healthcare.www.plan.domain.PlanCalendar;
-import com.healthcare.www.plan.domain.UserPlan;
-import com.healthcare.www.plan.domain.planDTO;
+import com.healthcare.www.plan.domain.*;
 import com.healthcare.www.plan.repository.ExerciseSetRepository;
 import com.healthcare.www.plan.repository.PlanCalendarRepository;
 import com.healthcare.www.plan.repository.UserPlanRepository;
@@ -63,5 +60,10 @@ public class HealthServiceImpl implements HealthService{
         log.info("setlist:"+setlist);
         exerciseSetRepository.saveAll(setlist);
 
+    }
+
+    @Override
+    public List<FullCalendarVO> getEventList(String userNo) {
+        return null;
     }
 }

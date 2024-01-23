@@ -1,11 +1,16 @@
 package com.healthcare.www.plan.controller;
 
+import com.healthcare.www.plan.domain.FullCalendarVO;
 import com.healthcare.www.plan.domain.planDTO;
 import com.healthcare.www.plan.service.HealthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/health/*")
@@ -29,6 +34,13 @@ public class HealthController {
     hsv.planSetting(pdto);
     return "redirect:/health/healthplan";
   }
+  @GetMapping("/getEventList")
+  public ResponseEntity<List<FullCalendarVO>> getEventList(@RequestParam("userNo")String userNo)
+  {
+    log.info("userNo:"+userNo);
+    List<FullCalendarVO> eventlist=hsv.getEventList(userNo);
 
+    return new ResponseEntity<List<FullCalendarVO>>(eventlist, HttpStatus.OK);
+  }
 
 }

@@ -6,9 +6,23 @@ $(document).ready(function(){
         slidesToScroll: 2,   //스크롤 한번에 움직일 컨텐츠 개수
         dots: false, // 좌우 arrow 네비게이션 안보이게 하기
         arrows: false, // 아래 dost 네비게이션 안보이게 하기
-
     });
 });
+let eventlist;
+
+//계획리스트 불러오기
+$.ajax({    
+    type: "GET",            // HTTP method type(GET, POST) 형식이다.
+    url: "/event/getEventList?userNo='1'",      // 컨트롤러에서 대기중인 URL 주소이다.
+    data: "1",                  //로그인한 id(수정할예정)
+    success: function (res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+      
+    },
+    error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+      alert("통신 실패.");
+    }
+  });
+
 
 // calendar element 취득
 let calendarEl = $('#calendar')[0];
@@ -185,9 +199,17 @@ targetSelectBtns.forEach(function(targetSelectBtn){
     let offsetinput=document.getElementById('offset');
     let target=targetSelectBtn.getAttribute('data-target');
     
-    targetinput.value=target;
-    offsetinput.value=0;   
-    
+    targetinput.value=target; 
+    offsetinput.value=0;   //페이지번호 0으로 초기화
+
+    //모든 부위버튼 배경색 검은색으로 초기화
+    targetSelectBtns.forEach(function(targetSelectBtn){
+        targetSelectBtn.style.backgroundColor='black';
+    })
+    //누른 부위버튼 배경색 빨간색으로 변경
+    targetSelectBtn.style.backgroundColor='red';
+
+    //다음페이지 버튼 보이게하기
     nextPageExerciseListBtn.style.display="block";
 
     $.ajax({  
@@ -346,10 +368,20 @@ let setAddBtn=document.querySelector('.setAddBtn');
 setAddBtn.addEventListener('click',(e)=>{
     let tbody=document.querySelector('.set-table tbody');
     let childCount = tbody.childElementCount + 1;
-    tbody.innerHTML+=`<tr class="set-list"><td>${childCount}</td>
+
+    //innerHTML을 사용하면 새로운 행을 추가할 때, 
+    //tbody의 전체 내용을 새로운 HTML 문자열로 대체하기 때문에 이전 행의 기존 입력 값이 손실된다.
+    //이 문제를 해결하려면 새로운 행을 추가할 때 기존 행을 대체하는 것이 아니라,
+    //새로운 행을 기존 행 뒤에 추가해야 됨.
+
+    let newRow = document.createElement('tr');
+    newRow.className = 'set-list';
+    newRow.innerHTML = `<td>${childCount}</td>
     <td><input type="text" name="Weight"> kg</td>
     <td><input type="text" name="count"></td>
-    <td><input type="checkbox" name="check"></td></tr>`;
+    <td><input type="checkbox" name="check"></td>`;
+
+    tbody.appendChild(newRow);
 })
 
 
@@ -389,7 +421,7 @@ submitBtn.addEventListener('click',(e)=>{
     });
 
     let pdto={
-        userNo:"1",
+        userNo:"1",         //(수정할예정)
         exerciseName:exerciseName,
         planDate:selectDate,
         setVOList:dataArray
