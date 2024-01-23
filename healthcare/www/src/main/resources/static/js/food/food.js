@@ -50,3 +50,4 @@ async function findFood() {
 //     console.log("오늘먹은단백질"+totalProtein);
 //     console.log("오늘먹은지방"+totalFat);
 //}
+
