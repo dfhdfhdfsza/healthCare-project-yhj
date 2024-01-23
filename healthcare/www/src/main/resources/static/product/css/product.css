@@ -114,7 +114,6 @@ select {
     -moz-appearance: none;
     padding: 8px;
     border:none;
-/*    border-right: 1px solid #000;*/
     outline: none;
     cursor: pointer;
     background-color: #fff;
@@ -139,9 +138,9 @@ select option:hover {
 .arrowUp{
     transform:rotate(180deg);
 }
-.arrowDown{
-    transform:rotate(0deg);
-}
+/*.arrowDown{*/
+/*    transform:rotate(0deg);*/
+/*}*/
 
 
 /* 슬라이드 */
@@ -246,7 +245,7 @@ select option:hover {
     align-items:center;
     border: 1px solid #D8D8D8;
     border-radius:5px;
-    padding: 20px 20px 35px 20px;
+    padding: 50px 20px 35px 20px;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.75);
 }
 .fa-circle-xmark{
@@ -254,10 +253,13 @@ select option:hover {
     top:10px;
     right:10px;
     color:#D8D8D8;
-    font-size:2rem;
+    font-size:1.5rem;
     cursor:pointer;
-
 }
+.fa-circle-xmark:hover{
+    color: #C51605;
+}
+
 .search-box{
     display:flex;
     align-items:center;
@@ -289,10 +291,49 @@ select option:hover {
 .seach-box select{
     border:none;
 }
-table{
-    color:#fff;
+.search-list{
+    box-sizing: border-box;
+    max-height: 450px;
+    overflow: auto;
+}
+#productList{
     margin-top:1.5rem;
     width:620px;
     border-collapse:collapse;
     box-sizing:border-box;
+    color: #fff;
+    text-align:center;
+}
+#productList tr:not(:first-child):nth-child(odd){
+    background-color: rgba(0, 0, 0, 0.2);
+    color:#fff;
+    padding-top: 0.5rem;
+}
+#productList tr:not(:first-child):nth-child(even){
+    background-color: rgba(0, 0, 0, 0.3);
+    color:#fff;
+    padding-top: 0.5rem;
+}
+#productList tr:not(:first-child):hover{
+    background-color: #e50914;
+    cursor: pointer;
+}
+#productList th{
+    padding: 0 0 10px 0;
+}
+#productList td{
+    padding: 7px 0 7px 0;
+    box-sizing:border-box;
+}
+#productList .pno{
+    min-width: 100px;;
+}
+#productList .ptype{
+    min-width: 120px;;
+}
+#productList .pname{
+    min-width: 100px;;
+}
+#productList .price{
+    min-width: 150px;;
 }

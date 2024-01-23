@@ -67,6 +67,7 @@ public class ProductServiceImpl implements ProductService{
                 productType(productDTO.getProductType()).
                 price(productDTO.getPrice()).
                 build();
+        log.info("product >>>>>> {}", product);
         long resultProductNo = productRepository.save(product).getProductNo(); // 상품정보 DB 수정
 
         List<ProductFile> productFileList  = new ArrayList<>(); // 첨부파일 domain 객체 리스트
@@ -87,7 +88,7 @@ public class ProductServiceImpl implements ProductService{
         }
     }
 
-    // 상품검색 메서드(관리자용)
+    // 상품검색 메서드(관리자 상품 수정용)
     @Override
     public List<Product> searchProductList(ProductDTO productDTO) {
         // enum 필드값과 일치하는지 확인
@@ -95,11 +96,13 @@ public class ProductServiceImpl implements ProductService{
             if(typed.getCategory().equals(productDTO.getCategory())){
                 String type = typed.getType();
                 if(type.equals(SearchTyped.PRODUCT_NO.getType())){
-                    return productRepository.findByProductNo(Long.valueOf(type));
+                    return productRepository.findByProductNo(Long.valueOf(productDTO.getKeyword()));
                 } else if (type.equals(SearchTyped.PRODUCT_NAME.getType())) {
-                    return productRepository.findByProductNameIgnoreCase(type);
+                    return productRepository.findByProductNameIgnoreCaseContaining(productDTO.getKeyword());
                 } else if (type.equals(SearchTyped.PRODUCT_TYPE.getType())) {
-                    return productRepository.findByProductType(type);
+                    return productRepository.findByProductTypeContaining(productDTO.getKeyword());
+                } else if (type.equals(SearchTyped.ALL.getType())) {
+                    return productRepository.findAll();
                 }
             }
         }

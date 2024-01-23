@@ -22,10 +22,19 @@ import java.util.UUID;
 @Component
 @Slf4j
 public class FileHandler {
+    // 파일경로 application-file.properties 에서 주입
     @Value("${product.file.upload-dir}")
-    private String uploadDir; // 파일경로 application-file.properties 에서 주입
+    private String productUploadDir; // 상품등록 파일경로
+    @Value("${user.file.upload-dir}")
+    private String userUploadDir; // 유저 프로필 파일경로
 
-    public List<ProductFileDTO> uploadFile(MultipartFile[] files) throws RuntimeException {
+    public List<ProductFileDTO> uploadFile(MultipartFile[] files, FileType type) throws RuntimeException {
+        // 업로드 파일별로 다르게 경로 설정
+        String uploadDir = switch (type){
+            case PRODUCT -> productUploadDir;
+            case USER -> userUploadDir;
+        };
+        
         List<ProductFileDTO> productFileList = new ArrayList<>();
         // 업로드 디렉토리가 존재하지 않으면 생성합니다.
         LocalDate date = LocalDate.now(); // 오늘날짜 추출

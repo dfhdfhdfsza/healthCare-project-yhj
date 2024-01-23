@@ -119,8 +119,8 @@ class ProductTest {
         productRepository.save(productList.get(1));*/
 
         // when
-        List<Product> p1 = productRepository.findByProductNameIgnoreCase("모둠견과류");
-        List<Product> p2 = productRepository.findByProductType("건강식품");
+        List<Product> p1 = productRepository.findByProductNameIgnoreCaseContaining("모둠견과류");
+        List<Product> p2 = productRepository.findByProductTypeContaining("건강식품");
         List<Product> p3 = productRepository.findByProductNo(1L);
         // then
         assertEquals("모둠견과류", p1.get(0).getProductName());
