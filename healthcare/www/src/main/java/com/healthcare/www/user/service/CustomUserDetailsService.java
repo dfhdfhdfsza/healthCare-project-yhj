@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     //DB에서 조회하는 구문
     User user = userRepository.findByUserName(username);
-    System.out.println(user+"유저<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
     if(user != null){
       //UserDetails에 담아서 return하면 AutneticationManager가 검증 함
       return new CustomUserDetails(user);

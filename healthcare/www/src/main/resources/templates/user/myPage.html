@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>MyPage</title>
+  <link rel="stylesheet" th:href="@{/css/user/myPage.css}" />
+</head>
+<body>
+    <div th:replace="common/nav.html :: nav"></div>
+
+    <div class="all-container">
+      <!--개인정보-->
+      <div class="main-container">
+        <div class="profile-div">
+          <!--사진-->
+          <div class="profileImage-div">
+            <img src="/image/user/프로필기본.png" class="profile-image">
+          </div>
+          <!--정보-->
+          <div class="profile">
+            <div>
+                <span>[[${user.userName}]]</span>
+
+                <a th:href="@{/user/modify?userNo=${user.userNo}}" class="profileModify">
+                  <span>프로필 편집</span>
+                </a>
+
+                <a th:href="@{/user/info?userNo=${user.userNo}}" class="infoAdd">
+                  <span>개인정보 입력</span>
+                </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+</body>
+</html>

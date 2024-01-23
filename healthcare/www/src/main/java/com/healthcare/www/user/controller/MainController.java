@@ -29,7 +29,7 @@ public class MainController {
     String role = auth.getAuthority();
 
 
-    return "main Controller"+username+role;
+    return "main Controller/"+username+"/"+role+"/";
   }
 
 

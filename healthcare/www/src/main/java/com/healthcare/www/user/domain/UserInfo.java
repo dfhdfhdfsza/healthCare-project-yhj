@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,5 +35,6 @@ public class UserInfo {
   @Column(name="info_metabolic")
   private double infoMetabolic; // 유저 기초대사량
 
-
+  @Column(name="info_userProfile")
+  private String infoUserProfile; // 유저 프로필사진
 }
