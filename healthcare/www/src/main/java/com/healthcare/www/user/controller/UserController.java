@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping("/myPage")
-    public String moveMyPage(HttpServletRequest request){
+    public String moveMyPage(HttpServletRequest request, Model m){
 
       Cookie[] cookies = request.getCookies();
 
@@ -60,9 +60,12 @@ public class UserController {
             String jwtTokenValue = cookie.getValue();
             String userInfo = jwtUtil.getUsername(jwtTokenValue);
 
-            System.out.println(userInfo);
+            User user = userService.getUserInfomation(userInfo);
+            System.out.println(user+" << 유저정보");
+            m.addAttribute("user",user);
           }
         }
+
       }
 
 

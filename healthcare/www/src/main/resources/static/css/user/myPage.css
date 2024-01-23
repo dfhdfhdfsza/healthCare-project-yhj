@@ -1,0 +1,30 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.all-container{
+    width: 100%;
+}
+.main-container{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 25%;
+    left: 50%;
+    width: 1000px;
+    background-color: #fff;
+}
+.profile-div{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+}
+.profile-image{
+    width: 200px;
+    height: 200px;
+}
+.profileModify , .infoAdd{
+    text-decoration: none;
+    color: black;
+}
