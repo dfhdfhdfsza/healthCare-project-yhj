@@ -1,0 +1,23 @@
+SQL
+CREATE TABLE `product` (
+  `created_date` date DEFAULT NULL,
+  `modified_date` date DEFAULT NULL,
+  `price` int NOT NULL,
+  `product_no` bigint NOT NULL AUTO_INCREMENT,
+  `product_info` varchar(255) DEFAULT NULL,
+  `product_name` varchar(255) DEFAULT NULL,
+  `product_type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`product_no`)
+)
+
+CREATE TABLE `product_file` (
+  `created_date` date DEFAULT NULL,
+  `modified_date` date DEFAULT NULL,
+  `product_file_size` bigint DEFAULT NULL,
+  `product_no` bigint NOT NULL,
+  `product_file_name` varchar(255) DEFAULT NULL,
+  `product_file_save_dir` varchar(255) DEFAULT NULL,
+  `product_file_type` varchar(255) DEFAULT NULL,
+  `product_uuid` varchar(255) NOT NULL,
+  PRIMARY KEY (`product_uuid`)
+)
