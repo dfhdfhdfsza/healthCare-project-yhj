@@ -109,9 +109,18 @@ public class ProductServiceImpl implements ProductService{
         return Collections.emptyList();
     }
 
-
-
-
+    // 상품목록 조회 메서드
+    @Override
+    public List<ProductDTO> getList() {
+        List<Product> productList = productRepository.findAll();
+        List<ProductFile> productFileList = productFileRepository.findAll();
+        List<ProductDTO> productDTOList;
+        for(Product product : productList){
+            ProductDTO productDTO = ProductDTO.builder().build();
+            productDTOList.add()
+        }
+        return productRepository.findAll();
+    }
 
 
 }

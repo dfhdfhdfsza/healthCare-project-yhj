@@ -11,6 +11,8 @@ import com.healthcare.www.product.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -91,6 +93,13 @@ public class ProductController {
         return ResponseEntity.ok(productList);
     }
 
+    // 상품목록 메소드
+    @GetMapping("productList")
+    public void getProductList(Model model, ProductDTO productDTO){
+        List<ProductDTO> productDTOList = productService.getList();
+        model.addAttribute("productDTOList", productDTOList);
+        model.addAttribute("productTyped", ProductTyped.values());
+    }
 
 
 

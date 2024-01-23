@@ -7,7 +7,10 @@
 <body>
     <main class="product-list-container">
         <div>
-
+            <select th:field="${productTyped}" class="select">
+                <option value="">상품유형</option>
+                <option th:each="typed: ${productTyped}" th:value="${th:typed.type}" th:text="${th:typed.type}"></option>
+            </select>
         </div>
     </main>
 </body>

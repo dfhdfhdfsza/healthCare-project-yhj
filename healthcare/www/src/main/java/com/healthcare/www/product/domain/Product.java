@@ -4,8 +4,6 @@ import com.healthcare.www.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.lang.reflect.Type;
-
 @Entity
 @Getter
 @Builder
