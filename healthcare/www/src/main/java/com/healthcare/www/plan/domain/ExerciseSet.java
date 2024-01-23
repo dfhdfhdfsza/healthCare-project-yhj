@@ -3,16 +3,21 @@ package com.healthcare.www.plan.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Setter
+import javax.swing.*;
+
 @Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Builder
-public class ExerciseSetVO {
-    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private  int exerciseSetNo;
+public class ExerciseSet {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  long exerciseSetNo;
+
+    @Column(name = "plan_no")
+    private  long planNo;
 
     @Column(name = "exercise_weight")
     private  int exerciseWeight;

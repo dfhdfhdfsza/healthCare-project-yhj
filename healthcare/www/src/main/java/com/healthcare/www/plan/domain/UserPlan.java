@@ -2,16 +2,15 @@ package com.healthcare.www.plan.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.poi.ss.formula.functions.Na;
 
-@Setter
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Builder
-public class UserPlanVO {
+public class UserPlan {
     @Id
     private  long userPlanNo;
 
@@ -23,4 +22,6 @@ public class UserPlanVO {
 
     @Column(name = "plan_no")
     private long planNo;
+
+
 }

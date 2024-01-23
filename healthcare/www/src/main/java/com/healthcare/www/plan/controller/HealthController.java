@@ -1,15 +1,11 @@
 package com.healthcare.www.plan.controller;
 
+import com.healthcare.www.plan.domain.planDTO;
 import com.healthcare.www.plan.service.HealthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/health/*")
@@ -23,8 +19,15 @@ public class HealthController {
 
   @GetMapping("/healthplan")
   public String moveHealthplan(){
-    log.info("ㅋㅋ");
     return "health/healthplan";
+  }
+
+  @PostMapping("/planSetting")
+  public String planSetting(@RequestBody planDTO pdto)
+  {
+    log.info("pdto:"+pdto);
+    hsv.planSetting(pdto);
+    return "redirect:/health/healthplan";
   }
 
 

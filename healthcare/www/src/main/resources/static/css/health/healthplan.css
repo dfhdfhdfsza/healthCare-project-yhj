@@ -33,7 +33,7 @@
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     width: 500px;
-    height: 600px;
+    /* height: 600px; */
     position: relative;
     padding: 10px;
 }
@@ -93,6 +93,47 @@
     color: red;
 }
 
+/* 운동 선택 슬라이드 */
+.slide-wrapper{
+    width: 100%;
+    margin-top: 30px;
+    padding: 0px 10px 0px 10px;
+}
+.slide-wrapper div{
+    color: white;
+}
+.slide-wrapper button{
+    background: black;
+    border: none;
+    color: white;
+}
+.target-select{
+    cursor: pointer;
+}
+
+/* 운동 선택 list div */
+.exercise-item{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.exercise-image{
+    margin-right: 10px;
+}
+.eximg{
+    width: 70px;
+    height: 70px;
+}
+
+.next-page-div{
+    display: none;
+    justify-content: center;
+}
+
+/* 세트설정 table */
 .set-table{
     text-align: center;
     width: 100%;
@@ -116,4 +157,3 @@
     background-color: darkgrey;
     padding: 5px 5px 5px 5px;
 }
-
