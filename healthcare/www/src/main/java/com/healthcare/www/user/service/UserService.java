@@ -13,4 +13,6 @@ public interface UserService {
   void addUser(JoinDTO joinDTO);
 
   User login(LoginDTO loginDTO);
+
+  User getUserInfomation(String userInfo);
 }

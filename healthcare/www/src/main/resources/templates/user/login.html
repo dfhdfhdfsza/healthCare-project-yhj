@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <title>Login</title>
   <link rel="stylesheet" th:href="@{/css/user/login.css}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
 <div th:replace="common/nav.html :: nav"></div>
+<input type="hidden" th:value="${loginErr}" id="loginErr">
+
 
     <div class="main-container">
 
@@ -25,6 +28,18 @@
 
       </div>
     </div>
+
+    <!-- 로그인 실패시 뜨는 모달창 -->
+    <div  class="loginErrModal">
+      <i class="bi bi-x" id="xBtn"></i>
+      <div>
+          <p>로그인 아이디 또는 비밀번호가 틀렸습니다.</p>
+      </div>
+    </div>
+
+
+
 <script type="text/javascript" th:src="@{/js/user/login.js}"></script>
+
 </body>
 </html>
