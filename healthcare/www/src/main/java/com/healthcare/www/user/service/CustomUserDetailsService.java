@@ -22,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
     //DB에서 조회하는 구문
-    User user = userRepository.findByUserName(username);
+    User user = userRepository.findByUserId(username);
 
     if(user != null){
       //UserDetails에 담아서 return하면 AutneticationManager가 검증 함

@@ -1,9 +1,6 @@
 package com.healthcare.www.user.jwt;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -27,13 +24,13 @@ public class JWTUtil {
   // 유저네임 검증
   public String getUsername(String token) {
     //
-    return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("username", String.class);
+    return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("userId", String.class);
   }
 
   // role 검증
   public String getRole(String token) {
 
-    return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
+    return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("userRole", String.class);
   }
 
   // 토큰만료 검증
@@ -47,8 +44,8 @@ public class JWTUtil {
     // id role 토큰유지시간
 
     return Jwts.builder()
-        .claim("username", username)
-        .claim("role", role)
+        .claim("userId", username)
+        .claim("userRole", role)
         .issuedAt(new Date(System.currentTimeMillis())) // 토큰발행시간 설정
         .expiration(new Date(System.currentTimeMillis() + expiredMs)) // 토큰소멸시간 설정 / 발행시간+토큰유지시간
         .signWith(secretKey) // 암호화 진행

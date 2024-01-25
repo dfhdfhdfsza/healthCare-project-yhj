@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>MyPage</title>
   <link rel="stylesheet" th:href="@{/css/user/myPage.css}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
     <div th:replace="common/nav.html :: nav"></div>
@@ -16,26 +17,69 @@
           <div class="profileImage-div">
             <img src="/image/user/프로필기본.png" class="profile-image">
           </div>
-          <!--정보-->
           <div class="profile">
-            <div>
-                <span>[[${user.userName}]]</span>
 
-                <a th:href="@{/user/modify?userNo=${user.userNo}}" class="profileModify">
-                  <span>프로필 편집</span>
-                </a>
+            <!--개인정보 입력 및 수정-->
+            <div class="profileInfo-editor">
+              <span th:text="${user.userId}" class="userId"></span>
 
-                <a th:href="@{/user/info?userNo=${user.userNo}}" class="infoAdd">
-                  <span>개인정보 입력</span>
-                </a>
+              <a href="#" class="profileModify" th:if="${validInfo == 0}">
+                <span class="profile-span profile-modify">프로필 편집</span>
+              </a>
+
+              <a th:href="@{/user/information(userNo=${user.userNo})}" class="infoAdd" th:if="${validInfo == 1}">
+                <span class="profile-span profile-add">프로필 입력</span>
+              </a>
             </div>
 
+            <!--개인정보 입력했을때만 출력-->
+            <div class="detail-div">
+              <!--개인정보 들어갈 div-->
+              <div class="detail-information" th:if="${validInfo == 0}">
+
+                <strong>키</strong>
+                <span>[[${info.infoHeight}]]</span>
+
+                <strong>몸무게</strong>
+                <span>[[${info.infoWeight}]]</span>
+
+                <strong>골격근량</strong>
+                <span>[[${info.infoSkeletal}]]</span>
+
+                <strong>체지방률</strong>
+                <span>[[${info.infoBody}]]</span>
+
+                <strong>기초대사량</strong>
+                <span>[[${info.infoMetabolic}]]</span>
+
+              </div>
+              <!--개인정보 입력 안했을때 -->
+              <div th:if="${validInfo == 1}">
+                <i class="bi bi-person-exclamation noProfile"></i>
+                <span>아직 정보를 입력하지 않았습니다. 정보를 입력해주세요</span>
+              </div>
+            </div>
+
+
+
           </div>
+
+
+
+
+
         </div>
       </div>
 
 
     </div>
+
+
+
+
+
+
+    <script type="text/javascript" th:src="@{/js/user/myPage.js}"></script>
 
 </body>
 </html>
