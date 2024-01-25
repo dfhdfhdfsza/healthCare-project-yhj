@@ -94,13 +94,14 @@ let exerciseSelectDiv=document.querySelector('.exercise-select');
 let planlistDiv=document.querySelector('.planlist');
 let setsettingdiv=document.querySelector('.set-setting');
 
+let nextPageExerciseListBtn=document.getElementById('next-page');
+let previousPageExerciseListBtn=document.getElementById('previous-page');
+
 //모달창 닫기
 const closeBtns = modal.querySelectorAll(".close-area")
 closeBtns.forEach(function(closeBtn) {
     closeBtn.addEventListener("click", (e) => {
-        modal.style.display = "none"
-        exerciseSelectDiv.style.display="none";
-        setsettingdiv.style.display="none";
+        closeModal();
     })
 });
 
@@ -108,11 +109,34 @@ closeBtns.forEach(function(closeBtn) {
 modal.addEventListener("click", (e) => {
     
     if (e.target.classList.contains("modal-overlay")) {
-        modal.style.display = "none"
-        exerciseSelectDiv.style.display="none";
-        setsettingdiv.style.display="none";
+        closeModal();
     }
 })
+
+//모달창 닫는 function
+function closeModal(){
+    modal.style.display = "none"
+    exerciseSelectDiv.style.display="none";
+    setsettingdiv.style.display="none";
+
+    //운동 list 지우기
+    let exerciseListDiv=document.querySelector('.exercise-list');
+    exerciseListDiv.innerHTML='';
+    //input값 지우기
+    document.getElementById('target').value='';
+    document.getElementById('offset').value='';
+    document.getElementById('exercise-name-input').value='';
+
+    //세트 초기화
+    let setDiv=document.querySelector('.set-table tbody');
+    setDiv.innerHTML=`<tr class="set-list">
+    <td>1</td>
+    <td><input type="text" name="Weight"> kg</td>
+    <td><input type="text" name="count"></td>
+    <td><input type="checkbox" name="check"></td>
+    </tr>`;
+
+}
 
 //모달창 운동추가 버튼눌렀을때 div변경
 let exaddBtn = document.querySelector(".exercise-add");
@@ -125,8 +149,14 @@ exaddBtn.addEventListener('click', (e) => {
 //세팅설정 버튼을 눌렀을때
 let setBtn=document.querySelector('.setBtn');
 setBtn.addEventListener('click',(e)=>{
-    setsettingdiv.style.display="flex";
-    exerciseSelectDiv.style.display="none";
+    let exerciseNameInpunt=document.getElementById('exercise-name-input');
+    if(exerciseNameInpunt.value!=''){
+        setsettingdiv.style.display="flex";
+        exerciseSelectDiv.style.display="none";
+    }
+    else{
+        alert('운동을 선택해주세요!');
+    }
 })
 
 
@@ -154,9 +184,11 @@ targetSelectBtns.forEach(function(targetSelectBtn){
     let targetinput=document.getElementById('target');
     let offsetinput=document.getElementById('offset');
     let target=targetSelectBtn.getAttribute('data-target');
-
+    
     targetinput.value=target;
     offsetinput.value=0;   
+    
+    nextPageExerciseListBtn.style.display="block";
 
     $.ajax({  
         async: true,
@@ -204,7 +236,8 @@ function spreadExerciseList(list)
 }
 
 //다음 페이지의 운동리스트 받아오기
-let nextPageExerciseListBtn=document.getElementById('next-page');
+
+
 nextPageExerciseListBtn.addEventListener('click',(e)=>{
     let targetinput=document.getElementById('target');
     let offsetinput=document.getElementById('offset');
@@ -222,15 +255,55 @@ nextPageExerciseListBtn.addEventListener('click',(e)=>{
         success: function (res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
             spreadExerciseList(res);
 
-            let nextPageDiv=document.querySelector('.next-page-div');
+            //이전페이지 버튼 활성화
+            previousPageExerciseListBtn.style.display="block";
+
             if(res.length<5){   //받아온 배열의길이가 5보다 작으면(=마지막페이지)
-                nextPageDiv.style.display="none";
+                nextPageExerciseListBtn.style.display="none";
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
           alert("통신 실패.");
         }
       });
+})
+
+//이전 페이지의 운동리스트 받아오기
+previousPageExerciseListBtn.addEventListener('click',(e)=>{
+    let targetinput=document.getElementById('target');
+    let offsetinput=document.getElementById('offset');
+    console.log(offsetinput);
+    if(offsetinput.value>0){
+        offsetinput.value=parseInt(offsetinput.value)-1;
+        $.ajax({  
+            async: true,
+            crossDomain: true,  
+            method: 'GET',
+            url: `https://exercisedb.p.rapidapi.com/exercises/target/${targetinput.value}?limit=5&offset=${offsetinput.value}`,
+            headers: {
+                'X-RapidAPI-Key': '9b7b13c7f5mshfd8b94a88797e77p1a4080jsnd904ca818f96',
+                'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+            },
+            success: function (res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                spreadExerciseList(res);
+
+                //다음페이지 버튼 활성화
+                nextPageExerciseListBtn.style.display="block";
+
+                //현재페이지가 0이면 이전페이지버튼 비활성화
+                if(offsetinput.value==0){
+                    previousPageExerciseListBtn.style.display="none";
+
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+              alert("통신 실패.");
+            }
+          });
+    }
+    
+    
+    
 })
 
 

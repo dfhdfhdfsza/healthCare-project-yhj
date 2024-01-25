@@ -13,7 +13,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -32,12 +31,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
     //클라이언트 요청에서 username, password 추출
-    String username = obtainUsername(request);
-    String password = obtainPassword(request);
+    String userId = obtainUsername(request);
+    String userPassword = obtainPassword(request);
     
     // 검증하기 위한 토큰 생성
     //스프링 시큐리티에서 username과 password를 검증하기 위해서는 token에 담아야 함
-    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password, null);
+    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userId, userPassword, null);
 
     //token에 담은 검증을 위한 AuthenticationManager로 전달
     return authenticationManager.authenticate(authToken);
@@ -48,17 +47,16 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
     //특정 유저 확인
     CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-
-    String username = customUserDetails.getUsername();
+    String userId = customUserDetails.getUsername();
 
     Collection<? extends GrantedAuthority> authorities  = authentication.getAuthorities();
     Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
     GrantedAuthority auth = iterator.next();
 
-    String role = auth.getAuthority();
+    String userRole = auth.getAuthority();
 
     // JWTUtil 에 토큰을 만들어달라고 요청(id,role,유지시간)
-    String token = jwtUtil.createJWT(username,role,60*60*10L);
+    String token = jwtUtil.createJWT(userId,userRole,60*60*10L);
 
 
     // HTTP 인증방식 : Authorization: Bearer 인증토큰string
