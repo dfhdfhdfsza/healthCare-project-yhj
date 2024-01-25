@@ -30,6 +30,5 @@ public class ProductFile extends BaseTimeEntity {
     // 파일 유형
     @Column(name = "product_file_type")
     private String productFileType;
-    // 외래키 설정
 
 }

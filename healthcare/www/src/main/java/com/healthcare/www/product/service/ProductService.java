@@ -11,7 +11,7 @@ public interface ProductService {
 
     void updateProduct(ProductDTO productDTO); // 상품수정
 
-    List<Product> searchProductList(ProductDTO productDTO); // 상품검색
+    List<ProductDTO> searchProductList(ProductDTO productDTO); // 상품검색
 
     List<ProductDTO> getList();
 }

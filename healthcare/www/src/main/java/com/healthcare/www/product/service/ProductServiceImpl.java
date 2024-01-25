@@ -12,11 +12,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -24,8 +25,8 @@ import java.util.stream.Stream;
 @Slf4j
 public class ProductServiceImpl implements ProductService{
 
-    private final ProductRepository productRepository;
-    private final ProductFileRepository productFileRepository;
+    private final ProductRepository productRepository; // 상품 repository
+    private final ProductFileRepository productFileRepository; // 상품 첨부파일 repository
     private final QueryRepository queryRepository;
 
     // 상품을 DB에 등록하는 메서드
@@ -36,6 +37,9 @@ public class ProductServiceImpl implements ProductService{
                 productInfo(productDTO.getProductInfo()).
                 productType(productDTO.getProductType()).
                 price(productDTO.getPrice()).
+                discountRate((productDTO.getDiscountRate())).
+                regDate(LocalDateTime.now()).
+                modDate(LocalDateTime.now()).
                 build();
         long resultProductNo = productRepository.save(product).getProductNo(); // 상품정보 DB 등록
 
@@ -66,6 +70,9 @@ public class ProductServiceImpl implements ProductService{
                 productInfo(productDTO.getProductInfo()).
                 productType(productDTO.getProductType()).
                 price(productDTO.getPrice()).
+                discountRate((productDTO.getDiscountRate())).
+                regDate(productDTO.getRegDate()).
+                modDate(LocalDateTime.now()).
                 build();
         log.info("product >>>>>> {}", product);
         long resultProductNo = productRepository.save(product).getProductNo(); // 상품정보 DB 수정
@@ -90,36 +97,39 @@ public class ProductServiceImpl implements ProductService{
 
     // 상품검색 메서드(관리자 상품 수정용)
     @Override
-    public List<Product> searchProductList(ProductDTO productDTO) {
+    public List<ProductDTO> searchProductList(ProductDTO productDTO) {
         // enum 필드값과 일치하는지 확인
+        List<Product> product = Collections.emptyList();
         for(SearchTyped typed : SearchTyped.values()){
             if(typed.getCategory().equals(productDTO.getCategory())){
                 String type = typed.getType();
                 if(type.equals(SearchTyped.PRODUCT_NO.getType())){
-                    return productRepository.findByProductNo(Long.valueOf(productDTO.getKeyword()));
+                    product = productRepository.findByProductNo(Long.valueOf(productDTO.getKeyword()));
                 } else if (type.equals(SearchTyped.PRODUCT_NAME.getType())) {
-                    return productRepository.findByProductNameIgnoreCaseContaining(productDTO.getKeyword());
+                    product = productRepository.findByProductNameIgnoreCaseContaining(productDTO.getKeyword());
                 } else if (type.equals(SearchTyped.PRODUCT_TYPE.getType())) {
-                    return productRepository.findByProductTypeContaining(productDTO.getKeyword());
+                    product = productRepository.findByProductTypeContaining(productDTO.getKeyword());
                 } else if (type.equals(SearchTyped.ALL.getType())) {
-                    return productRepository.findAll();
+                    product = productRepository.findAll();
                 }
             }
         }
-        return Collections.emptyList();
+        return product.stream().map(ProductDTO::new).collect(Collectors.toList());
     }
 
     // 상품목록 조회 메서드
     @Override
     public List<ProductDTO> getList() {
-        List<Product> productList = productRepository.findAll();
-        List<ProductFile> productFileList = productFileRepository.findAll();
-        List<ProductDTO> productDTOList;
-        for(Product product : productList){
-            ProductDTO productDTO = ProductDTO.builder().build();
-            productDTOList.add()
+        List<Product> productList = productRepository.findAll(); // 상품 전체 목록
+        List<ProductDTO> productDTOList = new ArrayList<>(); // ProductDTO 리스트
+        for(Product product : productList) {
+            List<ProductFile> productFileList = productFileRepository.findByProductNo(product.getProductNo()); // 상품번로별로 첨부파일 조회
+            log.info("productFileList >>>>> {}", productFileList);
+            List<ProductFileDTO> productFileDTOList = productFileList.stream().map(ProductFileDTO::new).toList();
+            ProductDTO productDTO = new ProductDTO(product, productFileDTOList); // Product -> ProductDTO 변환
+            productDTOList.add(productDTO); // ProductDTO 리스트에 추가
         }
-        return productRepository.findAll();
+        return productDTOList;
     }
 
 

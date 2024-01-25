@@ -46,6 +46,10 @@
                             <span class="label">상품가격</span>
                             <input type="text" th:field="*{price}">
                         </div>
+                        <div class="input-box">
+                            <span class="label">할인율</span>
+                            <input type="text" th:field="*{discountRate}">
+                        </div>
                         <!-- 첨부파일 표시 -->
                         <div id="regFileZone"></div>
 
@@ -97,7 +101,14 @@
                             <span class="label">상품가격</span>
                             <input type="text" th:field="*{price}">
                         </div>
-
+                        <div class="input-box">
+                            <span class="label">할인율</span>
+                            <input type="text" th:field="*{discountRate}">
+                        </div>
+                        <div>
+                            <!-- 상품등록일 유지 용도-->
+                            <input type="text" th:field="*{regDate}" hidden="hidden">
+                        </div>
                         <div class="button-box">
                             <button id="productImageModBtn" type="button">이미지등록</button>
                             <button type="submit">상품수정</button>

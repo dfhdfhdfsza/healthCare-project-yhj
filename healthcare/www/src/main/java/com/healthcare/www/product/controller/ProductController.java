@@ -82,15 +82,15 @@ public class ProductController {
 
     // 상품검색 메서드(관리자 상품 수정용)
     @GetMapping(value = "searchProduct" ,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Product>> searchProductList
+    public ResponseEntity<List<ProductDTO>> searchProductList
         (@RequestParam("category")String category, @RequestParam("keyword")String keyword){
         log.info("검색 하러 왔음");
         ProductDTO productDTO = ProductDTO.builder().
                 category(category).
                 keyword(keyword).
                 build();
-        List<Product> productList = productService.searchProductList(productDTO);
-        return ResponseEntity.ok(productList);
+        List<ProductDTO> productDTOList = productService.searchProductList(productDTO);
+        return ResponseEntity.ok(productDTOList);
     }
 
     // 상품목록 메소드

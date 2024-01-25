@@ -2,12 +2,14 @@ package com.healthcare.www.product;
 
 import com.healthcare.www.product.domain.Product;
 import com.healthcare.www.product.dto.ProductDTO;
+import com.healthcare.www.product.repository.ProductFileRepository;
 import com.healthcare.www.product.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +24,8 @@ class ProductTest {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ProductFileRepository productFileRepository;
 
     // 테스트 전 Product 객체 세팅
     List<Product> getProduct(){
@@ -128,4 +132,8 @@ class ProductTest {
         assertEquals(1, p3.size());
     }
 
+    @Query(value = "")
+    void updateFileUuid(){
+
+    }
 }

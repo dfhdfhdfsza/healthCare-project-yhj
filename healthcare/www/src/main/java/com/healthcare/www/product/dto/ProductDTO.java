@@ -1,10 +1,16 @@
 package com.healthcare.www.product.dto;
 
+import com.healthcare.www.product.domain.Product;
+import com.healthcare.www.product.domain.ProductFile;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -27,11 +33,36 @@ public class ProductDTO {
     // 상품 가격
     @NotNull
     private Integer price;
+    // 할인율
+    private int discountRate;
     // 첨부파일 리스트
     private List<ProductFileDTO> productFileList;
-
+    // 등록일
+    private LocalDateTime regDate;
+    // 수정일
+    private LocalDateTime modDate;
     // 상품검색용도
     private String category; // 검색유형
     private String keyword; // 검색어
 
+    // Product 엔티티 -> ProductDTO 로 변환 생성자
+    public ProductDTO(Product product){
+        this.productNo = product.getProductNo();
+        this.productName = product.getProductName();
+        this.productType = product.getProductType();
+        this.productInfo = product.getProductInfo();
+        this.price = product.getPrice();
+    }
+    // ProductFileDTO ->
+    public ProductDTO(List<ProductFileDTO> productFileDTOList){
+        this.productFileList = productFileDTOList;
+    }
+    public ProductDTO(Product product, List<ProductFileDTO> productFileDTOList){
+        this.productNo = product.getProductNo();
+        this.productName = product.getProductName();
+        this.productType = product.getProductType();
+        this.productInfo = product.getProductInfo();
+        this.price = product.getPrice();
+        this.productFileList = productFileDTOList;
+    }
 }
