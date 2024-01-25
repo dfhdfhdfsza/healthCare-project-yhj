@@ -6,9 +6,7 @@
 </head>
 <body>
     <input type="text" id="keywordInput" onkeyup="findFood()">
-    <form th:action="@{/food/checkFood}"  method="post">
-        <button type="submit">+</button>
-    </form>
+    <input type="hidden" id="userNO" th:value="${user}">
     <div id="serchresult"> </div>
     <div>
         <div>
