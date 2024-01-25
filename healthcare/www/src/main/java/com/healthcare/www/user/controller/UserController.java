@@ -2,19 +2,20 @@ package com.healthcare.www.user.controller;
 
 
 import com.healthcare.www.user.domain.User;
-import com.healthcare.www.user.dto.CustomUserDetails;
+import com.healthcare.www.user.domain.UserInfo;
 import com.healthcare.www.user.dto.JoinDTO;
 import com.healthcare.www.user.dto.LoginDTO;
+import com.healthcare.www.user.dto.UserInfoDTO;
 import com.healthcare.www.user.jwt.JWTUtil;
+import com.healthcare.www.user.repository.UserRepository;
 import com.healthcare.www.user.service.UserService;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,15 +24,19 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
 
   private final UserService userService;
   private final BCryptPasswordEncoder passwordEncoder;
   private final JWTUtil jwtUtil;
+  private final UserRepository userRepository;
+
 
   private String jwtCookie;
 
@@ -49,27 +54,25 @@ public class UserController {
     }
 
     @GetMapping("/myPage")
-    public String moveMyPage(HttpServletRequest request, Model m){
+    public String moveMyPage(HttpServletRequest request, Model m, @AuthenticationPrincipal UserDetails userDetails){
+      int validInfo = 0;
 
-      Cookie[] cookies = request.getCookies();
 
-      // 만약 쿠키가 있다면 jwtToken 쿠키의 값을 가져오기
-      if (cookies != null) {
-        for (Cookie cookie : cookies) {
-          if (cookie.getName().equals("jwtToken")) {
-            String jwtTokenValue = cookie.getValue();
-            String userInfo = jwtUtil.getUsername(jwtTokenValue);
+      User user = userRepository.findByUserId(userDetails.getUsername());
+      m.addAttribute("user",user);
 
-            User user = userService.getUserInfomation(userInfo);
-            System.out.println(user+" << 유저정보");
-            m.addAttribute("user",user);
-          }
-        }
 
+      UserInfo info = userService.selectUserInfo(user.getUserNo());
+      System.out.println(info+"유저 정보<<");
+      if(info == null){
+        validInfo = 1;
+        //유저가 정보를 입력하지 않았을 경우
+        m.addAttribute("validInfo",validInfo);
+      }else{
+        // 입력한 경우 정보를 화면에 출력
+        m.addAttribute("validInfo",validInfo);
+        m.addAttribute("info",info);
       }
-
-
-
 
       return "/user/myPage";
     }
@@ -85,19 +88,19 @@ public class UserController {
   @PostMapping("/login")
   public String postLogin(LoginDTO loginDTO, HttpServletResponse response, Model model){
 
-
     // 로그인
     User user = userService.login(loginDTO);
 
     if(user == null){
       model.addAttribute("loginErr",1);
+
       return "/user/login";
     }
 
 
     // 로그인 성공 후 -> 토큰 발급
     long expireTimeMs = 1000 * 60 * 60;     // Token 유효 시간 = 60분
-    String jwtToken =jwtUtil.createJWT(user.getUserName(),user.getUserRole(),expireTimeMs);
+    String jwtToken =jwtUtil.createJWT(user.getUserId(),user.getUserRole(),expireTimeMs);
 
     // 발급한 토큰을 Cookie를 통해서 전송
     // 클라이언트는 다음 요청부터 jwt 토큰이 담긴 쿠키를 전송 => 이 값으로 인증 , 인가
@@ -119,6 +122,16 @@ public class UserController {
     return "redirect:/user/login";
   }
 
+  @PostMapping("/information")
+  public String postMyPage(UserInfoDTO userInfo){
+    userService.addUserInfo(userInfo);
 
+    return "index";
+  }
+  @GetMapping("/information")
+  public String moveInformation(@RequestParam("userNo") long userNo,Model model){
+    model.addAttribute("userNo",userNo);
+    return "/user/information";
+  }
 
 }

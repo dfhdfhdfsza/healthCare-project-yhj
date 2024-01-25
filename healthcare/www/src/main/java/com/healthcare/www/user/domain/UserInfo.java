@@ -1,19 +1,18 @@
 package com.healthcare.www.user.domain;
 
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Entity
+@Builder
 public class UserInfo {
 
   @Id
@@ -35,6 +34,6 @@ public class UserInfo {
   @Column(name="info_metabolic")
   private double infoMetabolic; // 유저 기초대사량
 
-  @Column(name="info_userProfile")
-  private String infoUserProfile; // 유저 프로필사진
+  @Column(name="info_profile")
+  private String infoProfile; // 유저 프로필사진
 }

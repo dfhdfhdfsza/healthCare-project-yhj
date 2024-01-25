@@ -20,15 +20,17 @@ import java.util.Arrays;
 @Slf4j
 public class JWTFilter extends OncePerRequestFilter {
 
+
   private final JWTUtil jwtUtil;
 
-  public JWTFilter(JWTUtil jwtUtil){
-    this.jwtUtil = jwtUtil;
+
+  public JWTFilter(JWTUtil jwtUtil ){
+    this.jwtUtil=jwtUtil;
   }
+
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
 
     //request에서 Authorization 헤더를 찾음
     String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -48,23 +50,26 @@ public class JWTFilter extends OncePerRequestFilter {
           .findFirst()
           .orElse(null);
 
+
       if(jwtTokenCookie == null){
         filterChain.doFilter(request, response);
         return;
       }
 
       //Authorization 헤더 검증
-      if (authorization == null || !authorization.startsWith("Bearer ")) {
-
-        filterChain.doFilter(request, response);
-
-        //조건이 해당되면 메소드 종료 (필수)
-        return;
-      }
+//      if (authorization == null || !authorization.startsWith("Bearer ")) {
+//        System.out.println("헤더에 있는지 체크");
+//        filterChain.doFilter(request, response);
+//
+//        //조건이 해당되면 메소드 종료 (필수)
+//        return;
+//      }
       String jwtToken =  jwtTokenCookie.getValue();
       authorization = "Bearer " + jwtToken;
 
+
     }
+
 
       // Bearer / 부분 제거하고 순수 토큰만 추출
       String token = authorization.split(" ")[1];
@@ -85,11 +90,14 @@ public class JWTFilter extends OncePerRequestFilter {
       String username = jwtUtil.getUsername(token);
       String role = jwtUtil.getRole(token);
 
-      // user에 삽입
+       //user에 삽입
       User user = new User();
       user.setUserName(username);
       user.setUserPassword("temppassword"); // 임시 비밀번호 생성
       user.setUserRole(role);
+
+
+
 
       // userdetails에 user정보 담기
       CustomUserDetails customUserDetails = new CustomUserDetails(user);
