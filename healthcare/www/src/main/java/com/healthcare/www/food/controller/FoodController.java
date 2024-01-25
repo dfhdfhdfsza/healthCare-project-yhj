@@ -1,7 +1,10 @@
 package com.healthcare.www.food.controller;
 
 import com.healthcare.www.food.domain.Food;
+import com.healthcare.www.food.domain.Nutrition;
 import com.healthcare.www.food.service.FoodService;
+import com.healthcare.www.user.domain.User;
+import com.healthcare.www.user.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,12 +12,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -25,6 +31,7 @@ import java.util.List;
 public class FoodController {
     private final FoodService fsv;
     private final JdbcTemplate jdbcTemplate;
+    private final UserRepository userRepository;
 
     @PostConstruct
     public void processExcelData() {
@@ -37,11 +44,19 @@ public class FoodController {
     }
     //영양페이지 이동
     @GetMapping("/nutrition")
-    private void getNutrition(){}
+    private void getNutrition(@AuthenticationPrincipal UserDetails userDetails, Model m){
+        if(userDetails!=  null) {
+            User user = userRepository.findByUserId(userDetails.getUsername());
+            m.addAttribute("user", user.getUserNo());
+            System.out.println(user.getUserNo());
+        }
+
+    }
 
     @PostMapping("/checkFood")
-    private String checkFood(){
-         return "redirect:/nutrition";
+    private String checkFood(Nutrition nutrition){
+            System.out.println("nutrition" + nutrition);
+        return "redirect:/food/nutrition";
     }
 
     //음식 검색
@@ -59,6 +74,6 @@ public class FoodController {
     // 테이블이 존재하는지 확인하는 메서드
     private int getFoodTableCount() {
         String query = "SELECT COUNT(*) FROM food";
-        return jdbcTemplate.queryForObject(query, Integer.class);
+        return jdbcTemplate.queryForObject(query,Integer.class);
     }
 }
