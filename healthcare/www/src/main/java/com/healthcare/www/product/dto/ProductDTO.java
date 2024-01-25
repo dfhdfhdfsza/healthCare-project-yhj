@@ -34,7 +34,9 @@ public class ProductDTO {
     @NotNull
     private Integer price;
     // 할인율
-    private int discountRate;
+    private Integer discountRate;
+    // 실제 가격
+    private Integer realPrice;
     // 첨부파일 리스트
     private List<ProductFileDTO> productFileList;
     // 등록일
@@ -52,6 +54,9 @@ public class ProductDTO {
         this.productType = product.getProductType();
         this.productInfo = product.getProductInfo();
         this.price = product.getPrice();
+        this.discountRate = product.getDiscountRate();
+        this.regDate = product.getRegDate();
+        this.modDate = product.getModDate();
     }
     // ProductFileDTO ->
     public ProductDTO(List<ProductFileDTO> productFileDTOList){
@@ -63,6 +68,14 @@ public class ProductDTO {
         this.productType = product.getProductType();
         this.productInfo = product.getProductInfo();
         this.price = product.getPrice();
+        this.discountRate = product.getDiscountRate();
+        this.regDate = product.getRegDate();
+        this.modDate = product.getModDate();
         this.productFileList = productFileDTOList;
+    }
+
+
+    public Integer getRealPrice() {
+        return this.price - (int)(this.price * (this.discountRate/100.0));
     }
 }

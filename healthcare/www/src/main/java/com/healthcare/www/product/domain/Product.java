@@ -28,10 +28,10 @@ public class Product { // BaseTimeEntity 를 상속받아서 createdDate, modifi
     @Column(name = "product_info")
     private String productInfo;
     // 상품 가격
-    private int price;
+    private Integer price;
     // 할인율
     @Column(name = "discount_rate")
-    private int discountRate;
+    private Integer discountRate;
     // 등록일
     @Column(name = "reg_date")
     private LocalDateTime regDate;

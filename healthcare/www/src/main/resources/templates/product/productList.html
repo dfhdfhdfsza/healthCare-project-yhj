@@ -5,6 +5,7 @@
     <title>상품목록</title>
     <link rel="stylesheet" type="text/css" th:href="@{/product/css/product.css}">
 </head>
+
 <body>
     <main class="product-list-container">
         <div>
@@ -19,10 +20,26 @@
                 <div class="product-item"
                      th:with="dir=${p.productFileList.get(0).productFileSaveDir},
                         fileName=${p.productFileList.get(0).productFileName}">
-                    <img th:src="@{|/image/product_register_img/${fileName}|}">
-                    <img th:src="@{productFile/유기농1_1.jpg}">
-                    <span>[[${fileName}]]</span>
-                    <span>[[${#strings.replace(dir,'\','/') + fileName}]]</span>
+<!--                    <img th:src="@{|/image/product_register_img/${fileName}|}">-->
+                    <img th:src="@{|/productFile/${dir + fileName}|}">
+                    <div class="item-name">
+                        <span th:text="${p.productName}"></span>
+                    </div>
+                    <div class="item-info">
+                        <div>
+                            <span>#</span>
+                            <span th:text="${#strings.arraySplit(p.productInfo, '#')[0]}"></span>
+                        </div>
+                        <div>
+                            <span>#</span>
+                            <span th:text="${#strings.arraySplit(p.productInfo, '#')[#arrays.length(#strings.arraySplit(p.productInfo, '#')) - 1]}"></span>
+                        </div>
+                    </div>
+                    <div class="item-price">
+                        <span th:text="${#numbers.formatInteger(p.realPrice,3,'COMMA')+'원'}"></span>
+                        <span th:text="${#numbers.formatInteger(p.price,3,'COMMA')+'원'}"></span>
+                        <span th:text="${p.discountRate+'%'}"></span>
+                    </div>
                 </div>
 
             </div>
