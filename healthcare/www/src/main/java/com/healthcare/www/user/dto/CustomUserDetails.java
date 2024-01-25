@@ -1,6 +1,7 @@
 package com.healthcare.www.user.dto;
 
 import com.healthcare.www.user.domain.User;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-
+@ToString
 public class CustomUserDetails implements UserDetails {
 
   private final User user;
@@ -41,6 +42,7 @@ public class CustomUserDetails implements UserDetails {
     // 계정 ID
     return user.getUserName();
   }
+
 
   @Override
   public boolean isAccountNonExpired() {

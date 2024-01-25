@@ -11,7 +11,7 @@ body{
     transform: translate(-50%,-50%);
     top: 25%;
     left: 50%;
-    width: 1000px;
+    width: 1100px;
     background-color: #fff;
 }
 .profile-div{
@@ -19,12 +19,51 @@ body{
     display: flex;
     flex-direction: row;
     padding: 15px;
+    padding-top: 30px;
 }
 .profile-image{
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
+    padding-left: 30px
 }
 .profileModify , .infoAdd{
     text-decoration: none;
     color: black;
+}
+.profile-span{
+    padding: 9px;
+    border-radius: 9px;
+    background-color: #e8e8e8;
+    font-weight: 700;
+}
+.profile{
+    padding-left: 100px;
+}
+.profileInfo-editor{
+    display: flex;
+    gap: 10px;
+}
+.profileInfo-editor > span{
+    padding-right: 15px;
+}
+.userInfo-editor-modal{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border: 1px solid black;
+    background-color: #fff;
+    display: none;
+}
+.userId{
+    font-weight: 700;
+}
+.detail-div{
+    padding-top: 40px;
+}
+.detail-information{
+
+}
+.noProfile{
+    font-size: 25px;
 }

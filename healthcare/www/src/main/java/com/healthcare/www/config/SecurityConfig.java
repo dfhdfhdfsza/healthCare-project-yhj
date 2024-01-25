@@ -3,7 +3,6 @@ package com.healthcare.www.config;
 import com.healthcare.www.user.jwt.JWTFilter;
 import com.healthcare.www.user.jwt.JWTUtil;
 import com.healthcare.www.user.jwt.LoginFilter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,17 +22,17 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-
+@RequiredArgsConstructor
 public class SecurityConfig {
 
   private final AuthenticationConfiguration authenticationConfiguration;
 
   private final JWTUtil jwtUtil;
 
-  public SecurityConfig(AuthenticationConfiguration authenticationConfiguration,JWTUtil jwtUtil){
-    this.authenticationConfiguration=authenticationConfiguration;
-    this.jwtUtil=jwtUtil;
-  }
+//  public SecurityConfig(AuthenticationConfiguration authenticationConfiguration,JWTUtil jwtUtil){
+//    this.authenticationConfiguration=authenticationConfiguration;
+//    this.jwtUtil=jwtUtil;
+//  }
 
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws  Exception{
@@ -69,7 +68,7 @@ public class SecurityConfig {
     http
         .authorizeHttpRequests((auth) -> auth
             .requestMatchers("/user/login", "/", "/user/signup","/css/**","/image/**","/main/**",
-                "/js/**","/health/**","/product/**","/login","/user/logout","/user/myPage").permitAll()
+                "/js/**","/health/**","/product/**","/login","/user/logout","/user/myPage","/food/**").permitAll()
             .requestMatchers("/admin").hasRole("ADMIN")
             .anyRequest().authenticated());
 
