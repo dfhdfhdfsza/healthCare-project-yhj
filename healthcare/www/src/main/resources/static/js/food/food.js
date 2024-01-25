@@ -1,6 +1,12 @@
 let totalCarbohydrate = 0;
 let totalProtein = 0;
 let totalFat = 0;
+let userNO =document.getElementById("userNO").value;
+console.log(userNO);
+if(userNO ==null || userNO ==""){
+    alert("로그인 후 이용해주세요");
+    location.href ="/";
+}
 
 
 async function findFood() {
@@ -23,14 +29,21 @@ async function findFood() {
                 console.log(result[i]);
                 ResultHTML +=  `<div>${result[i].processedFoodItemName}<button popovertarget='food${i}'>+</button></div>`;
                 ResultHTML += `<div id='food${i}' class='food-popover'  popover> ${result[i].processedFoodItemName}`; 
-                ResultHTML += `<form th:action="@{/food/checkFood}"  method="post">`;
-                ResultHTML +=  ` 칼로리 :  ${result[i].energyKcal}`;
+                ResultHTML += `<form action="/food/checkFood"  method="post">`;
+                ResultHTML +=  `칼로리 : <input type='hidden' name='energyKcal' value='${result[i].energyKcal}' /> `;
+                ResultHTML +=  `탄 : <input type='hidden' name='carbohydrate' value='${result[i].carbohydrate}' /> `;
+                ResultHTML +=  `단 : <input type='hidden' name='protein' value='${result[i].protein}' /> `;
+                ResultHTML +=  `지 : <input type='hidden' name='fat' value='${result[i].fat}' /> `;
+                ResultHTML +=   `<input type='text' name='userNo' value='${userNO}' /> `;
+                ResultHTML +=   `<input type='text' name='processedFoodItemName' value='${result[i].processedFoodItemName}' /> `;
+                ResultHTML +=  `칼로리 :  ${result[i].energyKcal}`;
                 ResultHTML +=  `탄 :  ${result[i].carbohydrate}`;
                 ResultHTML +=  `단 : ${result[i].protein} `;
                 ResultHTML +=  `지 : ${result[i].fat} <br>`;
-//                ResultHTML += `  <input type='radio' name='time' value='breaktime' />아침`;
-//                ResultHTML += `  <input type='radio' name='time' value='lunch' />점심`;
-//                ResultHTML += `  <input type='radio' name='time' value='dinner' />저녁`;
+                ResultHTML += `  <input type='radio' name='eatTime' value='breaktime' />아침`;
+                ResultHTML += `  <input type='radio' name='eatTime' value='lunch' />점심`;
+                ResultHTML += `  <input type='radio' name='eatTime' value='dinner' />저녁`;
+                ResultHTML += `  <input type='radio' name='eatTime' value='dessert' />간식`;
                 ResultHTML += `  <button type='submit'>+</button></form> </div>`;
             }
             searchResult.innerHTML += ResultHTML;
@@ -50,3 +63,4 @@ async function findFood() {
 //     console.log("오늘먹은단백질"+totalProtein);
 //     console.log("오늘먹은지방"+totalFat);
 //}
+
