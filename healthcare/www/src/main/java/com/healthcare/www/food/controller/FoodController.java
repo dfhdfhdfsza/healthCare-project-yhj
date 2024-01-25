@@ -1,8 +1,10 @@
 package com.healthcare.www.food.controller;
 
 import com.healthcare.www.food.domain.Food;
+import com.healthcare.www.food.domain.Nutrition;
 import com.healthcare.www.food.service.FoodService;
 import com.healthcare.www.user.domain.User;
+import com.healthcare.www.user.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +15,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -27,6 +31,7 @@ import java.util.List;
 public class FoodController {
     private final FoodService fsv;
     private final JdbcTemplate jdbcTemplate;
+    private final UserRepository userRepository;
 
     @PostConstruct
     public void processExcelData() {
@@ -39,18 +44,18 @@ public class FoodController {
     }
     //영양페이지 이동
     @GetMapping("/nutrition")
-    private void getNutrition(){
+    private void getNutrition(@AuthenticationPrincipal UserDetails userDetails, Model m){
+        if(userDetails!=  null) {
+            User user = userRepository.findByUserId(userDetails.getUsername());
+            m.addAttribute("user", user.getUserNo());
+            System.out.println(user.getUserNo());
+        }
 
-        System.out.println();
     }
 
     @PostMapping("/checkFood")
-    private String checkFood(@RequestParam("energyKcal") double energyKcal,
-                             @RequestParam("carbohydrate") double carbohydrate,
-                             @RequestParam("protein") double protein,
-                             @RequestParam("fat") double fat,
-                             @RequestParam("time") String time){
-        System.out.println("food : "+energyKcal + carbohydrate + protein + fat +time);
+    private String checkFood(Nutrition nutrition){
+            System.out.println("nutrition" + nutrition);
         return "redirect:/food/nutrition";
     }
 
