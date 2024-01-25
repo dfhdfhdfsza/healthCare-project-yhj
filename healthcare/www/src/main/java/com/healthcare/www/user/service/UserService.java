@@ -1,12 +1,10 @@
 package com.healthcare.www.user.service;
 
 import com.healthcare.www.user.domain.User;
+import com.healthcare.www.user.domain.UserInfo;
 import com.healthcare.www.user.dto.JoinDTO;
 import com.healthcare.www.user.dto.LoginDTO;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.Errors;
-
-import java.util.Map;
+import com.healthcare.www.user.dto.UserInfoDTO;
 
 public interface UserService {
 
@@ -15,4 +13,9 @@ public interface UserService {
   User login(LoginDTO loginDTO);
 
   User getUserInfomation(String userInfo);
+
+
+  void addUserInfo(UserInfoDTO userInfo);
+
+  UserInfo selectUserInfo(long userNo);
 }
