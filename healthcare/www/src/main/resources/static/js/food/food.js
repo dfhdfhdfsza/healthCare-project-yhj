@@ -23,14 +23,19 @@ async function findFood() {
                 console.log(result[i]);
                 ResultHTML +=  `<div>${result[i].processedFoodItemName}<button popovertarget='food${i}'>+</button></div>`;
                 ResultHTML += `<div id='food${i}' class='food-popover'  popover> ${result[i].processedFoodItemName}`; 
-                ResultHTML += `<form th:action="@{/food/checkFood}"  method="post">`;
-                ResultHTML +=  ` 칼로리 :  ${result[i].energyKcal}`;
+                ResultHTML += `<form action="/food/checkFood"  method="post">`;
+                ResultHTML +=  `칼로리 : <input type='hidden' name='energyKcal' value='${result[i].energyKcal}' /> `;
+                ResultHTML +=  `탄 : <input type='hidden' name='carbohydrate' value='${result[i].carbohydrate}' /> `;
+                ResultHTML +=  `단 : <input type='hidden' name='protein' value='${result[i].protein}' /> `;
+                ResultHTML +=  `지 : <input type='hidden' name='fat' value='${result[i].fat}' /> `;
+                ResultHTML +=  `칼로리 :  ${result[i].energyKcal}`;
                 ResultHTML +=  `탄 :  ${result[i].carbohydrate}`;
                 ResultHTML +=  `단 : ${result[i].protein} `;
                 ResultHTML +=  `지 : ${result[i].fat} <br>`;
-//                ResultHTML += `  <input type='radio' name='time' value='breaktime' />아침`;
-//                ResultHTML += `  <input type='radio' name='time' value='lunch' />점심`;
-//                ResultHTML += `  <input type='radio' name='time' value='dinner' />저녁`;
+                ResultHTML += `  <input type='radio' name='time' value='breaktime' />아침`;
+                ResultHTML += `  <input type='radio' name='time' value='lunch' />점심`;
+                ResultHTML += `  <input type='radio' name='time' value='dinner' />저녁`;
+                ResultHTML += `  <input type='radio' name='time' value='dessert' />간식`;
                 ResultHTML += `  <button type='submit'>+</button></form> </div>`;
             }
             searchResult.innerHTML += ResultHTML;
