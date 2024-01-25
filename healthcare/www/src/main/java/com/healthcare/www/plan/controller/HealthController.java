@@ -1,6 +1,7 @@
 package com.healthcare.www.plan.controller;
 
 import com.healthcare.www.plan.domain.FullCalendarVO;
+import com.healthcare.www.plan.domain.UserPlan;
 import com.healthcare.www.plan.domain.planDTO;
 import com.healthcare.www.plan.service.HealthService;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +36,12 @@ public class HealthController {
     return "redirect:/health/healthplan";
   }
   @GetMapping("/getEventList")
-  public ResponseEntity<List<FullCalendarVO>> getEventList(@RequestParam("userNo")String userNo)
+  public ResponseEntity<List<FullCalendarVO>> getEventList(@RequestParam("userNo")Long userNo)
   {
-    log.info("userNo:"+userNo);
     List<FullCalendarVO> eventlist=hsv.getEventList(userNo);
 
     return new ResponseEntity<List<FullCalendarVO>>(eventlist, HttpStatus.OK);
+
   }
 
 }

@@ -63,7 +63,32 @@ public class HealthServiceImpl implements HealthService{
     }
 
     @Override
-    public List<FullCalendarVO> getEventList(String userNo) {
-        return null;
+    public List<FullCalendarVO> getEventList(Long userNo) {
+
+        List<FullCalendarVO> FullCalendarList=new ArrayList<>();
+
+        List<UserPlan>userPlanList=userPlanRepository.findByUserNo(userNo);
+        log.info("유저플랜리스트:"+userPlanList);
+
+        //FullCalendarList 만들기
+        for (int i=0;i<userPlanList.size();i++){
+            FullCalendarVO fcvo=new FullCalendarVO();
+
+            //FullCalendarVO value들 불러오기
+            UserPlan userPlan=userPlanList.get(i);
+            PlanCalendar pc=planCalendarRepository.findByPlanNo(userPlan.getPlanNo());
+            List<ExerciseSet>exerciseSetList=exerciseSetRepository.findByPlanNo(userPlan.getPlanNo());
+
+            //FullCalendarVO에 세팅
+            fcvo.setTitle(pc.getExerciseName());
+            fcvo.setStart(userPlan.getPlanDate());
+            fcvo.setUserPlan(userPlanList.get(i));
+            fcvo.setPlanCalendar(pc);
+            fcvo.setExerciseSetList(exerciseSetList);
+
+            FullCalendarList.add(fcvo);
+        }
+
+        return FullCalendarList;
     }
 }

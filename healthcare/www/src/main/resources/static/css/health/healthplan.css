@@ -3,15 +3,10 @@
     padding-left: 300px;
     padding-top: 100px;
 }
-.planlist{
+.planlist,.exercise-select,.set-setting,.set-detail{
     display: none;
 }
-.exercise-select{
-    display: none;
-}
-.set-setting{
-    display: none;
-}
+
 
 #modal.modal-overlay {
     width: 100%;
@@ -50,7 +45,7 @@
     display: inline;
 }
 
-#modal .close-area {
+#modal .close-area,#modal .close-setdetail {
     display: inline;
     float: right;
     padding-right: 10px;
