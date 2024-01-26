@@ -1,8 +1,12 @@
 package com.healthcare.www.food.service;
 
 import com.healthcare.www.dto.FoodDTO;
+import com.healthcare.www.dto.NutritionSummary;
 import com.healthcare.www.food.domain.Food;
+import com.healthcare.www.food.domain.Nutrition;
 import com.healthcare.www.food.repository.FoodRepository;
+import com.healthcare.www.food.repository.NutritionRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -14,15 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class FoodServiceImpl implements FoodService {
 
     private final FoodRepository foodRepository;
-
-    public FoodServiceImpl(FoodRepository foodRepository) {
-        this.foodRepository = foodRepository;
-    }
+    private final NutritionRepository nutritionRepository;
 
 
     @Override
@@ -71,6 +72,17 @@ public class FoodServiceImpl implements FoodService {
     public List<Food> findFoodContaining(String keyword) {
         List<Food> foodList = foodRepository.findFoodContaining(keyword);
         return foodList;
+    }
+
+    @Override
+    public void updateEattingFood(Nutrition nutrition) {
+        nutritionRepository.save(nutrition);
+    }
+
+    @Override
+    public List<NutritionSummary> getTotalEnergyKcalAndDateByUser(long userNo) {
+       return nutritionRepository.getTotalEnergyKcalAndDateByUser(userNo);
+
     }
 
     private double getNumericCellValue(Cell cell) {
