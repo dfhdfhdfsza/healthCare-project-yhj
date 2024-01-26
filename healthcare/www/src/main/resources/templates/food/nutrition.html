@@ -3,14 +3,20 @@
 <head lang="en" xmlns:th="http://www.thymeleaf.org">
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/food/nutrition.css}" />
 </head>
 <body>
-    <input type="text" id="keywordInput" onkeyup="findFood()">
-    <input type="hidden" id="userNO" th:value="${user}">
-    <div id="serchresult"> </div>
+    <input type="text" id="selectedDateInput" placeholder="선택날짜" />
+    <input type="hidden" id="userNO" th:value="${user.userNo}">
+    <div id="calendar"></div>
+    <div id="search_box" style="display : none">
+        <input type="text" id="keywordInput" onkeyup="findFood()"> 음식 검색
+        <div id="serchresult"> </div>
+    </div>
     <div>
         <div>
-            <h1>ㅇㅇ님의 식단 알아보기</h1>
+
+            <h1><span th:text="${user.userName}"> </span> 님의 식단 알아보기</h1>
             <div>
                 <div></div>
                 <div>
@@ -44,5 +50,19 @@
         </div>
     </div>
 </body>
+<!-- jquery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- fullcalendar CDN -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
+<!-- fullcalendar 언어 CDN -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+
+<script th:inline="javascript">
+    var totalEnergyKcalAndDateList = /*[[${totalEnergyKcalAndDateList}]]*/ '[]'; // 기본값은 빈 배열로 초기화
+
+</script>
+
 <script type="text/javascript" th:src="@{/js/food/food.js}"></script>
 </html>
