@@ -23,7 +23,7 @@
             <div class="profileInfo-editor">
               <span th:text="${user.userId}" class="userId"></span>
 
-              <a href="#" class="profileModify" th:if="${validInfo == 0}">
+              <a th:href="@{/user/modify(userNo=${user.userNo})}" class="profileModify" th:if="${validInfo == 0}">
                 <span class="profile-span profile-modify">프로필 편집</span>
               </a>
 
@@ -74,6 +74,22 @@
 
     </div>
 
+
+
+    <div class="profileImage-modify-modal">
+      <div class="close-div">
+        <i class="bi bi-x closeBtn"></i>
+      </div>
+
+      <div class="preview">
+        <img src="/image/user/프로필기본.png" class="modify-profileImage">
+      </div>
+
+      <div class="image-add-div">
+        <input type="file" hidden="hidden" multiple="multiple" name="file" class="hidden-userProfile">
+        <button class="modify-button">사진 변경</button>
+      </div>
+    </div>
 
 
 

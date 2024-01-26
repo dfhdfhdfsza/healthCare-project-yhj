@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService{
         return null;
     }
 
-    //String checkPassword = bCryptPasswordEncoder.encode(loginDTO.getPwd());
+
 
     if(!bCryptPasswordEncoder.matches(loginDTO.getPwd(),user.getUserPassword())){
       return null;
@@ -83,7 +83,6 @@ public class UserServiceImpl implements UserService{
     info.setInfoWeight(userInfo.getInfoWeight());
     info.setInfoMetabolic(userInfo.getInfoMetabolic());
     info.setInfoBody(userInfo.getInfoBody());
-    info.setInfoProfile(userInfo.getInfoProfile());
     info.setInfoSkeletal(userInfo.getInfoSkeletal());
     userInfoRepository.save(info);
 
@@ -93,6 +92,13 @@ public class UserServiceImpl implements UserService{
   public UserInfo selectUserInfo(long userNo) {
     UserInfo info = userInfoRepository.findByUserNo(userNo);
     return info;
+  }
+
+  @Override
+  public UserInfo putUserInfo(UserInfoDTO userInfoDTO) {
+
+
+    return null;
   }
 
 

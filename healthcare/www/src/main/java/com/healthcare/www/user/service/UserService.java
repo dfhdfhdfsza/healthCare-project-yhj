@@ -18,4 +18,7 @@ public interface UserService {
   void addUserInfo(UserInfoDTO userInfo);
 
   UserInfo selectUserInfo(long userNo);
+
+
+  UserInfo putUserInfo(UserInfoDTO userInfoDTO);
 }

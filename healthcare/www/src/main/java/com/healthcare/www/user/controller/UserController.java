@@ -7,6 +7,7 @@ import com.healthcare.www.user.dto.JoinDTO;
 import com.healthcare.www.user.dto.LoginDTO;
 import com.healthcare.www.user.dto.UserInfoDTO;
 import com.healthcare.www.user.jwt.JWTUtil;
+import com.healthcare.www.user.repository.UserInfoRepository;
 import com.healthcare.www.user.repository.UserRepository;
 import com.healthcare.www.user.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -36,6 +37,7 @@ public class UserController {
   private final BCryptPasswordEncoder passwordEncoder;
   private final JWTUtil jwtUtil;
   private final UserRepository userRepository;
+  private final UserInfoRepository userInfoRepository;
 
 
   private String jwtCookie;
@@ -132,6 +134,20 @@ public class UserController {
   public String moveInformation(@RequestParam("userNo") long userNo,Model model){
     model.addAttribute("userNo",userNo);
     return "/user/information";
+  }
+
+  @GetMapping("/modify")
+  public String moveModify(@RequestParam("userNo") long userNo , Model model){
+    UserInfo info = userInfoRepository.findByUserNo(userNo);
+    model.addAttribute("info",info);
+
+    return "/user/modify";
+  }
+  @PostMapping("/modfiy")
+  public String putModify(UserInfoDTO userInfoDTO){
+    UserInfo info = userService.putUserInfo(userInfoDTO);
+
+    return "redirect:/user/myPage";
   }
 
 }

@@ -34,7 +34,7 @@ public class FileHandler {
             case PRODUCT -> productUploadDir;
             case USER -> userUploadDir;
         };
-        
+
         List<ProductFileDTO> productFileList = new ArrayList<>();
         // 업로드 디렉토리가 존재하지 않으면 생성합니다.
         LocalDate date = LocalDate.now(); // 오늘날짜 추출
@@ -57,6 +57,8 @@ public class FileHandler {
                 // 파일을 저장합니다.
                 Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
+                if(uploadDir.contains("product")){
+                    /* 상품 이미지 저장 */
                 ProductFileDTO productFileDTO = ProductFileDTO.builder()
                         .productFileName(file.getOriginalFilename()) // 이미지파일 이름
                         .productUUID(uuid.toString()) // uuid
@@ -64,12 +66,23 @@ public class FileHandler {
                         .productFileSaveDir(directory.getPath()) // 파일 경로 => c:/fileUpload/2024/01/25
                         .productFileType(file.getContentType()) // 파일 타입
                         .build();
-
                 if(isImageFile(new File(directory, fileName))) {
                     File thumbNail = new File(directory, uuid.toString()+"_th_"+fileName);
                     Thumbnails.of(file.getInputStream()).size(75, 75).toFile(thumbNail);
                 }
                 productFileList.add(productFileDTO); // 파일객체 리스트 추가(DB저장용도)
+
+                }else if(uploadDir.contains("user")){
+                    /* 유저 이미지 ,*/
+//                    UserFileDTO userFileDTO = UserFileDTO.builder()
+//                        .userFileName(file.getOriginalFilename())
+//                        .userUUID(uuid.toString())
+//                        .userFileSize(file.getSize())
+//                        .userFileSaveDir(directory.getPath())
+//                        .build();
+                }
+
+
             }
         } catch (IOException e) {
             e.printStackTrace();

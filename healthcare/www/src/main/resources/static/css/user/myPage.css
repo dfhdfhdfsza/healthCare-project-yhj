@@ -24,7 +24,8 @@ body{
 .profile-image{
     width: 150px;
     height: 150px;
-    padding-left: 30px
+    padding-left: 30px;
+    cursor: pointer;
 }
 .profileModify , .infoAdd{
     text-decoration: none;
@@ -66,4 +67,54 @@ body{
 }
 .noProfile{
     font-size: 25px;
+}
+.profileImage-modify-modal{
+    display: none;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    background-color: #fff;
+    border-radius: 9px;
+    width: 400px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+.close-div{
+    width: 100%;
+    text-align: right;
+}
+.closeBtn{
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: 700;
+    margin-right: 5px;
+}
+.modify-profileImage{
+    width: 300px;
+    height: 300px;
+}
+.preview{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 50px;
+}
+.modify-button{
+    width: 300px;
+    background-color: transparent;
+    font-weight: 700;
+    font-size: 18px;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+.image-add-div{
+    padding-top: 50px;
+    text-align: center;
 }
