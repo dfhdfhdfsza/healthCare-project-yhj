@@ -6,4 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PlanCalendarRepository extends JpaRepository<PlanCalendar, Long> {
 
     PlanCalendar findTopByOrderByPlanNoDesc();
+
+    PlanCalendar findByPlanNo(long planNo);
+
+    void deleteByPlanNo(long planNo);
 }

@@ -1,9 +1,6 @@
 package com.healthcare.www.plan.service;
 
-import com.healthcare.www.plan.domain.ExerciseSet;
-import com.healthcare.www.plan.domain.PlanCalendar;
-import com.healthcare.www.plan.domain.UserPlan;
-import com.healthcare.www.plan.domain.planDTO;
+import com.healthcare.www.plan.domain.*;
 import com.healthcare.www.plan.repository.ExerciseSetRepository;
 import com.healthcare.www.plan.repository.PlanCalendarRepository;
 import com.healthcare.www.plan.repository.UserPlanRepository;
@@ -63,5 +60,52 @@ public class HealthServiceImpl implements HealthService{
         log.info("setlist:"+setlist);
         exerciseSetRepository.saveAll(setlist);
 
+    }
+
+    @Override
+    public List<FullCalendarVO> getEventList(Long userNo) {
+
+        List<FullCalendarVO> FullCalendarList=new ArrayList<>();
+
+        List<UserPlan>userPlanList=userPlanRepository.findByUserNo(userNo);
+        log.info("유저플랜리스트:"+userPlanList);
+
+        //FullCalendarList 만들기
+        for (int i=0;i<userPlanList.size();i++){
+            FullCalendarVO fcvo=new FullCalendarVO();
+
+            //FullCalendarVO value들 불러오기
+            UserPlan userPlan=userPlanList.get(i);
+            PlanCalendar pc=planCalendarRepository.findByPlanNo(userPlan.getPlanNo());
+            List<ExerciseSet>exerciseSetList=exerciseSetRepository.findByPlanNo(userPlan.getPlanNo());
+
+            //FullCalendarVO에 세팅
+            fcvo.setTitle(pc.getExerciseName());
+            fcvo.setStart(userPlan.getPlanDate());
+            fcvo.setUserPlan(userPlanList.get(i));
+            fcvo.setPlanCalendar(pc);
+            fcvo.setExerciseSetList(exerciseSetList);
+
+            FullCalendarList.add(fcvo);
+        }
+
+        return FullCalendarList;
+    }
+
+    @Override
+    @Transactional
+    public void delPlan(Long userPlanNo)
+    {
+        //user plan에 있는 planNo가 필요하므로 user plan을 불러온다
+        UserPlan userPlan=userPlanRepository.findByUserPlanNo(userPlanNo);
+        log.info("userPlan:"+userPlan);
+        //plan calendar 삭제
+        planCalendarRepository.deleteByPlanNo(userPlan.getPlanNo());
+
+        //exercise set 삭제
+        exerciseSetRepository.deleteByPlanNo(userPlan.getPlanNo());
+
+        //user plan 삭제
+        userPlanRepository.deleteByUserPlanNo(userPlanNo);
     }
 }
