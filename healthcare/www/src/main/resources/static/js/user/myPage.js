@@ -27,8 +27,20 @@ userProfile.addEventListener("change",(e)=>{
 
     let file = e.target.files[0]; // 선택한 파일
     let reader = new FileReader();
-    
+
     reader.readAsDataURL(file); // 파일 읽는 메서드
+
+    reader.onload = function(){
+        var photoFrame = document.createElement("div");
+      photoFrame.style = `background : url(${reader.result}); background-size : cover`;
+      photoFrame.className = "photoFrame";
+      document.getElementById("pictures").appendChild(photoFrame);
+      e.target.value = "";
+
+      photoFrame.addEventListener("click",function(){
+        document.getElementById("pictures").removeChild(photoFrame);
+      })
+    }
 })
 
 
