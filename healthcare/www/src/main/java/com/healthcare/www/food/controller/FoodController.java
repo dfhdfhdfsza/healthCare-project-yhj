@@ -1,5 +1,8 @@
 package com.healthcare.www.food.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.healthcare.www.dto.NutritionSummary;
 import com.healthcare.www.food.domain.Food;
 import com.healthcare.www.food.domain.Nutrition;
 import com.healthcare.www.food.service.FoodService;
@@ -44,11 +47,18 @@ public class FoodController {
     }
     //영양페이지 이동
     @GetMapping("/nutrition")
-    private void getNutrition(@AuthenticationPrincipal UserDetails userDetails, Model m){
+    private void getNutrition(@AuthenticationPrincipal UserDetails userDetails, Model m) throws JsonProcessingException {
         if(userDetails!=  null) {
             User user = userRepository.findByUserId(userDetails.getUsername());
-            m.addAttribute("user", user.getUserNo());
-            System.out.println(user.getUserNo());
+            List<NutritionSummary>totalEnergyKcalAndDateList = fsv.getTotalEnergyKcalAndDateByUser(user.getUserNo());
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonTotalEnergyKcalAndDateList = objectMapper.writeValueAsString(totalEnergyKcalAndDateList);
+
+
+            m.addAttribute("user", user);
+            m.addAttribute("totalEnergyKcalAndDateList", totalEnergyKcalAndDateList);
+            System.out.println(user);
         }
 
     }
@@ -56,10 +66,11 @@ public class FoodController {
     @PostMapping("/checkFood")
     private String checkFood(Nutrition nutrition){
             System.out.println("nutrition" + nutrition);
+            fsv.updateEattingFood(nutrition);
         return "redirect:/food/nutrition";
     }
 
-    //음식 검색
+    //음식 검색ss
     @GetMapping(value="/findFood", produces = {MediaType.APPLICATION_JSON_VALUE} )
     public ResponseEntity<List<Food>> findFood(@RequestParam String keyword) {
         List<Food> list  =  fsv.findFoodContaining(keyword);
