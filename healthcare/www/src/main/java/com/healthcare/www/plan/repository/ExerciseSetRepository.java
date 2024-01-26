@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ExerciseSetRepository extends JpaRepository<ExerciseSet, Long> {
     List<ExerciseSet> findByPlanNo(long planNo);
+
+    void deleteByPlanNo(long planNo);
 }

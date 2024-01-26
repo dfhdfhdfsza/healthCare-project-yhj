@@ -12,4 +12,5 @@ public interface HealthService {
     List<FullCalendarVO> getEventList(Long userNo);
 
 
+    void delPlan(Long userPlanNo);
 }

@@ -91,4 +91,21 @@ public class HealthServiceImpl implements HealthService{
 
         return FullCalendarList;
     }
+
+    @Override
+    @Transactional
+    public void delPlan(Long userPlanNo)
+    {
+        //user plan에 있는 planNo가 필요하므로 user plan을 불러온다
+        UserPlan userPlan=userPlanRepository.findByUserPlanNo(userPlanNo);
+        log.info("userPlan:"+userPlan);
+        //plan calendar 삭제
+        planCalendarRepository.deleteByPlanNo(userPlan.getPlanNo());
+
+        //exercise set 삭제
+        exerciseSetRepository.deleteByPlanNo(userPlan.getPlanNo());
+
+        //user plan 삭제
+        userPlanRepository.deleteByUserPlanNo(userPlanNo);
+    }
 }

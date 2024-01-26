@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
 import java.util.List;
 
 @Controller
@@ -42,6 +43,13 @@ public class HealthController {
 
     return new ResponseEntity<List<FullCalendarVO>>(eventlist, HttpStatus.OK);
 
+  }
+  @GetMapping("/delPlan")
+  public String delPlan(@RequestParam("userPlanNo")Long userPlanNo)
+  {
+    log.info("userPlanNo:"+userPlanNo);
+    hsv.delPlan(userPlanNo);
+    return "redirect:/health/healthplan";
   }
 
 }

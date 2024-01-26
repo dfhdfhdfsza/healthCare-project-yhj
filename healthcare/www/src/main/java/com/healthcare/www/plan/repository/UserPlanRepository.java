@@ -10,4 +10,8 @@ public interface UserPlanRepository extends JpaRepository<UserPlan, Long> {
     UserPlan findTopByOrderByUserPlanNoDesc();
 
     List<UserPlan> findByUserNo(Long userNo);
+
+    UserPlan findByUserPlanNo(Long userPlanNo);
+
+    void deleteByUserPlanNo(Long userPlanNo);
 }

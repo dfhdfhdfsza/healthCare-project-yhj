@@ -8,73 +8,81 @@ $(document).ready(function () {
         arrows: false, // 아래 dost 네비게이션 안보이게 하기
     });
 });
-let speradPlanList = new Array();
+
+let speradPlanList;
 
 //계획리스트 불러오기
-$.ajax({
-    type: "GET",            // HTTP method type(GET, POST) 형식이다.
-    url: "/health/getEventList?userNo=1",      // 컨트롤러에서 대기중인 URL 주소이다.  로그인한 id(수정할예정)
-    async: false,
-    success: function (res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-        for (let i = 0; i < res.length; i++) {
-            // events: [    이런형태의 json을 만들어준다
-            //     {
-            //         title: 'BCH237',
-            //         start: '2024-01-12',
-            //         extendedProps: {
-            //             department: 'BioChemistry'
-            //         },
-            //         description: 'Lecture'
-            //     }
-            // ]
-            let plan = new Object();
-            //표준속성
-            plan.title = res[i].title;
-            plan.start = res[i].start;
+function getEventList()
+{
+    $.ajax({
+        type: "GET",            // HTTP method type(GET, POST) 형식이다.
+        url: "/health/getEventList?userNo=1",      // 컨트롤러에서 대기중인 URL 주소이다.  로그인한 id(수정할예정)
+        async: true,
+        success: function (res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+            speradPlanList = new Array();
+            for (let i = 0; i < res.length; i++) {
+                // events: [    이런형태의 json을 만들어준다
+                //     {
+                //         title: 'BCH237',
+                //         start: '2024-01-12',
+                //         extendedProps: {
+                //             department: 'BioChemistry'
+                //         },
+                //         description: 'Lecture'
+                //     }
+                // ]
+                let plan = new Object();
+                //표준속성
+                plan.title = res[i].title;
+                plan.start = res[i].start;
+    
+                //비표준속성객체
+                let extendedProps = new Object();
+    
+                //userPlan
+                let userPlanJSON = new Object();
+                userPlanJSON.userPlanNo = res[i].userPlan.userPlanNo;
+                userPlanJSON.planDate = res[i].userPlan.planDate;
+                userPlanJSON.userNo = res[i].userPlan.userNo;
+                userPlanJSON.planNo = res[i].userPlan.planNo;
+    
+                //planCalendar
+                let planCalendarJSON = new Object();
+                planCalendarJSON.planNo = res[i].planCalendar.planNo;
+                planCalendarJSON.exerciseName = res[i].planCalendar.exerciseName;
+    
+                //exerciseSetList
+                let exerciseSetListJSONARRAY = new Array();
+                for (let j = 0; j < res[i].exerciseSetList.length; j++) {
+                    let exerciseSetListJSON = new Object();
+                    exerciseSetListJSON.exerciseSetNo = res[i].exerciseSetList[j].exerciseSetNo;
+                    exerciseSetListJSON.planNo = res[i].exerciseSetList[j].planNo;
+                    exerciseSetListJSON.exerciseWeight = res[i].exerciseSetList[j].exerciseWeight;
+                    exerciseSetListJSON.exerciseCount = res[i].exerciseSetList[j].exerciseCount;
+                    exerciseSetListJSON.exerciseCheck = res[i].exerciseSetList[j].exerciseCheck;
+                    exerciseSetListJSONARRAY.push(exerciseSetListJSON);
+                }
+    
+                //만든 JSON객체들을 비표준속성 객체에 추가
+                extendedProps.userPlan = userPlanJSON;
+                extendedProps.planCalendar = planCalendarJSON;
+                extendedProps.exerciseSetList = exerciseSetListJSONARRAY;
+    
+                plan.extendedProps = extendedProps;
+    
+                speradPlanList.push(plan);
 
-            //비표준속성객체
-            let extendedProps = new Object();
-
-            //userPlan
-            let userPlanJSON = new Object();
-            userPlanJSON.userPlanNo = res[i].userPlan.userPlanNo;
-            userPlanJSON.planDate = res[i].userPlan.planDate;
-            userPlanJSON.userNo = res[i].userPlan.userNo;
-            userPlanJSON.planNo = res[i].userPlan.planNo;
-
-            //planCalendar
-            let planCalendarJSON = new Object();
-            planCalendarJSON.planNo = res[i].planCalendar.planNo;
-            planCalendarJSON.exerciseName = res[i].planCalendar.exerciseName;
-
-            //exerciseSetList
-            let exerciseSetListJSONARRAY = new Array();
-            for (let j = 0; j < res[i].exerciseSetList.length; j++) {
-                let exerciseSetListJSON = new Object();
-                exerciseSetListJSON.exerciseSetNo = res[i].exerciseSetList[j].exerciseSetNo;
-                exerciseSetListJSON.planNo = res[i].exerciseSetList[j].planNo;
-                exerciseSetListJSON.exerciseWeight = res[i].exerciseSetList[j].exerciseWeight;
-                exerciseSetListJSON.exerciseCount = res[i].exerciseSetList[j].exerciseCount;
-                exerciseSetListJSON.exerciseCheck = res[i].exerciseSetList[j].exerciseCheck;
-                exerciseSetListJSONARRAY.push(exerciseSetListJSON);
             }
-
-            //만든 JSON객체들을 비표준속성 객체에 추가
-            extendedProps.userPlan = userPlanJSON;
-            extendedProps.planCalendar = planCalendarJSON;
-            extendedProps.exerciseSetList = exerciseSetListJSONARRAY;
-
-            plan.extendedProps = extendedProps;
-
-            speradPlanList.push(plan);
+            calendar.setOption('events', speradPlanList);
+            calendar.render();
+    
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+            alert("통신 실패.");
         }
+    });
 
-    },
-    error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-        alert("통신 실패.");
-    }
-});
-
+}
 
 // calendar element 취득
 let calendarEl = $('#calendar')[0];
@@ -111,6 +119,7 @@ let calendar = new FullCalendar.Calendar(calendarEl, {
     },
     eventRemove: function (obj) { // 이벤트가 삭제되면 발생하는 이벤트
         console.log(obj);
+        getEventList();
     },
     dateClick: function (info) {
         //모달창 띄우기
@@ -146,7 +155,7 @@ let calendar = new FullCalendar.Calendar(calendarEl, {
     //     calendar.unselect()
     // }
 
-    events: speradPlanList
+    events: getEventList()
 });
 calendar.render();
 
@@ -181,25 +190,25 @@ function spreadPlanListContent(clickedEventlist) {
 
     //플랜 자세히보기
     let setDetailBtns = document.querySelectorAll('.setDetail');
-    setDetailBtns.forEach(function(setDetailBtn){
+    setDetailBtns.forEach(function (setDetailBtn) {
         setDetailBtn.addEventListener('click', (e) => {
             let setDetailDiv = document.querySelector('.set-detail');
             setDetailDiv.style.display = 'flex';
-            
+
             //json으로 파싱해서 function에 매개변수로 전달
-            let extendedProps=JSON.parse(setDetailBtn.dataset.ep);
+            let extendedProps = JSON.parse(setDetailBtn.dataset.ep);
             spreadSetDetail(extendedProps);
-        })
-    })
+        });
+    });
 
     //플랜 삭제
-    let planDeleteBtns=document.querySelectorAll('.planDelete');
-    planDeleteBtns.forEach(function(planDeleteBtn){
-    planDeleteBtn.addEventListener('click',(e)=>{
-        let userPlanNo=planDeleteBtn.dataset.upn;
-        console.log(userPlanNo)
-    })
-})
+    let planDeleteBtns = document.querySelectorAll('.planDelete');
+    planDeleteBtns.forEach(function (planDeleteBtn) {
+        planDeleteBtn.addEventListener('click', (e) => {
+            let userPlanNo = planDeleteBtn.dataset.upn;
+            DeletePlan(userPlanNo);
+        });
+    });
 
 }
 
@@ -212,8 +221,8 @@ closeBtns.forEach(function (closeBtn) {
 });
 
 //set detail div 닫기
-let closeSetdetailBtn=document.querySelector('.close-setdetail');
-closeSetdetailBtn.addEventListener('click',(e)=>{
+let closeSetdetailBtn = document.querySelector('.close-setdetail');
+closeSetdetailBtn.addEventListener('click', (e) => {
     let setDetailDiv = document.querySelector('.set-detail');
     setDetailDiv.style.display = 'none';
 })
@@ -251,7 +260,7 @@ function closeModal() {
     previousPageExerciseListBtn.style.display = 'none';
 
     //세트 초기화
-    let setDiv = document.querySelector('.set-table tbody');
+    let setDiv = document.querySelector('.set-setting .set-table tbody');
     setDiv.innerHTML = `<tr class="set-list">
     <td>1</td>
     <td><input type="text" name="Weight"> kg</td>
@@ -477,7 +486,7 @@ document.addEventListener('click', (e) => {
 //세트 추가 버튼
 let setAddBtn = document.querySelector('.setAddBtn');
 setAddBtn.addEventListener('click', (e) => {
-    let tbody = document.querySelector('.set-table tbody');
+    let tbody = document.querySelector('.set-setting .set-table tbody');
     let childCount = tbody.childElementCount + 1;
 
     //innerHTML을 사용하면 새로운 행을 추가할 때, 
@@ -499,7 +508,7 @@ setAddBtn.addEventListener('click', (e) => {
 //세트 삭제 버튼
 let setDelBtn = document.querySelector('.setDelBtn');
 setDelBtn.addEventListener('click', (e) => {
-    let tbody = document.querySelector('.set-table tbody');
+    let tbody = document.querySelector('.set-setting .set-table tbody');
     let rowCount = tbody.rows.length;
 
     if (rowCount > 1) {
@@ -532,7 +541,7 @@ submitBtn.addEventListener('click', (e) => {
     });
 
     let pdto = {
-        userNo: "2",         //(수정할예정)
+        userNo: "1",         //(수정할예정)
         exerciseName: exerciseName,
         planDate: selectDate,
         setVOList: dataArray
@@ -546,36 +555,42 @@ submitBtn.addEventListener('click', (e) => {
         contentType: 'application/json',
         // processData: false,
         success: function (pdto) {
-            alert('전달성공');
+            alert('등록성공');
+            getEventList();
+            closeModal();
         }
     });
 })
 
 //set detail창에 뿌려주기
-function spreadSetDetail(extendedProps)
-{
-    
-   let setH2=document.querySelector('.set-detail .title h2')
-   setH2.innerHTML=`${extendedProps.planCalendar.exerciseName}`
+function spreadSetDetail(extendedProps) {
 
-   let setDetailList=document.querySelector('.set-detail .set-table tbody');
-   setDetailList.innerHTML='';
+    let setH2 = document.querySelector('.set-detail .title h2')
+    setH2.innerHTML = `${extendedProps.planCalendar.exerciseName}`
 
-   for(let i=0;i<extendedProps.exerciseSetList.length;i++){
-        setDetailList.innerHTML+=`<td>${i+1}</td>
+    let setDetailList = document.querySelector('.set-detail .set-table tbody');
+    setDetailList.innerHTML = '';
+
+    for (let i = 0; i < extendedProps.exerciseSetList.length; i++) {
+        setDetailList.innerHTML += `<td>${i + 1}</td>
         <td><input type="text" name="Weight" value=${extendedProps.exerciseSetList[i].exerciseWeight} readonly="readonly"> kg</td>
         <td><input type="text" name="count" value=${extendedProps.exerciseSetList[i].exerciseCount} readonly="readonly"></td>
         <td><input type="checkbox" value=${extendedProps.exerciseSetList[i].exerciseCheck} name="check"></td>`;
-   }
+    }
 }
 
-function DeletePlan(userPlanNo)
-{
+function DeletePlan(userPlanNo) {
     $.ajax({
-        type:'get',
-        url:`/health/DeletePlan?userPlanNo=${userPlanNo}`,
-        success:function(){
-
+        type: 'get',
+        url: `/health/delPlan?userPlanNo=${userPlanNo}`,
+        async:true,
+        success: function () {
+            alert('삭제성공');
+            getEventList();
+            closeModal();
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+            alert("통신 실패.");
         }
     })
 }
