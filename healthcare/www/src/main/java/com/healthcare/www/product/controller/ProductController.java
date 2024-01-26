@@ -2,7 +2,6 @@ package com.healthcare.www.product.controller;
 
 import com.healthcare.www.handler.FileHandler;
 import com.healthcare.www.handler.FileType;
-import com.healthcare.www.product.domain.Product;
 import com.healthcare.www.product.domain.ProductTyped;
 import com.healthcare.www.product.domain.SearchTyped;
 import com.healthcare.www.product.dto.ProductDTO;
@@ -11,9 +10,9 @@ import com.healthcare.www.product.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Controller
 @RequestMapping("/product/")
@@ -95,13 +96,22 @@ public class ProductController {
 
     // 상품목록 메소드
     @GetMapping("productList")
-    public void getProductList(Model model, ProductDTO productDTO){
+    public void getProductList(Model model, ProductDTO productDTO,
+        @PageableDefault(sort = "regDate", direction = DESC) Pageable pageable){
+        log.info("파라미터 전달받음 productType >>>>> {}",productDTO.getProductType());
+
+//        Page<ProductDTO> productDTOList = productService.getProductListAndPaging(productDTO, pageable);
+
         List<ProductDTO> productDTOList = productService.getList();
         model.addAttribute("productDTOList", productDTOList);
         model.addAttribute("productTyped", ProductTyped.values());
     }
 
-
+    // 상품 상세정보로 이동하는 메소드
+//    @GetMapping("productDetail")
+//    public void getProductDetail(Model model, @RequestParam(){
+//
+//    }
 
 
 

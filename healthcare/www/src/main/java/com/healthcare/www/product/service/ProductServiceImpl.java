@@ -7,18 +7,19 @@ import com.healthcare.www.product.dto.ProductDTO;
 import com.healthcare.www.product.dto.ProductFileDTO;
 import com.healthcare.www.product.repository.ProductFileRepository;
 import com.healthcare.www.product.repository.ProductRepository;
-import com.healthcare.www.product.repository.QueryRepository;
+import com.healthcare.www.product.repository.ProductQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository; // 상품 repository
     private final ProductFileRepository productFileRepository; // 상품 첨부파일 repository
-    private final QueryRepository queryRepository;
+    private final ProductQueryRepository productQueryRepository;
 
     // 상품을 DB에 등록하는 메서드
     @Override
@@ -44,7 +45,6 @@ public class ProductServiceImpl implements ProductService{
         long resultProductNo = productRepository.save(product).getProductNo(); // 상품정보 DB 등록
 
         List<ProductFile> productFileList  = new ArrayList<>(); // 첨부파일 domain 객체 리스트
-        log.info("product file list >>>>>>> {}", productDTO.getProductFileList());
         if(productDTO.getProductFileList() != null) { // 첨부파일이 존재하면
             for (ProductFileDTO file : productDTO.getProductFileList()){
                 ProductFile productFile = ProductFile.builder().
@@ -74,11 +74,9 @@ public class ProductServiceImpl implements ProductService{
                 regDate(productDTO.getRegDate()).
                 modDate(LocalDateTime.now()).
                 build();
-        log.info("product >>>>>> {}", product);
         long resultProductNo = productRepository.save(product).getProductNo(); // 상품정보 DB 수정
 
         List<ProductFile> productFileList  = new ArrayList<>(); // 첨부파일 domain 객체 리스트
-        log.info("product file list >>>>>>> {}", productDTO.getProductFileList());
         if(productDTO.getProductFileList() != null) { // 첨부파일이 존재하면
             for (ProductFileDTO file : productDTO.getProductFileList()){
                 ProductFile productFile = ProductFile.builder().
@@ -124,7 +122,6 @@ public class ProductServiceImpl implements ProductService{
         List<ProductDTO> productDTOList = new ArrayList<>(); // ProductDTO 리스트
         for(Product product : productList) {
             List<ProductFile> productFileList = productFileRepository.findByProductNo(product.getProductNo()); // 상품번로별로 첨부파일 조회
-            log.info("productFileList >>>>> {}", productFileList);
             List<ProductFileDTO> productFileDTOList = productFileList.stream().map(ProductFileDTO::new).toList();
             ProductDTO productDTO = new ProductDTO(product, productFileDTOList); // Product -> ProductDTO 변환
             productDTOList.add(productDTO); // ProductDTO 리스트에 추가

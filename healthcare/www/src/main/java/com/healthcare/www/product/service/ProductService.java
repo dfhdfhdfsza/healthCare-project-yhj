@@ -2,6 +2,8 @@ package com.healthcare.www.product.service;
 
 import com.healthcare.www.product.domain.Product;
 import com.healthcare.www.product.dto.ProductDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -14,4 +16,5 @@ public interface ProductService {
     List<ProductDTO> searchProductList(ProductDTO productDTO); // 상품검색
 
     List<ProductDTO> getList();
+
 }
