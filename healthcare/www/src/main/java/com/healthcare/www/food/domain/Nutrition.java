@@ -1,13 +1,21 @@
 package com.healthcare.www.food.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.*;
-
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class Nutrition {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long nutritionNo; // pk
+
     private Long userNo;  // 사용자 번호 (기본 키)
 
     private String date;  // 날짜 및 시간
