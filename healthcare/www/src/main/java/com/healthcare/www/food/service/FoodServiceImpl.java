@@ -85,6 +85,11 @@ public class FoodServiceImpl implements FoodService {
 
     }
 
+    @Override
+    public List<Nutrition> getUserEatFoodName(long userNo) {
+        return  nutritionRepository.getUserEatFoodName(userNo);
+    }
+
     private double getNumericCellValue(Cell cell) {
         if (cell != null) {
             if (cell.getCellType() == CellType.NUMERIC) {

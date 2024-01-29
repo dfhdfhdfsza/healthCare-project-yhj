@@ -32,4 +32,5 @@ public class Nutrition {
 
     private String processedFoodItemName;  // 가공식품명
 
+
 }
