@@ -6,49 +6,35 @@
     <link rel="stylesheet" th:href="@{/css/food/nutrition.css}" />
 </head>
 <body>
-    <input type="text" id="selectedDateInput" placeholder="선택날짜" />
+
+<div th:replace="common/nav.html :: nav"></div>
+<div class="mainContainer">
+    <input type="hidden" id="selectedDateInput" placeholder="선택날짜" />
     <input type="hidden" id="userNO" th:value="${user.userNo}">
     <div id="calendar"></div>
     <div id="search_box" style="display : none">
         <input type="text" id="keywordInput" onkeyup="findFood()"> 음식 검색
         <div id="serchresult"> </div>
     </div>
-    <div>
-        <div>
 
-            <h1><span th:text="${user.userName}"> </span> 님의 식단 알아보기</h1>
-            <div>
-                <div></div>
-                <div>
-                    <ul>
-                        <li id="addBreakFirst">아침</li>
-                        <li id="addLunch">점심</li>
-                        <li id="addDinner">저녁</li>
-                        <li id="addDessert">간식</li>
 
-                    </ul>
 
-                </div>
+        <div class="eat_food_box">
+            <h1><span id="selectDate"></span>  <span th:text="${user.userName}"> </span>님의 식사</h1>
+            <div id="breakfast_box">아침
+                <div id="breakfast"> </div>
+            </div>
+            <div id="lunch_box">점심
+                <div id="lunch"> </div>
+            </div>
+            <div id="dinner_box">저녁
+                <div id="dinner"> </div>
+            </div>
+            <div id="dessert_box">간식
+                <div id="dessert"> </div>
             </div>
         </div>
-
-        <div>
-            <h1>하루 영양소</h1>
-            <ul>
-                <li id="totalCarbohydrate">탄수화물</li>
-                <li id="totalProtein">단백질</li>
-                <li id="totalProvince">지방</li>
-            </ul>
-        </div>
-
-        <div>
-            <h1>나의 식사</h1>
-            <div id="morning">아침</div>
-            <div>점심</div>
-            <div>저녁</div>
-            <div>간식</div>
-        </div>
-    </div>
+</div>
 </body>
 <!-- jquery CDN -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -61,7 +47,7 @@
 
 <script th:inline="javascript">
     var totalEnergyKcalAndDateList = /*[[${totalEnergyKcalAndDateList}]]*/ '[]'; // 기본값은 빈 배열로 초기화
-
+    var getUserEatFoodName = /*[[${getUserEatFoodName}]]*/ '[]';
 </script>
 
 <script type="text/javascript" th:src="@{/js/food/food.js}"></script>
