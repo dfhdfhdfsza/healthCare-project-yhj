@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ul th:with="p=${productDTO}">
+        <li th:text="${p.productNo}"></li>
+        <li th:text="${p.productName}"></li>
+        <li th:text="${p.productInfo}"></li>
+        <li th:text="${p.productType}"></li>
+        <li th:text="${p.price}"></li>
+        <li th:each="file : ${p.productFileList}" th:text="${file.productFileName}"></li>
+    </ul>
+</body>
+</html>

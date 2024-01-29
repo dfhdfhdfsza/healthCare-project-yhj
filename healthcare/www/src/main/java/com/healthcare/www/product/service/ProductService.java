@@ -17,4 +17,7 @@ public interface ProductService {
 
     List<ProductDTO> getList();
 
+    Page<ProductDTO> getProductListAndPaging(ProductDTO productDTO, Pageable pageable);
+
+    ProductDTO getProduct(Long productNo);
 }

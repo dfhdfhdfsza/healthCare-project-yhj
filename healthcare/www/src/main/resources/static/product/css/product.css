@@ -362,6 +362,7 @@ select option:hover {
     height: 4.375rem;
     border: 1px solid #eee;
     background-color: #fff;
+    box-sizing:border-box;
 }
 .category-box span{
     width: 100%;
@@ -457,4 +458,40 @@ select option:hover {
 .discount-rate{
     color: #e50914;
     font-weight: bold;
+}
+
+
+/* 페이징 */
+.paging-container{
+    width:100%;
+}
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    gap: 1rem;
+}
+
+.page-link{
+    border: 1px solid #000;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+}
+.prev, .next{
+    width: 3.5rem;
+}
+/* a태그 비활성화 (이전,다음) */
+.disabled{ 
+    pointer-events: none;
+    color: #fff;
+    background-color: #e50914;
+}
+.active{
+    color:#fff;
+    background-color: #000;
 }

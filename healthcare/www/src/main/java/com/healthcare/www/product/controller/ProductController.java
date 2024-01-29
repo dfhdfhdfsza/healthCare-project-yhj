@@ -97,21 +97,23 @@ public class ProductController {
     // 상품목록 메소드
     @GetMapping("productList")
     public void getProductList(Model model, ProductDTO productDTO,
-        @PageableDefault(sort = "regDate", direction = DESC) Pageable pageable){
+        @PageableDefault(size = 8 ,sort = "regDate", direction = DESC) Pageable pageable){
         log.info("파라미터 전달받음 productType >>>>> {}",productDTO.getProductType());
-
-//        Page<ProductDTO> productDTOList = productService.getProductListAndPaging(productDTO, pageable);
-
-        List<ProductDTO> productDTOList = productService.getList();
+        // 페이지 기능을 담은 리스트 요청
+        Page<ProductDTO> productDTOList = productService.getProductListAndPaging(productDTO, pageable);
+        log.info("productDTO List >>>>>>>> {}",productDTOList);
+//        List<ProductDTO> productDTOList = productService.getList();
         model.addAttribute("productDTOList", productDTOList);
         model.addAttribute("productTyped", ProductTyped.values());
     }
 
     // 상품 상세정보로 이동하는 메소드
-//    @GetMapping("productDetail")
-//    public void getProductDetail(Model model, @RequestParam(){
-//
-//    }
+    @GetMapping("productDetail")
+    public void getProductDetail(Model model, ProductDTO productDTO){
+
+        productDTO = productService.getProduct(productDTO.getProductNo());
+        model.addAttribute("productDTO", productDTO);
+    }
 
 
 
