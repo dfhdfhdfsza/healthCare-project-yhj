@@ -14,5 +14,5 @@ public class UserFileDTO {
   private String userFileName;
   private long userFileSize;
   private String userFileSaveDir;
-  private String userFileType; // 프로필사진인지  , 커뮤니티 사진인지
+  private String userFileType;
 }

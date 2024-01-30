@@ -1,10 +1,14 @@
 package com.healthcare.www.user.controller;
 
 
+import com.healthcare.www.handler.FileHandler;
+import com.healthcare.www.handler.FileType;
 import com.healthcare.www.user.domain.User;
+import com.healthcare.www.user.domain.UserFile;
 import com.healthcare.www.user.domain.UserInfo;
 import com.healthcare.www.user.dto.JoinDTO;
 import com.healthcare.www.user.dto.LoginDTO;
+import com.healthcare.www.user.dto.UserFileDTO;
 import com.healthcare.www.user.dto.UserInfoDTO;
 import com.healthcare.www.user.jwt.JWTUtil;
 import com.healthcare.www.user.repository.UserInfoRepository;
@@ -15,6 +19,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,10 +28,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,7 +44,7 @@ public class UserController {
   private final JWTUtil jwtUtil;
   private final UserRepository userRepository;
   private final UserInfoRepository userInfoRepository;
-
+  private final FileHandler fh;
 
   private String jwtCookie;
 
@@ -58,7 +64,7 @@ public class UserController {
     @GetMapping("/myPage")
     public String moveMyPage(HttpServletRequest request, Model m, @AuthenticationPrincipal UserDetails userDetails){
       int validInfo = 0;
-
+      int validImage= 0;
 
       User user = userRepository.findByUserId(userDetails.getUsername());
       m.addAttribute("user",user);
@@ -75,6 +81,19 @@ public class UserController {
         m.addAttribute("validInfo",validInfo);
         m.addAttribute("info",info);
       }
+
+      UserFile file = userService.selectUserFile(user.getUserNo());
+
+      if(file == null){
+        // 이미지 없는 경우 기본 이미지 출력
+        validImage = 1;
+        m.addAttribute("validImage", validImage);
+      }else{
+        // 이미지가 있는 경우 이미지 출력
+        m.addAttribute("validImage",validImage);
+        m.addAttribute("file",file);
+      }
+
 
       return "/user/myPage";
     }
@@ -148,6 +167,26 @@ public class UserController {
     UserInfo info = userService.putUserInfo(userInfoDTO);
 
     return "redirect:/user/myPage";
+  }
+
+  @PostMapping("/profileImage")
+  public String addImage(@RequestParam(name ="file" ,required = false)MultipartFile[] files, @AuthenticationPrincipal UserDetails userDetails){
+    if(files[0].getSize() > 0){
+      UserFileDTO userFileDTOS = fh.uploadUserFile(files,FileType.USER);
+
+      User user = userRepository.findByUserId(userDetails.getUsername());
+      System.out.println(user+"user<<<<<<<<<<<<<<!!");
+      int isOk = userService.addImage(userFileDTOS, user);
+    }
+
+    return "index";
+  }
+
+
+  @GetMapping(value="addProfileImage/{file}")
+  public ResponseEntity<String> addProfileImage(@PathVariable File file){
+    System.out.println(file.toString()+"파일정보<<<<<");
+    return new ResponseEntity<>("1", HttpStatus.OK);
   }
 
 }

@@ -1,10 +1,13 @@
 package com.healthcare.www.user.service;
 
 import com.healthcare.www.user.domain.User;
+import com.healthcare.www.user.domain.UserFile;
 import com.healthcare.www.user.domain.UserInfo;
 import com.healthcare.www.user.dto.JoinDTO;
 import com.healthcare.www.user.dto.LoginDTO;
+import com.healthcare.www.user.dto.UserFileDTO;
 import com.healthcare.www.user.dto.UserInfoDTO;
+import com.healthcare.www.user.repository.UserFileRepository;
 import com.healthcare.www.user.repository.UserInfoRepository;
 import com.healthcare.www.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +22,11 @@ public class UserServiceImpl implements UserService{
 
   private final UserRepository userRepository;
   private final UserInfoRepository userInfoRepository;
+  private final UserFileRepository userFileRepository;
+
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
 
   @Override
   public void addUser(JoinDTO joinDTO) {
@@ -97,8 +104,45 @@ public class UserServiceImpl implements UserService{
   @Override
   public UserInfo putUserInfo(UserInfoDTO userInfoDTO) {
 
+    UserInfo info = UserInfo.builder().
+        userNo(userInfoDTO.getUserNo()).
+        infoHeight(userInfoDTO.getInfoHeight()).
+        infoWeight(userInfoDTO.getInfoWeight()).
+        infoBody(userInfoDTO.getInfoBody()).
+        infoSkeletal(userInfoDTO.getInfoSkeletal()).
+        infoMetabolic(userInfoDTO.getInfoMetabolic()).
+        build();
 
-    return null;
+    userInfoRepository.save(info);
+    return info;
+  }
+
+  @Override
+  public int addImage(UserFileDTO userFileDTOS, User user) {
+
+
+
+    System.out.println(userFileDTOS+"<<<<<<<<<<<<<<<<<><><><><><><><><");
+
+    UserFile userFile = UserFile.builder()
+        .userFileName(userFileDTOS.getUserFileName())
+        .userFileSize(userFileDTOS.getUserFileSize())
+        .userFileSaveDir(userFileDTOS.getUserFileSaveDir())
+        .userNo(user.getUserNo())
+        .userUUID(userFileDTOS.getUserUUID())
+        .userFileType(userFileDTOS.getUserFileType())
+        .build();
+
+    userFileRepository.save(userFile);
+
+    return 0;
+  }
+
+  @Override
+  public UserFile selectUserFile(long userNo) {
+    UserFile file = userFileRepository.findByUserNo(userNo);
+
+    return file;
   }
 
 
