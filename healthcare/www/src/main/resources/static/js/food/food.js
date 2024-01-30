@@ -2,7 +2,7 @@ let userNO = document.getElementById("userNO").value; // 유저번호
 let selectedDateInput = document.getElementById('selectedDateInput'); // 날짜 선택하면 날짜 넣어줄 값
 let today = new Date();
 let searchBOxSwitch = true;
-
+console.log(getUserEatFoodName[0].date);    
 // 연, 월, 일을 추출하기
 let year = today.getFullYear();
 let month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더합니다.
@@ -12,12 +12,26 @@ let day = today.getDate();
 let formatToday = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
 selectedDateInput.value = formatToday;
+spreadEatFood();
 // full-calendar 생성하기
 
 // 로그인 안하면 튕겨내기
 if (userNO == null || userNO == "") {
     alert("로그인 후 이용해주세요");
     location.href = "/";
+}
+
+/** 선택한 날짜 먹음 은식 뿌려주는 이벤트 */
+function spreadEatFood(){
+    document.getElementById("selectDate").innerText = selectedDateInput.value;
+    for(let i = 0 ; i < getUserEatFoodName.length ; i++){
+            
+        if ( selectedDateInput.value ==getUserEatFoodName[i].date) {
+            console.log("십");
+        document.getElementById(getUserEatFoodName[i].eatTime).innerHTML +=`<div>${getUserEatFoodName[i].processedFoodItemName}</div>`;
+        }
+    }
+    
 }
 
 /** 검색하면 비동기로 음식 리스트 가져오기 */
@@ -53,7 +67,7 @@ async function findFood() {
                 ResultHTML += `탄 :  ${result[i].carbohydrate}`;
                 ResultHTML += `단 : ${result[i].protein} `;
                 ResultHTML += `지 : ${result[i].fat} <br>`;
-                ResultHTML += `  <input type='radio' name='eatTime' value='breaktime' />아침`;
+                ResultHTML += `  <input type='radio' name='eatTime' value='breakfast' />아침`;
                 ResultHTML += `  <input type='radio' name='eatTime' value='lunch' />점심`;
                 ResultHTML += `  <input type='radio' name='eatTime' value='dinner' />저녁`;
                 ResultHTML += `  <input type='radio' name='eatTime' value='dessert' />간식`;
@@ -201,9 +215,15 @@ let calendar = new FullCalendar.Calendar(calendarEl, {
                     formattedDate: formattedDate
                 };
             }
+
         }
 
         selectedDateInput.value = formattedDate;
+        document.getElementById("breakfast").innerHTML="";
+        document.getElementById("lunch").innerHTML="";
+        document.getElementById("dinner").innerHTML="";
+        document.getElementById("dessert").innerHTML="";
+        spreadEatFood();
     },
 
 });
@@ -214,3 +234,8 @@ function formatDate(date) {
     return `${year}-${month}-${day}`;
 }
 calendar.render();
+
+
+
+    
+

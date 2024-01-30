@@ -19,5 +19,7 @@ CREATE TABLE `product_file` (
   `product_file_save_dir` varchar(255) DEFAULT NULL,
   `product_file_type` varchar(255) DEFAULT NULL,
   `product_uuid` varchar(255) NOT NULL,
-  PRIMARY KEY (`product_uuid`)
+  PRIMARY KEY (`product_uuid`),
+  KEY `fk_poroduct_no_idx` (`product_no`),
+  CONSTRAINT `fk_poroduct_no` FOREIGN KEY (`product_no`) REFERENCES `product` (`product_no`) ON DELETE CASCADE
 )

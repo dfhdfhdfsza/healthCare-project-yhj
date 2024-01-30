@@ -51,13 +51,13 @@ public class FoodController {
         if(userDetails!=  null) {
             User user = userRepository.findByUserId(userDetails.getUsername());
             List<NutritionSummary>totalEnergyKcalAndDateList = fsv.getTotalEnergyKcalAndDateByUser(user.getUserNo());
-
+            List<Nutrition>getUserEatFoodName = fsv.getUserEatFoodName(user.getUserNo());
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonTotalEnergyKcalAndDateList = objectMapper.writeValueAsString(totalEnergyKcalAndDateList);
-
-
+            log.info("getUserEatFoodName>>> "+ getUserEatFoodName);
             m.addAttribute("user", user);
             m.addAttribute("totalEnergyKcalAndDateList", totalEnergyKcalAndDateList);
+            m.addAttribute("getUserEatFoodName" ,getUserEatFoodName);
             System.out.println(user);
         }
 

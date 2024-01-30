@@ -59,7 +59,8 @@ function searchProduct(){
                 data-ptype="${product.productType}"
                 data-pname="${product.productName}"
                 data-pinfo="${product.productInfo}"                                   
-                data-price="${product.price}">
+                data-price="${product.price}"
+                data-regdate=${product.regDate}">
                 <td class="pno">${product.productNo}</td>
                 <td class="ptype">${product.productType}</td>
                 <td class="pname">${product.productName}</td>
@@ -77,7 +78,8 @@ let productType = document.querySelectorAll('#productType'), // 상품유형
     productNoVal = document.querySelector('.product-no'); //상품번호 입력값
     productName = document.querySelectorAll('#productName'), // 상품명
     productInfo = document.querySelectorAll('#productInfo'), // 상품설명
-    price = document.querySelectorAll('#price'); // 상품가격
+    price = document.querySelectorAll('#price'), // 상품가격
+    regDate = document.querySelector('#regDate'); // 상품등록일
 
 productList.addEventListener('click', e => {
     let tr = e.target.closest('tr');
@@ -89,6 +91,7 @@ productList.addEventListener('click', e => {
         productType[1].value = tr.dataset.ptype;
         productInfo[1].value = tr.dataset.pinfo;
         price[1].value = tr.dataset.price;
+        regDate.value = tr.dataset.regdate;
         closeBtn.click();
     }
     
@@ -105,8 +108,7 @@ function isSpace(value) {
 }
 // 상품등록 입력 검사
 function validRegister(){
-    if(isSpace( productName[0].value) ||  isSpace(productInfo[0].value)
-    || isSpace(price[0].value) || isSpace(productType[0].value)){
+    if(isSpace(isSpace(price[0].value) || isSpace(productType[0].value))){
         alert('공백은 허용하지 않습니다.');
         return false;
     } else if(productName[0].value == '' || productType[0].value == '' || productInfo[0].value == '' || price[0].value == ''){
@@ -121,8 +123,7 @@ function validRegister(){
 }
 // 상품수정 입력 검사
 function validModify(){
-    if(isSpace( productName[1].value) || isSpace(productNo.value) || 
-        isSpace(productInfo[1].value)|| isSpace(price[1].value) || isSpace(productType[1].value)){
+    if(isSpace(isSpace(price[1].value) || isSpace(productType[1].value))){
         alert('공백은 허용하지 않습니다.');
         return false;
     } else if(productNo.value == '' || productName[1].value == '' || productType[1].value == '' || productInfo[1].value == '' || price[1].value == ''){

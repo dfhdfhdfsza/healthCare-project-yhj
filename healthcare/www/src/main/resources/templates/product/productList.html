@@ -3,12 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>상품목록</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/product/css/product.css}">
 </head>
+
 <body>
     <main class="product-list-container">
-        <div>
+        <div class="box">
+            <!--/* 배너 영역 */-->
+        </div>
+
+        <!--/* 카테고리 영역 */-->
+        <div class="category-box">
+            <span th:each="typed: ${productTyped}">
+                <a th:href="@{/product/productList(productType=${typed.type}, page=1, size=8, sort)}" th:text="${typed.type}"></a>
+            </span>
+        </div>
+
+        <!--/* 아이템 영역 */-->
+        <div class="item-section">
+            <div class="items-wrap" th:each="p : ${productDTOList}">
+                <div class="product-item" th:with="dir=${p.productFileList.get(0).productFileSaveDir},
+                    fileName=${p.productFileList.get(0).productFileName}">
+                    <a th:href="@{/product/productDetail(productNo=${p.productNo})}">
+                        <img class="item-main-img" th:src="@{|/productFile/${dir}/${fileName}|}">
+                        <div class="item-name">
+                            <span th:text="${p.productName}"></span>
+                        </div>
+                    </a>
+                    <div class="item-info">
+                        <div>
+                            <span>#</span>
+                            <span th:text="${#strings.arraySplit(p.productInfo, '#')[0]}"></span>
+                        </div>
+                        <div>
+                            <span>#</span>
+                            <span th:text="${#strings.arraySplit(p.productInfo, '#')[#arrays.length(#strings.arraySplit(p.productInfo, '#')) - 1]}"></span>
+                        </div>
+                    </div>
+                    <div class="item-price">
+                        <span class="real-price" th:text="${#numbers.formatInteger(p.realPrice,3,'COMMA')+'원'}"></span>
+                        <span class="price" th:text="${#numbers.formatInteger(p.price,3,'COMMA')+'원'}"></span>
+                        <span class="discount-rate" th:text="${p.discountRate+'%'}"></span>
+                    </div>
+                </div>
+
+            </div>
 
         </div>
+
     </main>
 </body>
 </html>

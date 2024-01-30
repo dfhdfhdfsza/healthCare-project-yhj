@@ -17,4 +17,7 @@ public interface FoodService {
     void updateEattingFood(Nutrition nutrition);
 
     List<NutritionSummary> getTotalEnergyKcalAndDateByUser(long userNo);
+
+
+    List<Nutrition> getUserEatFoodName(long userNo);
 }
