@@ -64,9 +64,7 @@ public class ProductQueryRepository {
                 //.select(Wildcard.count) // select count(*)
                 .select(Wildcard.count)
                 .from(product)
-                .where(productTypeEq(productDTO.getProductType()))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize());
+                .where(productTypeEq(productDTO.getProductType()));
 
         return PageableExecutionUtils.getPage(productDTOList, pageable, countQuery::fetchOne);
     }

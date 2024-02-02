@@ -51,8 +51,6 @@
         </div>
         <!-- 페이징 영역 -->
         <div th:if="${!productDTOList.isEmpty()}" class="paging-container">
-            <span th:text="${productDTOList.totalPages}"></span>
-            <span th:text="${productDTOList.totalElements}"></span>
             <ul class="pagination">
                 <!-- 이전 -->
                 <li class="page-item">

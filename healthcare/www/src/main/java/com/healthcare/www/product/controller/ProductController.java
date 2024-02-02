@@ -2,6 +2,7 @@ package com.healthcare.www.product.controller;
 
 import com.healthcare.www.handler.FileHandler;
 import com.healthcare.www.handler.FileType;
+import com.healthcare.www.order.dto.OrderDTO;
 import com.healthcare.www.product.domain.ProductTyped;
 import com.healthcare.www.product.domain.SearchTyped;
 import com.healthcare.www.product.dto.ProductDTO;
@@ -109,7 +110,7 @@ public class ProductController {
 
     // 상품 상세정보로 이동하는 메소드
     @GetMapping("productDetail")
-    public void getProductDetail(Model model, ProductDTO productDTO){
+    public void getProductDetail(Model model, OrderDTO orderDto, ProductDTO productDTO){
 
         productDTO = productService.getProduct(productDTO.getProductNo());
         model.addAttribute("productDTO", productDTO);

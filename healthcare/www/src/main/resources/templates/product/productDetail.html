@@ -3,15 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/product/css/product.css}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,100,0,0" />
 </head>
 <body>
-    <ul th:with="p=${productDTO}">
-        <li th:text="${p.productNo}"></li>
-        <li th:text="${p.productName}"></li>
-        <li th:text="${p.productInfo}"></li>
-        <li th:text="${p.productType}"></li>
-        <li th:text="${p.price}"></li>
-        <li th:each="file : ${p.productFileList}" th:text="${file.productFileName}"></li>
-    </ul>
+    <form class="product-detail-form" th:object="${orderDTO}">
+        <div class="product-detail-container" th:with="p=${productDTO}">
+            <div class="product-info"
+                 th:with="dir=${productDTO.productFileList.get(0).productFileSaveDir},
+                        fileName=${productDTO.productFileList.get(0).productFileName}">
+                <div class="order-box">
+                    <img class="order-img" th:src="@{|/productFile/${dir}/${fileName}|}">
+                    <div class="order-info">
+                        <div>
+                            <h2 class="product-name" th:text="${p.productName}"></h2>
+                            <span class="product-info" th:text="${p.productInfo}"></span>
+                        </div>
+                        <div>
+                            <table class="order-table">
+                                <tr>
+                                    <td>정상가</td>
+                                    <td>
+                                        <span class="price" th:text="${#numbers.formatInteger(p.price, 3, 'COMMA')+'원'}"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>판매가</td>
+                                    <td>
+                                        <span th:data-priceval="${p.realPrice}" class="real-price" th:text="${#numbers.formatInteger(p.realPrice, 3, 'COMMA')}"></span>원
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>제조사</td>
+                                    <td>
+                                        <span th:text="헬스플래너"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>상품유형</td>
+                                    <td>
+                                        <span th:text="${p.productType}"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="order-qty">
+                                        <span th:text="${p.productName}"></span>
+                                        <div>
+                                            <div class="qty">
+                                                <span class="material-symbols-outlined" id="OrderMinus">remove</span>
+                                                <span th:data-qty="${1}" class="qty-value">1</span>
+                                                <span class="material-symbols-outlined" id="OrderPlus">add</span>
+                                            </div>
+                                            <div class="order-price">
+                                                <span>총 상품 금액</span>
+                                                <span th:data-price="${p.realPrice}" id="orderResult" th:text="${#numbers.formatInteger(p.realPrice, 3, 'COMMA')+'원'}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="credits">
+                                            <span>적립금(구매금액의 1%)</span>
+                                            <span th:data-point="${p.realPrice * 0.01}" id="credit" th:text="${#numbers.formatInteger(p.realPrice * 0.01 , 3, 'COMMA')+'원'}"></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <input type="hidden" th:field="*{productNo}">
+                            <input type="hidden" id="orderQty" name="orderQty" th:value="1">
+                            <input type="hidden" id="orderPrice" name="orderPrice" th:value="${productDTO.realPrice}">
+                            <input type="hidden" id="point" name="point" th:value="${#numbers.formatInteger(p.realPrice*0.01, 0)}">
+                        </div>
+                        <div class="order-button">
+                            <button type="button" id="cart" class="button cart">장바구니</button>
+                            <button type="button" id="buy" class="button buy">구매하기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-info-line">
+                    <h2>상품 정보</h2>
+                </div>
+                <div class="info-box">
+                    <th:block th:each="file : ${p.productFileList}">
+                        <img th:if="${!fileStat.first}" th:src="@{|/productFile/${file.productFileSaveDir}/${file.productFileName}|}">
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </form>
+<script th:inline="javascript">
+    let product = [[${productDTO}]];
+    console.log(product);
+</script>
+<script th:src="@{/product/js/productOrder.js}"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 </body>
 </html>
