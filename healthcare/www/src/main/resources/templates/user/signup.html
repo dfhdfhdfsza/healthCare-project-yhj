@@ -10,18 +10,25 @@
 
 <div class="main-container">
   <div class="signupForm">
-    <img src="/image/logo.png" class="logo">
 
-    <div>
+    <div class="logo-div">
+      <img src="/image/logo.png" class="logo">
+    </div>
+
+    <div class="singup-form">
       <form action="/user/signup" method="post">
 
-        <input type="text" name="userId" placeholder="아이디"> <br>
-        <input type="text" name="userPassword" placeholder="비밀번호"> <br>
-        <input type="text" name="userName" placeholder="사용자 이름"> <br>
-        <input type="text" name="userAddress" placeholder="주소"> <br>
-        <input type="text" name="userNumber" placeholder="전화번호"> <br>
-        <input type="text" name="userAge" placeholder="나이"> <br>
-        성별 : 남자<input type="radio" value="남자" name="userMail"> 여자<input type="radio" value="여자" name="userMail"> <br>
+        <input type="text" name="userId" placeholder="아이디" class="singup-input-text">
+        <input type="text" name="userPassword" placeholder="비밀번호" class="singup-input-text">
+        <input type="text" name="userName" placeholder="사용자 이름" class="singup-input-text">
+        <input type="text" name="userAddress" placeholder="주소" class="singup-input-text">
+        <input type="text" name="userNumber" placeholder="전화번호" class="singup-input-text">
+        <input type="text" name="userAge" placeholder="나이" class="singup-input-text">
+        <div>
+
+          남자 <input type="radio" value="남자" name="userMail" class="singup-input-radio">
+          여자 <input type="radio" value="여자" name="userMail" class="singup-input-radio">
+        </div>
 
         <button type="submit" class="signupBtn">회원가입</button>
 

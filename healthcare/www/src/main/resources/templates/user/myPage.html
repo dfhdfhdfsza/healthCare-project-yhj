@@ -16,14 +16,14 @@
           <!--사진-->
           <div class="profileImage-div">
             <img src="/image/user/프로필기본.png" class="profile-image" th:if="${validImage == 1}">
-            <img src="" th:if="${validImage == 0}">
+<!--            <img class="item-main-img" th:src="@{|/userFile/${#strings.replace(file.userFileSaveDir, '\', '-')}/${file.userFileName}}|}"-->
+<!--                 th:if="${validImage == 0}">-->
           </div>
           <div class="profile">
 
             <!--개인정보 입력 및 수정-->
             <div class="profileInfo-editor">
               <span th:text="${user.userId}" class="userId"></span>
-
               <a th:href="@{/user/modify(userNo=${user.userNo})}" class="profileModify" th:if="${validInfo == 0}">
                 <span class="profile-span profile-modify">프로필 편집</span>
               </a>

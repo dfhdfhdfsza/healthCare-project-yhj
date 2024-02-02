@@ -1,12 +1,11 @@
 package com.healthcare.www.user.service;
 
+import com.healthcare.www.user.domain.Community;
 import com.healthcare.www.user.domain.User;
 import com.healthcare.www.user.domain.UserFile;
 import com.healthcare.www.user.domain.UserInfo;
-import com.healthcare.www.user.dto.JoinDTO;
-import com.healthcare.www.user.dto.LoginDTO;
-import com.healthcare.www.user.dto.UserFileDTO;
-import com.healthcare.www.user.dto.UserInfoDTO;
+import com.healthcare.www.user.dto.*;
+import com.healthcare.www.user.repository.CommunityRepository;
 import com.healthcare.www.user.repository.UserFileRepository;
 import com.healthcare.www.user.repository.UserInfoRepository;
 import com.healthcare.www.user.repository.UserRepository;
@@ -14,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService{
   private final UserRepository userRepository;
   private final UserInfoRepository userInfoRepository;
   private final UserFileRepository userFileRepository;
+  private final CommunityRepository communityRepository;
 
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -119,11 +121,6 @@ public class UserServiceImpl implements UserService{
 
   @Override
   public int addImage(UserFileDTO userFileDTOS, User user) {
-
-
-
-    System.out.println(userFileDTOS+"<<<<<<<<<<<<<<<<<><><><><><><><><");
-
     UserFile userFile = UserFile.builder()
         .userFileName(userFileDTOS.getUserFileName())
         .userFileSize(userFileDTOS.getUserFileSize())
@@ -143,6 +140,36 @@ public class UserServiceImpl implements UserService{
     UserFile file = userFileRepository.findByUserNo(userNo);
 
     return file;
+  }
+
+  @Override
+  public Community addCommunity(CommunityDTO communityDTO) {
+
+    Community community = Community.builder()
+        .writingContent(communityDTO.getWritingContent())
+        .writingTitle(communityDTO.getWritingTitle())
+        .writingTag(communityDTO.getWritingTag())
+        .userNo(communityDTO.getUserNo())
+        .writingWriter(communityDTO.getWritingWriter())
+        .build();
+
+    communityRepository.save(community);
+
+    return community;
+  }
+
+  @Override
+  public List<Community> selectAll() {
+    List<Community> communityList = communityRepository.findAll();
+
+    return communityList;
+  }
+
+  @Override
+  public Community selectCommunity(long writingNo) {
+    Community community = communityRepository.findByWritingNo(writingNo);
+
+    return community;
   }
 
 

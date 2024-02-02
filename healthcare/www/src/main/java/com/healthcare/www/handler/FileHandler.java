@@ -64,7 +64,7 @@ public class FileHandler {
                         .productFileName(file.getOriginalFilename()) // 이미지파일 이름
                         .productUUID(uuid.toString()) // uuid
                         .productFileSize(file.getSize()) // 이미지파일 크기
-                        .productFileSaveDir(directory.getPath()) // 파일 경로 => c:/fileUpload/2024/01/25
+                        .productFileSaveDir(today) // 파일 경로 => c:/fileUpload/2024/01/25
                         .productFileType(file.getContentType()) // 파일 타입
                         .build();
                 if(isImageFile(new File(directory, fileName))) {
@@ -115,7 +115,7 @@ public class FileHandler {
               .userFileName(file.getOriginalFilename())
               .userUUID(uuid.toString())
               .userFileSize(file.getSize())
-              .userFileSaveDir(directory.getPath())
+              .userFileSaveDir(today)
               .userFileType(file.getContentType())
               .build();
 
