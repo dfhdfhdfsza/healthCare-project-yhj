@@ -23,3 +23,3209 @@ CREATE TABLE `product_file` (
   KEY `fk_poroduct_no_idx` (`product_no`),
   CONSTRAINT `fk_poroduct_no` FOREIGN KEY (`product_no`) REFERENCES `product` (`product_no`) ON DELETE CASCADE
 )
+
+
+---------------------------- 상품 insert ---------------------------
+insert into product(
+product_name,
+product_info,
+price,
+discount_rate,
+product_type,
+reg_date,
+mod_date
+)
+values(
+'헬스플래너 유기농 제트게이너 (1.2kg)',
+'#업계최초 유기농 인증마크 획득
+#탄수화물+유기농 WPC 7:3 보충제',
+69000,
+16,
+'유기농',
+now(),
+now()
+),
+(
+'헬스플래너 유기농 제트게이너 (3kg)',
+'#업계최초 유기농 인증마크 획득
+#탄수화물+유기농 WPC 7:3 보충제',
+150000,
+17,
+'유기농',
+now(),
+now()
+),
+(
+'헬스플래너 유기농 제트맥스게인 (1.2kg)',
+'#업계최초 유기농 인증마크 획득
+#탄수화물+유기농 WPC 9:1 보충제',
+80000,
+31,
+'유기농',
+now(),
+now()
+),
+(
+'헬스플래너 유기농 제트맥스게인 (3kg)',
+'#업계최초 유기농 인증마크 획득
+#탄수화물+유기농 WPC 9:1 보충제',
+145000,
+17,
+'유기농',
+now(),
+now()
+),
+(
+'헬스플래너 유기농 제트맥스프로틴 (1.8kg)',
+'#업계최초 유기농 인증마크 획득
+#유기농 WPC 농축유청단백질',
+150000,
+17,
+'유기농',
+now(),
+now()
+),
+(
+'헬스플래너 유기농 제트맥스프로틴 (640g)',
+'#업계최초 유기농 인증마크 획득
+#유기농 WPC 농축유청단백질',
+66000,
+17,
+'유기농',
+now(),
+now()
+),
+(
+'헬스플래너 유기농 제트팻킬러쉐이크 (640g)',
+'#업계최초 유기농 인증마크 획득
+#최상급 유기농 단백질 쉐이크',
+66000,
+17,
+'유기농',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스WHP (2kg)',
+'#건강기능식품 인증
+#WPH 가수분해유청단백질',
+130000,
+47,
+'프로틴',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스WHI (2kg)',
+'#건강기능식품 인증
+#WPI 분리유청단백질',
+140000,
+50,
+'프로틴',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스WPIH (2kg)',
+'#건강기능식품 인증
+#WPIH 가수분해 분리유청단백질',
+170000,
+47,
+'프로틴',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스웨이 (2kg)',
+'#건강기능식품 인증
+#WPC 농축유청단백질',
+100000,
+51,
+'프로틴',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스소이 (2kg)',
+'#건강기능식품 인증
+#NON-GMO 식물성 분리대두단백질',
+90000,
+45,
+'프로틴',
+now(),
+now()
+),
+(
+'헬스플래너 제트프로프로틴 (2kg)',
+'#건강기능식품 인증
+#식물성 단백질 + WPI 분리유청단백질',
+110000,
+46,
+'프로틴',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스프로틴 (2kg)',
+'#건강기능식품 인증
+#미셀라카제인 + WPI + 식물성 단백질',
+130000,
+47,
+'프로틴',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스WPH 플래티넘 (2kg)',
+'#식품안전 인증마크
+#WPH 가수분해유청단백질  플래티넘',
+140000,
+47,
+'프로틴',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스MPH (2kg)',
+'#식품안전 인증마크
+#MPH 가수분해유청단백질',
+130000,
+47,
+'프로틴',
+now(),
+now()
+),
+(
+'니드포WPH (2.27kg)',
+'#특별한 선택, 니드포 시리즈
+#프리미엄 WPH 가수분해유청단백질',
+120000,
+46,
+'프로틴',
+now(),
+now()
+),
+(
+'니드포WPI (2.27kg)',
+'#특별한 선택, 니드포 시리즈
+#프리미엄 WPI 분리유청단백질',
+140000,
+46,
+'프로틴',
+now(),
+now()
+),
+(
+'니드포웨이 (2.27kg)',
+'#특별한 선택, 니드포 시리즈
+#프리미엄 WPC 농축유청단백질',
+100000,
+40,
+'프로틴',
+now(),
+now()
+),
+(
+'니드포프로틴 (2.27kg)',
+'#특별한 선택, 니드포 시리즈
+#프리미엄 5가지 동물성 + 식물성 단백질',
+90000,
+39,
+'프로틴',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스게이너 (4kg)',
+'#균형잡힌 근육발달 + 체중증가 보충제
+#최상급 탄수화물 + 단백질 7:3',
+95000,
+21,
+'게이너',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스칼로리 (4kg)',
+'#체중증가를 위한 고칼로리 1448kcal
+#프리미엄 고칼로리 탄수화물 체중증가제',
+88000,
+22,
+'게이너',
+now(),
+now()
+),
+(
+'헬스플래너 제트머슬온 (3kg)',
+'#균형잡힌 근육발달 + 체중증가 보충제
+#최상급 탄수화물 + 단백질 5:5',
+105000,
+19,
+'게이너',
+now(),
+now()
+),
+(
+'헬스플래너 제트게이너 (4kg)',
+'#균형잡힌 근육발달 + 체중증가 보충제
+#최상급 탄수화물 + 8종 혼합단백질 7:3',
+75000,
+21,
+'게이너',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스게이너 플래티넘 (4kg)',
+'#하이퀄리티 근육발달 + 체중증가
+#탄수화물 + 단백질 7:3, 아르기닌 + BCAA',
+102000,
+17,
+'게이너',
+now(),
+now()
+),
+(
+'헬스플래너 제트머슬온 플래티넘 (3kg)',
+'#하이퀄리티 근육발달 + 체중증가
+#탄수화물 + 단백질 5:5, 아르기닌 + BCAA',
+115000,
+17,
+'게이너',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스게인 (4kg)',
+'#균형잡힌 근육발달 + 체중증가 보충제
+#최상급 탄수화물 + 3종 혼합단백질 9:1',
+80000,
+19,
+'게이너',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스카브 (4kg)',
+'#체중증가를 위한 고품질 탄수화물99%
+#최상급 탄수화물 고칼로리 체중증가제',
+100000,
+41,
+'게이너',
+now(),
+now()
+),
+(
+'헬스플래너 제트팻킬러쉐이크 (1.5kg)',
+'#건강한 다이어트를 위한 선택
+#프리미엄 식사대용 단백질 쉐이크',
+77000,
+38,
+'다이어트',
+now(),
+now()
+),
+(
+'헬스플래너 제트프로컷가르시니아 (1.000mg x 180정)',
+'#탄수화물, 지방합성 억제 기능성
+#고함량 프리미엄 가르시니아(HCA) 공급',
+84000,
+65,
+'다이어트',
+now(),
+now()
+),
+(
+'헬스플래너 제트프로컷엘카르니틴 (1.000mg x 180정)',
+'#체지방 감소 기능성
+#고함량 프리미엄 L-카르니틴 공급',
+73000,
+39,
+'다이어트',
+now(),
+now()
+),
+(
+'헬스플래너 제트프로컷카테킨 (1.000mg x 180정)',
+'#체지방 감소, 식이섬유
+#고함량 녹차추출물 카테킨 공급',
+65000,
+39,
+'다이어트',
+now(),
+now()
+),
+(
+'헬스플래너 제트프로컷키토산 (1.000mg x 180정)',
+'#식약처 GMP 인증마크 획득
+#첨가물 무첨가 프리미엄 고함량 키토산',
+65000,
+39,
+'다이어트',
+now(),
+now()
+),
+(
+'헬스플래너 제트락토페린프로 (1.000mg x 30정)',
+'#우유에 극소량만 추출 가능한 귀한 성분
+#순도 95% 최상급 락토페린',
+77000,
+38,
+'다이어트',
+now(),
+now()
+),
+(
+'헬스플래너 제트크레아틴프로 (1.000mg x 180정)',
+'#이상적인 퍼포먼스를 위한 선택
+#고함량 프리미언 크레아틴 충전',
+48000,
+39,
+'에너지',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스크레아틴 (300g)',
+'#이상적인 퍼포먼스를 위한 선택
+#無첨가물 순수 100% 독일산 모노크레아틴',
+61000,
+45,
+'에너지',
+now(),
+now()
+),
+(
+'헬스플래너 제트엘아르기닌프로 (1,500mg x 180정)',
+'#활력 넘치는 하루의 시작
+#고함량 프리미엄 L-아르기닌 충전',
+48000,
+43,
+'에너지',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스엘아르기닌 (900g)',
+'#활력 넘치는 하루의 시작
+#고함량 프리미엄 L-아르기닌 + 아미노산',
+77000,
+38,
+'에너지',
+now(),
+now()
+),
+(
+'헬스플래너 제트타우린프로 (1,400mg x 180정)',
+'#피로회복, 자양강장제 주 성분
+#고함량 프리미엄 타우린',
+46000,
+40,
+'에너지',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스부스터 (900g)',
+'#폭발적인 퍼포먼스를 위한 선택
+#고함량 에너지 부스터',
+78000,
+39,
+'에너지',
+now(),
+now()
+),
+(
+'헬스플래너 제트맥스에너지 (500g)',
+'#에너지 충전을 위한 선택
+#고함량 에너지 섭취',
+48000,
+39,
+'에너지',
+now(),
+now()
+),
+(
+'헬스플래너 제트ZMA프로 (1,000mg x 180정)',
+'#면역력, 에너지를 위한
+#ZMA(마그네슘, 비타민B6, 아연) 충전',
+48000,
+43,
+'에너지',
+now(),
+now()
+),
+(
+'헬스플래너 제트옥타코사놀프로 (1,000mg x 180정)',
+'#지구력 증진을 위한
+#고함량 프리미엄 옥타코사놀 충전',
+48000,
+39,
+'에너지',
+now(),
+now()
+),
+(
+'헬스플래너 제트멀티비타민프로 (600mg x 180정)',
+'#하루 1회, 비타민&미네랄 기준치 100% 충족
+#고함량 프리미엄 멀티비타민 충전',
+35000,
+30,
+'영양제',
+now(),
+now()
+),
+(
+'헬스플래너 제트밀크씨슬프로 (1,000mg x 180정)',
+'#건강한 간을 위한
+#고함량 프리미엄 밀크씨슬 충전',
+35000,
+30,
+'영양제',
+now(),
+now()
+),
+(
+'헬스플래너 제트칼슘프로 (1,000mg x 180정)',
+'#튼튼한 뼈를 위한 4중 복합기능성
+#고함량 프리미엄 칼슘 충전',
+42000,
+13,
+'영양제',
+now(),
+now()
+),
+(
+'헬스플래너 제트엽산프로 (800mg x 180정)',
+'#건강한 태아를 위한 안전한 無첨가물
+#고함량 프리미엄 엽산 충전',
+35000,
+33,
+'영양제',
+now(),
+now()
+),
+(
+'헬스플래너 제트아연프로 (1000mg x 180정)',
+'#정신적인 면역 기능을 위한
+#고함량 프리미엄 아연 충전',
+35000,
+33,
+'영양제',
+now(),
+now()
+),
+(
+'헬스플래너 제트비오틴프로 (700mg x 90정)',
+'#건강한 모발을 위한
+#비오틴 맥주효모 공급',
+40000,
+41,
+'영양제',
+now(),
+now()
+),
+(
+'락앤락 프로쉐이커 690ml 트라이탄 (블랙)',
+'#락앤락 정품 프로쉐이커
+#690ml 친환경 트라이탄',
+10000,
+22,
+'쉐이커',
+now(),
+now()
+),
+(
+'락앤락 프로쉐이커 컨테이너 600ml (매트그레이)',
+'#락앤락 정품 프로쉐이커
+#600ml 분리형 컨테이너',
+10000,
+22,
+'쉐이커',
+now(),
+now()
+),
+(
+'락앤락 프로쉐이커 밸런스 800ml (매트블랙)',
+'#락앤락 정품 프로쉐이커
+#800ml 이중 프로텍트 아머',
+12000,
+18,
+'쉐이커',
+now(),
+now()
+),
+(
+'락앤락 프로쉐이커 그랑데 2400ml (클리어그레이)',
+'#락앤락 정품 프로쉐이커
+#2400ml 대용량쉐이커',
+13000,
+25,
+'쉐이커',
+now(),
+now()
+),
+(
+'시크 1118W 리스트랩 18인치 (화이트)',
+'#공식수입 정품, 강력한 지지력
+#손목을 보호하여 부상 방지',
+34200,
+11,
+'헬스용품',
+now(),
+now()
+),
+(
+'럼블롤러 폼롤러 필라테스 마시지 폼',
+'#공식수입 정품, 럼플롤러 모음전
+#필라테스, 마사지 폼롤러',
+81600,
+29,
+'헬스용품',
+now(),
+now()
+),
+(
+'레드라인 66인치 무릎보호대',
+'#공식수입 정품, 강력한 압박감
+#고중량 트레이닝시 무릎부상 방지',
+41000,
+7,
+'헬스용품',
+now(),
+now()
+),
+(
+'시크 1900 얼티메이트 그립 블랙',
+'#공식수입 정품, 강력한 지지력
+#손목을 보호하여 부상 방지',
+54000,
+10,
+'헬스용품',
+now(),
+now()
+),
+(
+'시크 3004 리프팅 파워벨트 RED/BLACK',
+'#공식수입 정품, 강력한 지지력
+#허리부상 방지, 파워 리프트 벨트',
+81000,
+10,
+'헬스용품',
+now(),
+now()
+),
+(
+'시크 1700 앵클스트랩 (블랙)',
+'#공식수입 정품, 강력한 지지력
+#발목을 보호하여 부상 방지',
+33000,
+11,
+'헬스용품',
+now(),
+now()
+),
+(
+'시크 415 파워 리프팅 글러브',
+'#공식수입 정품, 안정적인 그립감
+#미끄럼방지를 위한 리프팅 글러브',
+40000,
+15,
+'헬스용품',
+now(),
+now()
+),
+(
+'시크 SGB22 디럭스 스포츠 GYM BAG',
+'#공식수입 정품, 다양한 수납 공간
+#실용적인 스포츠 백',
+59500,
+10,
+'헬스용품',
+now(),
+now()
+),
+(
+'시크 700MP Meal pack 백팩',
+'#공식수입 정품, 다양한 수납 공간
+#실용적인 스포츠 백팩',
+144000,
+10,
+'헬스용품',
+now(),
+now()
+),
+(
+'고체형 탄마가루 Gym Chalk magnesium',
+'#공식수입 정품, 강력한 지지력
+#고체형 탄마가루, 미끄럼 방지',
+5400,
+15,
+'헬스용품',
+now(),
+now()
+),
+(
+'WSF 그립테크 헬스스트랩 + 레드라인 손목보호대',
+'#공식수입 정품, 강력한 지지력
+#손목을 보호하여 부상 방지',
+45000,
+10,
+'헬스용품',
+now(),
+now()
+);
+
+
+--------------------------- 상품별 첨부 파일 insert -----------------------
+insert into product_file(
+product_no,
+product_file_name,
+product_file_save_dir,
+created_date,
+modified_date,
+product_file_type,
+product_uuid,
+product_file_size
+)
+values(
+1,
+'유기농1_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+1,
+'유기농1_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+1,
+'유기농1_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+2,
+'유기농2_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+2,
+'유기농2_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+2,
+'유기농2_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+3,
+'유기농3_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+3,
+'유기농3_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+3,
+'유기농3_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+4,
+'유기농4_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+4,
+'유기농4_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+4,
+'유기농4_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+5,
+'유기농5_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+5,
+'유기농5_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+5,
+'유기농5_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+6,
+'유기농6_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+6,
+'유기농6_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+6,
+'유기농6_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+7,
+'유기농7_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+7,
+'유기농7_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+7,
+'유기농7_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+8,
+'프로틴1_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+8,
+'프로틴1_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+8,
+'프로틴1_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+9,
+'프로틴2_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+9,
+'프로틴2_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+9,
+'프로틴2_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+10,
+'프로틴3_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+10,
+'프로틴3_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+10,
+'프로틴3_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+11,
+'프로틴4_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+11,
+'프로틴4_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+11,
+'프로틴4_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+12,
+'프로틴5_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+12,
+'프로틴5_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+12,
+'프로틴5_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+13,
+'프로틴6_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+13,
+'프로틴6_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+13,
+'프로틴6_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+14,
+'프로틴7_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+14,
+'프로틴7_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+14,
+'프로틴7_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+15,
+'프로틴8_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+15,
+'프로틴8_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+15,
+'프로틴8_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+16,
+'프로틴9_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+16,
+'프로틴9_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+16,
+'프로틴9_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+17,
+'프로틴10_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+17,
+'프로틴10_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+17,
+'프로틴10_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+18,
+'프로틴11_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+18,
+'프로틴11_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+18,
+'프로틴11_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+19,
+'프로틴12_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+19,
+'프로틴12_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+19,
+'프로틴12_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+20,
+'프로틴13_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+20,
+'프로틴13_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+20,
+'프로틴13_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+21,
+'게이너1_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+21,
+'게이너1_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+21,
+'게이너1_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+22,
+'게이너2_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+22,
+'게이너2_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+22,
+'게이너2_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+23,
+'게이너3_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+23,
+'게이너3_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+23,
+'게이너3_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+24,
+'게이너4_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+24,
+'게이너4_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+24,
+'게이너4_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+25,
+'게이너5_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+25,
+'게이너5_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+25,
+'게이너5_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+26,
+'게이너6_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+26,
+'게이너6_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+26,
+'게이너6_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+27,
+'게이너7_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+27,
+'게이너7_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+27,
+'게이너7_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+28,
+'게이너8_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+28,
+'게이너8_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+28,
+'게이너8_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+29,
+'다이어트1_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+29,
+'다이어트1_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+29,
+'다이어트1_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+30,
+'다이어트2_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+30,
+'다이어트2_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+30,
+'다이어트2_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+31,
+'다이어트3_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+31,
+'다이어트3_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+31,
+'다이어트3_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+32,
+'다이어트4_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+32,
+'다이어트4_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+32,
+'다이어트4_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+33,
+'다이어트5_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+33,
+'다이어트5_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+33,
+'다이어트5_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+34,
+'다이어트6_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+34,
+'다이어트6_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+34,
+'다이어트6_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+35,
+'에너지1_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+35,
+'에너지1_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+35,
+'에너지1_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+36,
+'에너지2_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+36,
+'에너지2_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+36,
+'에너지2_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+37,
+'에너지3_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+37,
+'에너지3_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+37,
+'에너지3_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+38,
+'에너지4_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+38,
+'에너지4_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+38,
+'에너지4_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+39,
+'에너지5_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+39,
+'에너지5_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+39,
+'에너지5_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+40,
+'에너지6_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+40,
+'에너지6_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+40,
+'에너지6_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+41,
+'에너지7_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+41,
+'에너지7_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+41,
+'에너지7_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+42,
+'에너지8_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+42,
+'에너지8_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+42,
+'에너지8_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+43,
+'에너지9_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+43,
+'에너지9_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+43,
+'에너지9_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+44,
+'영양제1_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+44,
+'영양제1_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+44,
+'영양제1_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+45,
+'영양제2_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+45,
+'영양제2_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+45,
+'영양제2_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+46,
+'영양제3_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+46,
+'영양제3_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+46,
+'영양제3_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+47,
+'영양제4_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+47,
+'영양제4_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+47,
+'영양제4_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+48,
+'영양제5_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+48,
+'영양제5_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+48,
+'영양제5_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+49,
+'영양제6_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+49,
+'영양제6_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+49,
+'영양제6_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+50,
+'쉐이커1_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+50,
+'쉐이커1_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+50,
+'쉐이커1_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+51,
+'쉐이커2_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+51,
+'쉐이커2_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+51,
+'쉐이커2_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+52,
+'쉐이커3_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+52,
+'쉐이커3_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+52,
+'쉐이커3_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+53,
+'쉐이커4_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+53,
+'쉐이커4_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+53,
+'쉐이커4_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+54,
+'헬스용품1_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+54,
+'헬스용품1_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+55,
+'헬스용품2_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+55,
+'헬스용품2_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+56,
+'헬스용품3_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+56,
+'헬스용품3_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+56,
+'헬스용품3_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+57,
+'헬스용품4_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+57,
+'헬스용품4_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+57,
+'헬스용품4_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+58,
+'헬스용품5_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+58,
+'헬스용품5_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+58,
+'헬스용품5_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+59,
+'헬스용품6_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+59,
+'헬스용품6_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+59,
+'헬스용품6_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+60,
+'헬스용품7_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+60,
+'헬스용품7_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+60,
+'헬스용품7_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+61,
+'헬스용품8_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+61,
+'헬스용품8_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+61,
+'헬스용품8_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+62,
+'헬스용품9_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+62,
+'헬스용품9_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+62,
+'헬스용품9_3.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+63,
+'헬스용품10_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+63,
+'헬스용품10_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+64,
+'헬스용품11_1.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+),
+(
+64,
+'헬스용품11_2.jpg',
+'product_register_img',
+now(),
+now(),
+'image/jpeg',
+UUID(),
+FLOOR(1000 + RAND() * 2000)
+);
+
+
+---------------------------- 기본 상품 정보 ---------------------------
+상품등록
+C:\health_upload\product_register_img\
+image/jpeg
+
+- 유기농
+1.
+헬스플래너 유기농 제트게이너 (1.2kg)
+image/jpeg
+#업계최초 유기농 인증마크 획득
+#탄수화물+유기농 WPC 7:3 보충제
+
+가격 : 69000
+
+할인율 : 16
+
+2.
+헬스플래너 유기농 제트게이너 (3kg)
+
+#업계최초 유기농 인증마크 획득
+#탄수화물+유기농 WPC 7:3 보충제
+
+가격 : 150000
+
+할인율 : 17
+
+3.
+헬스플래너 유기농 제트맥스게인 (1.2kg)
+
+#업계최초 유기농 인증마크 획득
+#탄수화물+유기농 WPC 9:1 보충제
+
+가격 : 80000
+
+할인율 : 31
+
+4.
+헬스플래너 유기농 제트맥스게인 (3kg)
+
+#업계최초 유기농 인증마크 획득
+#탄수화물+유기농 WPC 9:1 보충제
+
+가격 : 145000
+
+할인율 : 17
+
+5.
+헬스플래너 유기농 제트맥스프로틴 (1.8kg)
+
+#업계최초 유기농 인증마크 획득
+#유기농 WPC 농축유청단백질
+
+가격 : 150000
+
+할인율 : 17
+
+6.
+헬스플래너 유기농 제트맥스프로틴 (640g)
+
+#업계최초 유기농 인증마크 획득
+#유기농 WPC 농축유청단백질
+
+가격 : 66000
+
+할인율 : 17
+
+7.
+헬스플래너 유기농 제트팻킬러쉐이크 (640g)
+
+#업계최초 유기농 인증마크 획득
+#최상급 유기농 단백질 쉐이크
+
+가격 : 66000
+
+할인율 : 17
+
+
+- 프로틴
+1.
+헬스플래너 제트맥스WHP (2kg)
+
+#건강기능식품 인증
+#WPH 가수분해유청단백질
+
+가격 : 130000
+
+할인율 : 47
+
+2.
+헬스플래너 제트맥스WHI (2kg)
+
+#건강기능식품 인증
+#WPI 분리유청단백질
+
+가격 : 140000
+
+할인율 : 50
+
+3.
+헬스플래너 제트맥스WPIH (2kg)
+
+#건강기능식품 인증
+#WPIH 가수분해 분리유청단백질
+
+가격 : 170000
+
+할인율 : 47
+
+4.
+헬스플래너 제트맥스웨이 (2kg)
+
+#건강기능식품 인증
+#WPC 농축유청단백질
+
+가격 : 100000
+
+할인율 : 51
+
+5.
+헬스플래너 제트맥스소이 (2kg)
+
+#건강기능식품 인증
+#NON-GMO 식물성 분리대두단백질
+
+가격 : 90000
+
+할인율 : 45
+
+6.
+헬스플래너 제트프로프로틴 (2kg)
+
+#건강기능식품 인증
+#식물성 단백질 + WPI 분리유청단백질
+
+가격 : 110000
+
+할인율 : 46
+
+7.
+헬스플래너 제트맥스프로틴 (2kg)
+
+#건강기능식품 인증
+#미셀라카제인 + WPI + 식물성 단백질
+
+가격 : 130000
+
+할인율 : 47
+
+8.
+헬스플래너 제트맥스WPH 플래티넘 (2kg)
+
+#식품안전 인증마크
+#WPH 가수분해유청단백질  플래티넘
+
+가격 : 140000
+
+할인율 : 47
+
+9.
+헬스플래너 제트맥스MPH (2kg)
+
+#식품안전 인증마크
+#MPH 가수분해유청단백질
+
+가격 : 130000
+
+할인율 : 47
+
+10.
+니드포WPH (2.27kg)
+
+#특별한 선택, 니드포 시리즈
+#프리미엄 WPH 가수분해유청단백질
+
+가격 : 120000
+
+할인율 : 46
+
+11.
+니드포WPI (2.27kg)
+
+#특별한 선택, 니드포 시리즈
+#프리미엄 WPI 분리유청단백질
+
+가격 : 140000
+
+할인율 : 46
+
+12.
+니드포웨이 (2.27kg)
+
+#특별한 선택, 니드포 시리즈
+#프리미엄 WPC 농축유청단백질
+
+가격 : 100000
+
+할인율 : 40
+
+13.
+니드포프로틴 (2.27kg)
+
+#특별한 선택, 니드포 시리즈
+#프리미엄 5가지 동물성 + 식물성 단백질
+
+가격 : 90000
+
+할인율 : 39
+
+
+- 게이너
+1.
+헬스플래너 제트맥스게이너 (4kg)
+
+#균형잡힌 근육발달 + 체중증가 보충제
+#최상급 탄수화물 + 단백질 7:3
+
+가격 : 95000
+
+할인율 : 21
+
+2.
+헬스플래너 제트맥스칼로리 (4kg)
+
+#체중증가를 위한 고칼로리 1448kcal
+#프리미엄 고칼로리 탄수화물 체중증가제
+
+가격 : 88000
+
+할인율 : 22
+
+3.
+헬스플래너 제트머슬온 (3kg)
+
+#균형잡힌 근육발달 + 체중증가 보충제
+#최상급 탄수화물 + 단백질 5:5
+
+가격 : 105000
+
+할인율 : 19
+
+4.
+헬스플래너 제트게이너 (4kg)
+
+#균형잡힌 근육발달 + 체중증가 보충제
+#최상급 탄수화물 + 8종 혼합단백질 7:3
+
+가격 : 75000
+
+할인율 : 21
+
+5.
+헬스플래너 제트맥스게이너 플래티넘 (4kg)
+
+#하이퀄리티 근육발달 + 체중증가
+#탄수화물 + 단백질 7:3, 아르기닌 + BCAA
+
+가격 : 102000
+
+할인율 : 17
+
+6.
+헬스플래너 제트머슬온 플래티넘 (3kg)
+
+#하이퀄리티 근육발달 + 체중증가
+#탄수화물 + 단백질 5:5, 아르기닌 + BCAA
+
+가격 : 115000
+
+할인율 : 17
+
+7.
+헬스플래너 제트맥스게인 (4kg)
+
+#균형잡힌 근육발달 + 체중증가 보충제
+#최상급 탄수화물 + 3종 혼합단백질 9:1
+
+가격 : 80000
+
+할인율 : 19
+
+8.
+헬스플래너 제트맥스카브 (4kg)
+
+#체중증가를 위한 고품질 탄수화물99%
+#최상급 탄수화물 고칼로리 체중증가제
+
+가격 : 100000
+
+할인율 : 41
+
+
+- 다이어트
+1.
+헬스플래너 제트팻킬러쉐이크 (1.5kg)
+
+#건강한 다이어트를 위한 선택
+#프리미엄 식사대용 단백질 쉐이크
+
+가격 : 77000
+
+할인율 : 38
+
+2.
+헬스플래너 제트프로컷가르시니아 (1.000mg x 180정)
+
+#탄수화물, 지방합성 억제 기능성
+#고함량 프리미엄 가르시니아(HCA) 공급
+
+가격 : 84000
+
+할인율 : 65
+
+3.
+헬스플래너 제트프로컷엘카르니틴 (1.000mg x 180정)
+
+#체지방 감소 기능성
+#고함량 프리미엄 L-카르니틴 공급
+
+가격 : 73000
+
+할인율 : 39
+
+4.
+헬스플래너 제트프로컷카테킨 (1.000mg x 180정)
+
+#체지방 감소, 식이섬유
+#고함량 녹차추출물 카테킨 공급
+
+가격 : 65000
+
+할인율 : 39
+
+5.
+헬스플래너 제트프로컷키토산 (1.000mg x 180정)
+
+#식약처 GMP 인증마크 획득
+#첨가물 무첨가 프리미엄 고함량 키토산
+
+가격 : 65000
+
+할인율 : 39
+
+6.
+헬스플래너 제트락토페린프로 (1.000mg x 30정)
+
+#우유에 극소량만 추출 가능한 귀한 성분
+#순도 95% 최상급 락토페린
+
+가격 : 77000
+
+할인율 : 38
+
+
+- 에너지
+1.
+헬스플래너 제트크레아틴프로 (1.000mg x 180정)
+
+#이상적인 퍼포먼스를 위한 선택
+#고함량 프리미언 크레아틴 충전
+
+가격 : 48000
+
+할인율 : 39
+
+2.
+헬스플래너 제트맥스크레아틴 (300g)
+
+#이상적인 퍼포먼스를 위한 선택
+#無첨가물 순수 100% 독일산 모노크레아틴
+
+가격 : 61000
+
+할인율 : 45
+
+3.
+헬스플래너 제트엘아르기닌프로 (1,500mg x 180정)
+
+#활력 넘치는 하루의 시작
+#고함량 프리미엄 L-아르기닌 충전
+
+가격 : 48000
+
+할인율 : 43
+
+4.
+헬스플래너 제트맥스엘아르기닌 (900g)
+
+#활력 넘치는 하루의 시작
+#고함량 프리미엄 L-아르기닌 + 아미노산
+
+가격 : 77000
+
+할인율 : 38
+
+5.
+헬스플래너 제트타우린프로 (1,400mg x 180정)
+
+#피로회복, 자양강장제 주 성분
+#고함량 프리미엄 타우린
+
+가격 : 46000
+
+할인율 : 40
+
+6.
+헬스플래너 제트맥스부스터 (900g)
+
+#폭발적인 퍼포먼스를 위한 선택
+#고함량 에너지 부스터
+
+가격 : 78000
+
+할인율 : 39
+
+7.
+헬스플래너 제트맥스에너지 (500g)
+
+#에너지 충전을 위한 선택
+#고함량 에너지 섭취
+
+가격 : 48000
+
+할인율 : 39
+
+8.
+헬스플래너 제트ZMA프로 (1,000mg x 180정)
+
+#면역력, 에너지를 위한
+#ZMA(마그네슘, 비타민B6, 아연) 충전
+
+가격 : 48000
+
+할인율 : 43
+
+9.
+헬스플래너 제트옥타코사놀프로 (1,000mg x 180정)
+
+#지구력 증진을 위한
+#고함량 프리미엄 옥타코사놀 충전
+
+가격 : 48000
+
+할인율 : 39
+
+
+- 영양제
+1.
+헬스플래너 제트멀티비타민프로 (600mg x 180정)
+
+#하루 1회, 비타민&미네랄 기준치 100% 충족
+#고함량 프리미엄 멀티비타민 충전
+
+가격 : 35000
+
+할인율 : 30
+
+2.
+헬스플래너 제트밀크씨슬프로 (1,000mg x 180정)
+
+#건강한 간을 위한
+#고함량 프리미엄 밀크씨슬 충전
+
+가격 : 35000
+
+할인율 : 30
+
+3.
+헬스플래너 제트칼슘프로 (1,000mg x 180정)
+
+#튼튼한 뼈를 위한 4중 복합기능성
+#고함량 프리미엄 칼슘 충전
+
+가격 : 42000
+
+할인율 : 13
+
+4.
+헬스플래너 제트엽산프로 (800mg x 180정)
+
+#건강한 태아를 위한 안전한 無첨가물
+#고함량 프리미엄 엽산 충전
+
+가격 : 35000
+
+할인율 : 33
+
+5.
+헬스플래너 제트아연프로 (1000mg x 180정)
+
+#정신적인 면역 기능을 위한
+#고함량 프리미엄 아연 충전
+
+가격 : 35000
+
+할인율 : 33
+
+6.
+헬스플래너 제트비오틴프로 (700mg x 90정)
+
+#건강한 모발을 위한
+#비오틴 맥주효모 공급
+
+가격 : 40000
+
+할인율 : 41
+
+
+- 쉐이커
+1.
+락앤락 프로쉐이커 690ml 트라이탄 (블랙)
+
+#락앤락 정품 프로쉐이커
+#690ml 친환경 트라이탄
+
+가격 : 10000
+
+할인율 : 22
+
+2.
+락앤락 프로쉐이커 컨테이너 600ml (매트그레이)
+
+#락앤락 정품 프로쉐이커
+#600ml 분리형 컨테이너
+
+가격 : 10000
+
+할인율 : 22
+
+3.
+락앤락 프로쉐이커 밸런스 800ml (매트블랙)
+
+#락앤락 정품 프로쉐이커
+#800ml 이중 프로텍트 아머
+
+가격 : 12000
+
+할인율 : 18
+
+4.
+락앤락 프로쉐이커 그랑데 2400ml (클리어그레이)
+
+#락앤락 정품 프로쉐이커
+#2400ml 대용량쉐이커
+
+가격 : 13000
+
+할인율 : 25
+
+
+- 헬스용품
+1.
+시크 1118W 리스트랩 18인치 (화이트)
+
+#공식수입 정품, 강력한 지지력
+#손목을 보호하여 부상 방지
+
+가격 : 34200
+
+할인율 : 11
+
+2.
+럼블롤러 폼롤러 필라테스 마시지 폼
+
+#공식수입 정품, 럼플롤러 모음전
+#필라테스, 마사지 폼롤러
+
+가격 : 81600
+
+할인율 : 29
+
+3.
+레드라인 66인치 무릎보호대
+
+#공식수입 정품, 강력한 압박감
+#고중량 트레이닝시 무릎부상 방지
+
+가격 : 41000
+
+할인율 : 7
+
+4.
+시크 1900 얼티메이트 그립 블랙
+
+#공식수입 정품, 강력한 지지력
+#손목을 보호하여 부상 방지
+
+가격 : 54000
+
+할인율 : 10
+
+5.
+시크 3004 리프팅 파워벨트 RED/BLACK
+
+#공식수입 정품, 강력한 지지력
+#허리부상 방지, 파워 리프트 벨트
+
+가격 : 81000
+
+할인율 : 10
+
+6.
+시크 1700 앵클스트랩 (블랙)
+
+#공식수입 정품, 강력한 지지력
+#발목을 보호하여 부상 방지
+
+가격 : 33000
+
+할인율 : 11
+
+7.
+시크 415 파워 리프팅 글러브
+
+#공식수입 정품, 안정적인 그립감
+#미끄럼방지를 위한 리프팅 글러브
+
+가격 : 40000
+
+할인율 : 15
+
+8.
+시크 SGB22 디럭스 스포츠 GYM BAG
+
+#공식수입 정품, 다양한 수납 공간
+#실용적인 스포츠 백
+
+가격 : 59500
+
+할인율 : 10
+
+9.
+시크 700MP Meal pack 백팩
+
+#공식수입 정품, 다양한 수납 공간
+#실용적인 스포츠 백팩
+
+가격 : 144000
+
+할인율 : 10
+
+10.
+고체형 탄마가루 Gym Chalk magnesium
+
+#공식수입 정품, 강력한 지지력
+#고체형 탄마가루, 미끄럼 방지
+
+가격 : 5400
+
+할인율 : 15
+
+11.
+WSF 그립테크 헬스스트랩 + 레드라인 손목보호대
+
+#공식수입 정품, 강력한 지지력
+#손목을 보호하여 부상 방지
+
+가격 : 45000
+
+할인율 : 10

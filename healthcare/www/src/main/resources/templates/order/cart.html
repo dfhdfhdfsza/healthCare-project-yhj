@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/product/css/product.css}">
+</head>
+<body>
+    <div class="cart-container">
+        <div class="box">
+            <!--/* 배너 영역 */-->
+        </div>
+
+        <!--/* 카테고리 영역 */-->
+        <div class="category-box">
+            <span th:each="typed: ${productTyped}">
+                <a th:href="@{/product/productList(productType=${typed.type}, page=, size=)}" th:text="${typed.type}"></a>
+            </span>
+        </div>
+        <div>
+            <ul>
+                <li th:each="order : ${session.cartList}">
+                    <div th:text="${order.userId}"></div>
+                    <div th:text="${order.orderNo}"></div>
+                    <div th:text="${order.productNo}"></div>
+                    <div th:text="${order.orderQty}"></div>
+                    <div th:text="${order.orderPrice}"></div>
+                    <div th:text="${order.point}"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

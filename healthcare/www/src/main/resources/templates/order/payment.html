@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>-->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+</head>
+<body>
+    <select name="select-pg" id="selectPg">
+        <option value="">결제선택</option>
+        <option value="kakaopay">카카오페이</option>
+        <option value="tosspay">토스페이</option>
+    </select>
+    <button type="button" onclick="requestPay()">결제하기</button>
+<script th:src="@{/js/order/payment.js}"></script>
+</body>
+</html>
