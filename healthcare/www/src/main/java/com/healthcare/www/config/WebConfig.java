@@ -11,4 +11,5 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/productFile/**")
                 .addResourceLocations("file:///C:/health_upload/product/");
     }
+
 }
