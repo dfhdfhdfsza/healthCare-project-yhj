@@ -50,9 +50,9 @@
                                         <span th:text="${p.productName}"></span>
                                         <div>
                                             <div class="qty">
-                                                <span class="material-symbols-outlined" id="OrderMinus">remove</span>
-                                                <span th:data-qty="${1}" class="qty-value">1</span>
-                                                <span class="material-symbols-outlined" id="OrderPlus">add</span>
+                                                <span class="material-symbols-outlined" id="orderMinus">remove</span>
+                                                <span th:data-price="${p.realPrice}" th:data-qty="${1}" class="qty-value">1</span>
+                                                <span class="material-symbols-outlined" id="orderPlus">add</span>
                                             </div>
                                             <div class="order-price">
                                                 <span>총 상품 금액</span>

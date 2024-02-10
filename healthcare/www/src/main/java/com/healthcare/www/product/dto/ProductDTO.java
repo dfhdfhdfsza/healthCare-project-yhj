@@ -1,5 +1,6 @@
 package com.healthcare.www.product.dto;
 
+import com.healthcare.www.order.dto.OrderDTO;
 import com.healthcare.www.product.domain.Product;
 import com.querydsl.core.annotations.QueryProjection;
 import com.querydsl.core.types.dsl.DateTimePath;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductDTO {
+public class ProductDTO implements Serializable {
     // 상품번호
     private Long productNo;
     // 상품명
@@ -76,6 +78,7 @@ public class ProductDTO {
         this.modDate = product.getModDate();
         this.productFileList = productFileDTOList;
     }
+
 
     // price 와 discountRate 로 realPrice 계산
     public Integer getRealPrice() {

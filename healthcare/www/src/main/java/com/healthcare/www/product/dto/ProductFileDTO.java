@@ -4,13 +4,15 @@ import com.healthcare.www.product.domain.ProductFile;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
 @AllArgsConstructor
 @Builder
-public class ProductFileDTO {
+public class ProductFileDTO implements Serializable {
 
     private String productUUID;
 
