@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/product/css/product.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="order-container">
+        <div class="box">
+            <!--/* 배너 영역 */-->
+        </div>
+
+        <!--/* 카테고리 영역 */-->
+        <div class="category-box">
+                <span th:each="typed: ${productTyped}">
+                    <a th:href="@{/product/productList(productType=${typed.type}, page=, size=)}" th:text="${typed.type}"></a>
+                </span>
+        </div>
+        <div class="order-history">
+            <h2>주문목록</h2>
+            <table class="order-list-table">
+                <tr>
+<!--                    <td>결제번호</td>-->
+<!--                    <td>주문번호</td>-->
+                    <td></td>
+                    <td>상품명</td>
+                    <td>주문일자</td>
+                    <td>주문수량</td>
+                    <td>결제금액</td>
+                    <td>적립금</td>
+                    <td></td>
+                </tr>
+                <!--/* 장바구니가 비어있으면... */-->
+                <tr th:if="${orderList.isEmpty()}">
+                    <td style="text-align:center" colspan="7">주문내역이 없습니다.</td>
+                </tr>
+
+                <!--/* 주문정보 data로 입력 */-->
+                <tr th:each="order : ${orderList}" class="order-list" th:if="${orderList.size() > 0}"
+                    th:data-orderno="${order.orderNo}" th:data-productno="${order.productDTO.productNo}" th:data-paymentno="${order.paymentNo}"
+                    th:data-orderqty="${order.orderQty}" th:data-orderprice="${order.orderPrice}" th:data-point="${order.point}">
+
+                    <td th:with="dir=${order.productDTO.productFileList.get(0).productFileSaveDir},
+                                fileName=${order.productDTO.productFileList.get(0).productFileName}">
+                        <div class="order-thumb"><a th:href="@{/product/productDetail(productNo=${order.productDTO.productNo})}"><img th:src="@{|/productFile/${dir}/${fileName}|}"></a></div>
+                    </td>
+
+                    <td><div><a class="product-link" th:href="@{/product/productDetail(productNo=${order.productDTO.productNo})}"  th:text="${order.productDTO.productName}"></a></div></td>
+
+                    <td><div th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></div></td>
+
+                    <td><div th:text="${order.orderQty}"></div></td>
+
+                    <td><div th:text="${#numbers.formatInteger(order.orderPrice,3,'COMMA')+'원'}" class="point-value"></div></td>
+
+                    <td><div th:text="${#numbers.formatInteger(order.point,3,'COMMA')+'원'}" class="point-value"></div></td>
+
+                    <td><button th:data-orderno="${order.orderNo}" th:data-orderprice="${order.orderPrice}" th:data-point="${order.point}"
+                                class="order-remove-btn" id="orderCancel" type="button">주문취소</button></td>
+                </tr>
+            </table>
+            <div>
+                <a th:href="@{/product/productList}"><button class="continue-shopping" type="button">계속 쇼핑하기</button></a>
+            </div>
+
+        </div>
+    </div>
+<script th:src="@{/js/order/orderList.js}"></script>
+</body>
+</html>

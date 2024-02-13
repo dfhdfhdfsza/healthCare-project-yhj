@@ -86,7 +86,6 @@ public class ProductController {
     @GetMapping(value = "searchProduct" ,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ProductDTO>> searchProductList
         (@RequestParam("category")String category, @RequestParam("keyword")String keyword){
-        log.info("검색 하러 왔음");
         ProductDTO productDTO = ProductDTO.builder().
                 category(category).
                 keyword(keyword).
@@ -102,7 +101,6 @@ public class ProductController {
         log.info("파라미터 전달받음 productType >>>>> {}",productDTO.getProductType());
         // 페이지 기능을 담은 리스트 요청
         Page<ProductDTO> productDTOList = productService.getProductListAndPaging(productDTO, pageable);
-        log.info("productDTO List >>>>>>>> {}",productDTOList);
 //        List<ProductDTO> productDTOList = productService.getList();
         model.addAttribute("productDTOList", productDTOList);
         model.addAttribute("productTyped", ProductTyped.values());
@@ -111,7 +109,6 @@ public class ProductController {
     // 상품 상세정보로 이동하는 메소드
     @GetMapping("productDetail")
     public void getProductDetail(Model model, OrderDTO orderDto, ProductDTO productDTO){
-
         productDTO = productService.getProduct(productDTO.getProductNo());
         model.addAttribute("productDTO", productDTO);
     }

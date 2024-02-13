@@ -25,6 +25,7 @@ import static com.healthcare.www.product.domain.QProductFile.productFile;
 public class ProductQueryRepository {
 
     private final JPAQueryFactory queryFactory;
+
     // 상품 목록 페이징 조건으로 검색, 조건에 맞는 상품목록 개수 조회
     public Page<ProductDTO> getProductListAndPaging(ProductDTO productDTO, Pageable pageable) {
         // DTO 객체로 맵핑하기 위해 Projection 객체로 바인딩 bean => setter 로 맵핑 (그 외 fields, constructor, Constructor + @QueryProjection 가능)
