@@ -3,10 +3,7 @@ package com.healthcare.www.user.controller;
 
 import com.healthcare.www.handler.FileHandler;
 import com.healthcare.www.handler.FileType;
-import com.healthcare.www.user.domain.Community;
-import com.healthcare.www.user.domain.User;
-import com.healthcare.www.user.domain.UserFile;
-import com.healthcare.www.user.domain.UserInfo;
+import com.healthcare.www.user.domain.*;
 import com.healthcare.www.user.dto.*;
 import com.healthcare.www.user.jwt.JWTUtil;
 import com.healthcare.www.user.repository.UserInfoRepository;
@@ -17,6 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,10 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -62,37 +59,25 @@ public class UserController {
 
     @GetMapping("/myPage")
     public String moveMyPage(HttpServletRequest request, Model m, @AuthenticationPrincipal UserDetails userDetails){
-      int validInfo = 0;
-      int validImage= 0;
 
+      int validCommunity = 0;
+
+      /* 현재 로그인한사람 */
       User user = userRepository.findByUserId(userDetails.getUsername());
       m.addAttribute("user",user);
 
-
+      /*유저정보*/
       UserInfo info = userService.selectUserInfo(user.getUserNo());
-      System.out.println(info+"유저 정보<<");
-      if(info == null){
-        validInfo = 1;
-        //유저가 정보를 입력하지 않았을 경우
-        m.addAttribute("validInfo",validInfo);
-      }else{
-        // 입력한 경우 정보를 화면에 출력
-        m.addAttribute("validInfo",validInfo);
-        m.addAttribute("info",info);
-      }
+      m.addAttribute("info",info);
 
+      /*이미지*/
       UserFile file = userService.selectUserFile(user.getUserNo());
-      System.out.println(file);
+      m.addAttribute("file",file);
 
-      if(file == null){
-        // 이미지 없는 경우 기본 이미지 출력
-        validImage = 1;
-        m.addAttribute("validImage", validImage);
-      }else{
-        // 이미지가 있는 경우 이미지 출력
-        m.addAttribute("validImage",validImage);
-        m.addAttribute("file",file);
-      }
+      /*댓글*/
+      List<Community> communityList = userService.selectCommunityList(user.getUserNo());
+      m.addAttribute("communityList",communityList);
+
 
 
       return "/user/myPage";
@@ -183,21 +168,38 @@ public class UserController {
   }
 
   @GetMapping("/community")
-  public String moveCommunity(@AuthenticationPrincipal UserDetails userDetails,  Model model){
+  public String moveCommunity(@AuthenticationPrincipal UserDetails userDetails,  Model model,
+                              @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo,
+                              @RequestParam(required = false, defaultValue = "createdAt", value = "criteria") String criteria){
+
+
+
     User user = userRepository.findByUserId(userDetails.getUsername());
     model.addAttribute("user",user);
 
     List<Community> communityList = userService.selectAll();
-    System.out.println(communityList.get(0));
+
     model.addAttribute("cList",communityList);
 
     return "/user/community";
   }
 
   @PostMapping("/community")
-  public  String addCommunity(CommunityDTO communityDTO){
+  public  String addCommunity(CommunityDTO communityDTO,
+                              @RequestParam(name ="file" ,required = false)MultipartFile[] files,
+                              @AuthenticationPrincipal UserDetails userDetails){
+
+    User user = userRepository.findByUserId(userDetails.getUsername());
+
     Community community = userService.addCommunity(communityDTO);
-    return "index";
+    System.out.println(files+"들어온파일<<<<<<<<<<<<");
+
+    if(files[0].getSize() > 0){
+      CommunityFileDTO communityFileDTO = fh.uploadCommunityFile(files,FileType.COMMUNITY);
+      /* 커뮤니티 파일 등록 */
+      int isOk = userService.addCommunityFile(communityFileDTO, community, user);
+    }
+    return "redirect:/user/community";
   }
   @GetMapping("/communityDetail")
   public String moveCommunityDetail(Model model, @AuthenticationPrincipal UserDetails userDetails,
@@ -207,10 +209,102 @@ public class UserController {
     User user = userRepository.findByUserId(userDetails.getUsername());
     model.addAttribute("user",user);
 
-    //작성자 정보
+    // 게시글 작성자 정보
     Community community = userService.selectCommunity(writingNo);
     model.addAttribute("community",community);
 
+    // 프로필사진
+    UserFile userFile = userService.findByUserNo(community.getUserNo());
+    model.addAttribute("file",userFile);
+
+    // 커뮤니티 사진
+    CommunityFile communityFile = userService.findByWritingNo(community.getWritingNo());
+    model.addAttribute("cFile",communityFile);
+    System.out.println(communityFile+"<<<<<<<<<<<< 커뮤니티 사진");
+
+    List<Comment> commentList = userService.selectCommentList(writingNo);
+
+    if(commentList != null){
+      /* 댓글이 있는 경우 */
+      model.addAttribute("commentList",commentList);
+    }
+
+    int validNumber = 0;
+
+    if(user.getUserNo() != community.getUserNo()){
+      validNumber = 1;
+      model.addAttribute("validNumber",validNumber);
+    }else{
+      /* 현재 접속한 유저가 커뮤니티 작성자인 경우 */
+      model.addAttribute("validNumber",validNumber);
+    }
+
+    // 조회수 추가
+
+
+
     return "/user/communityDetail";
   }
+  @GetMapping("/communityDelete")
+  public String deleteCommunity(@RequestParam("writingNo") long writingNo){
+    System.out.println(writingNo);
+
+    userService.deleteCommunity(writingNo);
+
+    return "index";
+  }
+
+  @PostMapping("/addComment")
+  public ResponseEntity<String> addComment(@RequestBody CommentDTO commentDTO){
+    System.out.println(commentDTO.getUserNo());
+    /* 댓글 등록 */
+    Comment comment = userService.addComment(commentDTO);
+
+    return comment != null ? new ResponseEntity<String>("1", HttpStatus.OK) :
+        new ResponseEntity<String>("0",HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @GetMapping("/commentDelete")
+  public String deleteComment(@RequestParam long commentNo){
+    /* 댓글 삭제 */
+    Comment comment = userService.commentDelete(commentNo);
+
+
+    return "redirect:/user/communityDetail?writingNo="+comment.getWritingNo();
+  }
+
+
+
+  @GetMapping(value = "/selectTag/{tag}" , produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<Community>> searchTag(@PathVariable String tag){
+    /* 태그 클릭 */
+    System.out.println(tag+"입력한 태그<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    List<Community> list = userService.selectTag(tag);
+
+    return new ResponseEntity<List<Community>>(list,HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/searchCommunity/{searchValue}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<Community>> searchCommunity(@PathVariable String searchValue){
+    /* 검색으로 */
+    List<Community> list = userService.communityList(searchValue);
+
+
+    return new ResponseEntity<List<Community>>(list,HttpStatus.OK);
+  }
+
+  @GetMapping("/favoriteAdd/{userNo}/{commentNo}")
+  public ResponseEntity<String> addFavorite(@PathVariable long userNo,@PathVariable long commentNo){
+    int isOk = userService.addFavorite(userNo,commentNo);
+
+    return new ResponseEntity<>("1", HttpStatus.OK);
+  }
+
+  @GetMapping("/userDelete")
+  public String deleteUser(@RequestParam("userNo") long userNo){
+    userService.removeUser(userNo);
+
+    return "redirect:/user/logout";
+  }
+
 }

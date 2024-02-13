@@ -15,61 +15,98 @@
         <div class="profile-div">
           <!--사진-->
           <div class="profileImage-div">
-            <img src="/image/user/프로필기본.png" class="profile-image" th:if="${validImage == 1}">
-<!--            <img class="item-main-img" th:src="@{|/userFile/${#strings.replace(file.userFileSaveDir, '\', '-')}/${file.userFileName}}|}"-->
-<!--                 th:if="${validImage == 0}">-->
+            <img src="/image/user/프로필기본.png" class="profile-image" th:if="${file == null}">
+            <img class="item-main-img profile-image" th:src=
+                "@{|/userFile/${#strings.replace(file.userFileSaveDir, '\\', '/')}/${file.userUUID + '_' + file.userFileName}|}"
+                 th:if="${file != null}">
           </div>
           <div class="profile">
 
             <!--개인정보 입력 및 수정-->
             <div class="profileInfo-editor">
               <span th:text="${user.userId}" class="userId"></span>
-              <a th:href="@{/user/modify(userNo=${user.userNo})}" class="profileModify" th:if="${validInfo == 0}">
+              <a th:href="@{/user/modify(userNo=${user.userNo})}" class="profileModify" th:if="${info != null}">
                 <span class="profile-span profile-modify">프로필 편집</span>
               </a>
 
-              <a th:href="@{/user/information(userNo=${user.userNo})}" class="infoAdd" th:if="${validInfo == 1}">
+              <a th:href="@{/user/information(userNo=${user.userNo})}" class="infoAdd" th:if="${info == null}">
                 <span class="profile-span profile-add">프로필 입력</span>
+              </a>
+
+              <a href="#" class="infoAdd">
+                <span class="profile-span">개인정보 변경</span>
+              </a>
+
+              <a href="#" class="infoAdd">
+                <span class="profile-span user-delete">회원탈퇴</span>
               </a>
             </div>
 
             <!--개인정보 입력했을때만 출력-->
             <div class="detail-div">
               <!--개인정보 들어갈 div-->
-              <div class="detail-information" th:if="${validInfo == 0}">
-
-                <strong>키</strong>
-                <span>[[${info.infoHeight}]]</span>
-
-                <strong>몸무게</strong>
-                <span>[[${info.infoWeight}]]</span>
-
-                <strong>골격근량</strong>
-                <span>[[${info.infoSkeletal}]]</span>
-
-                <strong>체지방률</strong>
-                <span>[[${info.infoBody}]]</span>
-
-                <strong>기초대사량</strong>
-                <span>[[${info.infoMetabolic}]]</span>
-
+              <div class="detail-information" th:if="${info != null}">
+                <div>
+                  <strong>성별</strong>
+                  <span>[[${user.userMail}]]</span>
+                </div>
+                <div>
+                  <strong>신장</strong>
+                  <span>[[${info.infoHeight}]] cm</span>
+                </div>
+                <div>
+                  <strong>체중</strong>
+                  <span>[[${info.infoWeight}]] kg</span>
+                </div>
+                <div>
+                  <strong>골격근량</strong>
+                  <span>[[${info.infoSkeletal}]] kg</span>
+                </div>
+                <div>
+                  <strong>체지방률</strong>
+                  <span>[[${info.infoBody}]] %</span>
+                </div>
+                <div>
+                  <strong>기초대사량</strong>
+                  <span>[[${info.infoMetabolic}]] kcal/day</span>
+                </div>
               </div>
               <!--개인정보 입력 안했을때 -->
-              <div th:if="${validInfo == 1}">
+              <div th:if="${info == null}">
                 <i class="bi bi-person-exclamation noProfile"></i>
                 <span>아직 정보를 입력하지 않았습니다. 정보를 입력해주세요</span>
               </div>
             </div>
+          </div>
+        </div>
 
+        <!--게시물-->
+        <div class="mid">
+          <div class="commentZone">
+            <!--작성한 게시글이 없는 경우-->
+            <div th:if="${communityList.size() < 1}" class="no-community">
+              <img src="/image/user/글없음.png" class="no-community-image">
+              <span>작성하신 게시글이 없습니다.</span>
+            </div>
 
-
+            <!--작성한 게시글이 있는 경우-->
+            <div th:if="${communityList.size() >= 1}" class="community-list-div">
+              <div th:each="list : ${communityList}" class="community-list">
+                <span th:text="${list.writingTitle}" class="community-title"></span>
+                <span th:text="${#strings.substring(list.writingRegDate, 0, 10)}" class="community-regDate"></span>
+              </div>
+            </div>
           </div>
 
-
-
-
+          <div class="productZone">
+            <div>
+              <span>구매하신 상품이 없습니다.</span>
+            </div>
+          </div>
 
         </div>
+
+
       </div>
 
 
@@ -83,7 +120,10 @@
       </div>
 
       <div class="preview">
-        <img src="/image/user/프로필기본.png" class="modify-profileImage">
+        <img src="/image/user/프로필기본.png" class="modify-profileImage" th:if="${file == null}">
+        <img class="item-main-img modify-profileImage" th:src=
+            "@{|/userFile/${#strings.replace(file.userFileSaveDir, '\\', '/')}/${file.userUUID + '_' + file.userFileName}|}"
+             th:if="${file != null}">
       </div>
 
       <div class="image-add-div">
@@ -93,6 +133,24 @@
           <button type="submit" class="save">저장</button>
         </form>
 
+      </div>
+    </div>
+
+    <div class="userDelete-modal">
+      <div class="userDelete-modal-sub">
+    <!--회원탈퇴 모달-->
+        <div class="close-button-div">
+          <i class="bi bi-x-lg close-button"></i>
+        </div>
+
+        <div class="delete-comment">계정을 삭제하시겠습니까?</div>
+
+        <div class="delete-modal-div">
+          <div class="delete-check-button">
+            <a th:href="@{/user/userDelete(userNo=${user.userNo})}" class="ok-btn">확인</a>
+            <div class="cancel-btn">취소</div>
+          </div>
+        </div>
       </div>
     </div>
 

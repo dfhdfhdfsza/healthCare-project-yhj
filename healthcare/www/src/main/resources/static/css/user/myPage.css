@@ -9,26 +9,31 @@ body{
 .main-container{
     position: absolute;
     transform: translate(-50%,-50%);
-    top: 25%;
-    left: 50%;
+    top: 50%;
+    left: 55%;
     width: 1100px;
     background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ccc;
 }
 .profile-div{
-    border: 1px solid black;
     display: flex;
     flex-direction: row;
     padding: 15px;
     padding-top: 30px;
+    border-bottom: 1px solid #ccc;
 }
 .profile-image{
-    width: 150px;
-    height: 150px;
-    padding-left: 30px;
+    width: 170px;
+    height: 170px;
+    margin-left: 30px;
     cursor: pointer;
 }
+.item-main-img{
+    border-radius: 50%;
+}
 .profileModify , .infoAdd{
-    text-decoration: none;
+    text-decoration: none;  
     color: black;
 }
 .profile-span{
@@ -62,9 +67,7 @@ body{
 .detail-div{
     padding-top: 40px;
 }
-.detail-information{
 
-}
 .noProfile{
     font-size: 25px;
 }
@@ -118,4 +121,119 @@ body{
 .image-add-div{
     padding-top: 50px;
     text-align: center;
+}
+.mid{
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+}
+.mid > div{
+    width: 50%;
+    padding: 10px;
+}
+.community-list-div{
+    padding: 10px;
+}
+.community-list{
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+.community-list > span{
+    font-size: 16px;
+}
+.community-title{
+    font-weight: 700;
+}
+.info-detail-image{
+    width: 50px;
+    height: 50px;
+}
+.detail-information{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+.detail-information > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 200px;
+    height: 40px;
+    cursor: pointer;
+    gap: 10px;
+    border-radius: 10px;
+}
+.no-community{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.no-community-image{
+    width: 20px;
+    height: 20px;
+}
+
+.userDelete-modal{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    padding: 10px;
+    display: none;
+}
+.userDelete-modal-sub{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.close-button{
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+}
+.close-button-div{
+    width: 100%;
+    text-align: right;
+
+}
+.delete-modal-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+}
+.delete-comment{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+.delete-check-button{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.delete-check-button > div, .delete-check-button > a{
+    width: 50%;
+    cursor: pointer;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #ccc;
+}
+.ok-btn{
+    text-decoration: none;
+    color: black;
 }

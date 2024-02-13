@@ -1,14 +1,8 @@
 package com.healthcare.www.user.service;
 
-import com.healthcare.www.user.domain.Community;
-import com.healthcare.www.user.domain.User;
-import com.healthcare.www.user.domain.UserFile;
-import com.healthcare.www.user.domain.UserInfo;
+import com.healthcare.www.user.domain.*;
 import com.healthcare.www.user.dto.*;
-import com.healthcare.www.user.repository.CommunityRepository;
-import com.healthcare.www.user.repository.UserFileRepository;
-import com.healthcare.www.user.repository.UserInfoRepository;
-import com.healthcare.www.user.repository.UserRepository;
+import com.healthcare.www.user.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +19,9 @@ public class UserServiceImpl implements UserService{
   private final UserInfoRepository userInfoRepository;
   private final UserFileRepository userFileRepository;
   private final CommunityRepository communityRepository;
+  private final CommentRepository commentRepository;
+  private final CommentFavoriteRepository commentFavoriteRepository;
+  private final CommunityFileRepository communityFileRepository;
 
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -168,8 +165,128 @@ public class UserServiceImpl implements UserService{
   @Override
   public Community selectCommunity(long writingNo) {
     Community community = communityRepository.findByWritingNo(writingNo);
-
+    community.setWritingReadCount(community.getWritingReadCount()+1);
+    communityRepository.save(community);
     return community;
+  }
+
+  @Override
+  public Comment addComment(CommentDTO commentDTO) {
+    Comment comment = Comment.builder()
+        .commentContent(commentDTO.getCommentContent())
+        .writingNo(commentDTO.getWritingNo())
+        .commentWriter(commentDTO.getCommentWriter())
+        .userNo(commentDTO.getUserNo())
+        .build();
+
+    commentRepository.save(comment);
+
+    return comment;
+  }
+
+  @Override
+  public List<Community> selectCommunityList(long userNo) {
+    List<Community> list = communityRepository.findByUserNo(userNo);
+    return list;
+  }
+
+  @Override
+  public List<Comment> selectCommentList(long writingNo) {
+    List<Comment> list = commentRepository.findByWritingNo(writingNo);
+    return list;
+  }
+
+  @Override
+  public List<Community> selectTag(String tag) {
+    List<Community> list = communityRepository.findByWritingTag(tag);
+    return list;
+  }
+
+  @Override
+  public List<Community> communityList(String searchValue) {
+    List<Community> list = communityRepository.findByWritingTitleLike("%"+searchValue+"%");
+
+    return list;
+  }
+
+  @Override
+  public void deleteCommunity(long writingNo) {
+    // 게시글 삭제
+    communityRepository.deleteById(writingNo);
+
+  }
+
+  @Override
+  public Comment commentDelete(long commentNo) {
+    // 댓글삭제
+    Comment comment = commentRepository.findByCommentNo(commentNo);
+
+    commentRepository.deleteById(commentNo);
+
+    return comment;
+  }
+
+  @Override
+  public UserFile findByUserNo(long userNo) {
+    // 커뮤니티 프로필사진
+    UserFile file = userFileRepository.findByUserNo(userNo);
+
+    return file;
+  }
+
+  @Override
+  public int addFavorite(long userNo, long commentNo) {
+    CommentFavorite favorite = CommentFavorite.builder()
+            .userNo(userNo)
+            .commentNo(commentNo)
+            .build();
+
+    commentFavoriteRepository.save(favorite);
+    return 1;
+  }
+
+  @Override
+  public void removeUser(long userNo) {
+    // 커뮤니티, 댓글, 프로필사진, 개인정보 , 좋아요 기록 전부삭제
+
+    // 회원 삭제
+    userRepository.deleteById(userNo);
+    // 회원 정보삭제
+    userInfoRepository.deleteById(userNo);
+    // 프로필사진 삭제
+    userFileRepository.deleteById(userNo);
+    // 작성글
+    communityRepository.deleteByUserNo(userNo);
+    // 작성글 -> 이미지
+    communityFileRepository.deleteByUserNo(userNo);
+    // 댓글
+    commentRepository.deleteByUserNo(userNo);
+    // 댓글 추천
+    commentFavoriteRepository.deleteByUserNo(userNo);
+
+  }
+
+  @Override
+  public int addCommunityFile(CommunityFileDTO communityFileDTO, Community community, User user) {
+    CommunityFile file = CommunityFile.builder()
+        .writingFileName(communityFileDTO.getWritingFileName())
+        .writingFileSize(communityFileDTO.getWritingFileSize())
+        .writingFileSaveDir(communityFileDTO.getWritingFileSaveDir())
+        .writingUUID(communityFileDTO.getWritingUUID())
+        .writingFileType(communityFileDTO.getWritingFileType())
+        .writingNo(community.getWritingNo())
+        .userNo(user.getUserNo())
+        .build();
+
+
+    communityFileRepository.save(file);
+    return 1;
+  }
+
+  @Override
+  public CommunityFile findByWritingNo(long writingNo) {
+    CommunityFile file = communityFileRepository.findByWritingNo(writingNo);
+    return file;
   }
 
 

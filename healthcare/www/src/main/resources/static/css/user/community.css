@@ -9,7 +9,10 @@ body{
     transform: translate(-50%,-50%);
     top: 40%;
     left: 55%;
-    
+    /* width: 100%;
+    padding-left: 250px;
+    padding-top: 60px;
+    box-sizing: border-box; */
 }
 .sub-container{
     padding: 20px;
@@ -213,4 +216,13 @@ body{
 .etc-zone > span:last-child{
     width: 50px;
     display: block;
+}
+.search-i{
+    cursor: pointer;
+}
+.search-div-value{
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px dotted #ccc;
 }

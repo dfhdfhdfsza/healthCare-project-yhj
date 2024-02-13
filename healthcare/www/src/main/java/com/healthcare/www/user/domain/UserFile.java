@@ -12,10 +12,11 @@ import lombok.*;
 @Entity
 @Builder
 public class UserFile {
-  @Id
+  /* 프로필 사진 */
   @Column(name = "user_uuid")
   private String userUUID;
 
+  @Id
   @Column(name = "user_no")
   private long userNo;
 

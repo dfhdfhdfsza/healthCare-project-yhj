@@ -14,33 +14,48 @@
     <form action="/user/information" method="post">
       <input type="hidden" name="userNo" th:value="${userNo}">
       <div>
-        <table border="1">
-          <tr>
-            <th>키</th>
-            <td><input type="text" name="infoHeight"></td>
-          </tr>
-          <tr>
-            <th>몸무게</th>
-            <td><input type="text" name="infoWeight"></td>
-          </tr>
-          <tr>
-            <th>골격근량</th>
-            <td><input type="text" name="infoSkeletal"></td>
-          </tr>
-          <tr>
-            <th>체지방률</th>
-            <td><input type="text" name="infoBody"></td>
-          </tr>
-          <tr>
-            <th>기초대사량</th>
-            <td><input type="text" name="infoMetabolic"></td>
-          </tr>
-        </table>
+        <div>
+          <strong>개인정보를 입력합니다.</strong>
+        </div>
+        <div>
+          <strong>키</strong>
+          <div>
+            <input type="text" name="infoHeight">
+            <span>cm</span>
+          </div>
+        </div>
+        <div>
+          <strong>몸무게</strong>
+          <div>
+            <input type="text" name="infoWeight">
+            <span>kg</span>
+          </div>
 
+        </div>
+        <div>
+          <strong>골격근량</strong>
+          <div>
+            <input type="text" name="infoSkeletal">
+            <span>kg</span>
+          </div>
+        </div>
+        <div>
+          <strong>체지방률</strong>
+          <div>
+            <input type="text" name="infoBody">
+            <span>%</span>
+          </div>
+        </div>
+        <div>
+          <strong>기초대사량</strong>
+          <div>
+            <input type="text" name="infoMetabolic">
+            <span>kcal/day</span>
+          </div>
+        </div>
         <button type="submit">저장</button>
 
       </div>
-
     </form>
   </div>
 </div>
