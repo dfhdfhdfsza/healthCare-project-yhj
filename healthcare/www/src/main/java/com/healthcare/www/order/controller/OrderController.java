@@ -1,13 +1,11 @@
 package com.healthcare.www.order.controller;
 
-import com.healthcare.www.membership.domain.Membership;
 import com.healthcare.www.membership.service.MembershipService;
 import com.healthcare.www.order.dto.OrderDTO;
 import com.healthcare.www.order.dto.PaymentDTO;
 import com.healthcare.www.order.service.OrderService;
 import com.healthcare.www.order.service.PaymentService;
 import com.healthcare.www.product.domain.ProductTyped;
-import com.healthcare.www.product.service.ProductService;
 import com.healthcare.www.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.geom.Path2D;
 import java.util.Comparator;
 import java.util.List;
 

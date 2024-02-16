@@ -25,7 +25,7 @@
                 <div class="product-item" th:with="dir=${p.productFileList.get(0).productFileSaveDir},
                     fileName=${p.productFileList.get(0).productFileName}">
                     <a th:href="@{/product/productDetail(productNo=${p.productNo})}">
-                        <img class="item-main-img" th:src="@{|/productFile/${dir}/${fileName}|}">
+                        <img class="item-main-img" th:src="@{|/productFile/${#strings.replace(dir, '\', '/')}/${fileName}|}">
                         <div class="item-name">
                             <span th:text="${p.productName}"></span>
                         </div>
