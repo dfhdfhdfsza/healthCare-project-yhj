@@ -1,5 +1,6 @@
 package com.healthcare.www.user.service;
 
+import com.healthcare.www.order.domain.Payment;
 import com.healthcare.www.user.domain.*;
 import com.healthcare.www.user.dto.*;
 
@@ -60,4 +61,15 @@ public interface UserService {
 
 
   CommunityFile findByWritingNo(long writingNo);
+
+
+  List<CommentFavorite> selectFavoriteList(long userNo, long writingNo);
+
+  void modifyComment(long commentNo, String commentContent);
+
+
+  int removeFavorite(long userNo, long commentNo);
+
+
+  List<Payment> selectProduct(String userId);
 }

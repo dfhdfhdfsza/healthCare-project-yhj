@@ -96,3 +96,18 @@ z-index: 9998;
 #heartIcon{
     transform: translateY(-41%);
 }
+.profile-image-nav, .item-main-img-nav{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.item-main-img-nav{
+    border-radius: 50%;
+}
+.myPage{
+    display: flex;
+    align-items: center;
+}

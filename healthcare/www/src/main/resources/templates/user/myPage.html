@@ -80,36 +80,56 @@
           </div>
         </div>
 
-        <!--게시물-->
-        <div class="mid">
-          <div class="commentZone">
-            <!--작성한 게시글이 없는 경우-->
-            <div th:if="${communityList.size() < 1}" class="no-community">
-              <img src="/image/user/글없음.png" class="no-community-image">
-              <span>작성하신 게시글이 없습니다.</span>
+        <div class="writing-payment-btn">
+          <!--작성한 글 / 구매목록 버튼-->
+          <div class="writing-payment-div">
+            <div class="writing-me">
+              <span>작성한 글</span>
             </div>
+            <div class="payment-me">
+              <span>구매목록</span>
+            </div>
+          </div>
 
-            <!--작성한 게시글이 있는 경우-->
-            <div th:if="${communityList.size() >= 1}" class="community-list-div">
-              <div th:each="list : ${communityList}" class="community-list">
-                <span th:text="${list.writingTitle}" class="community-title"></span>
-                <span th:text="${#strings.substring(list.writingRegDate, 0, 10)}" class="community-regDate"></span>
+          <!--게시물-->
+          <div class="mid">
+            <div class="commentZone">
+              <!--작성한 게시글이 없는 경우-->
+              <div th:if="${communityList.size() < 1}" class="no-community">
+                <img src="/image/user/글없음.png" class="no-community-image">
+                <span>작성하신 게시글이 없습니다.</span>
+              </div>
+              <!--작성한 게시글이 있는 경우-->
+              <div th:if="${communityList.size() >= 1}" class="community-list-div">
+                <div th:each="list : ${communityList}" class="community-list">
+                  <div  class="community-title">
+                    <a th:href="@{@{/user/communityDetail(writingNo=${list.writingNo})}}" th:text="${list.writingTitle}"></a>
+                  </div>
+                  <div th:text="${list.writingWriter}" class="community-writer"></div>
+                  <div th:text="${#strings.substring(list.writingRegDate, 0, 10)}" class="community-regDate"></div>
+                  <div th:text="${list.writingReadCount}" class="community-read-count"></div>
+                  <div th:text="${list.writingTag}" class="community-tag"></div>
+                </div>
               </div>
             </div>
-          </div>
+            <div class="productZone">
+              <div class="community-list-div">
+                <div th:if="${paymentList == null}">구매하신 상품이 없습니다.</div>
 
-          <div class="productZone">
-            <div>
-              <span>구매하신 상품이 없습니다.</span>
+                <div th:if="${paymentList != null}">
+                  <div th:each="list : ${paymentList}" >
+                    <div>
+                      <img th:src="@{|/productFile/${dir}/${fileName}|}"></a>
+                    </div>
+                    <div th:text="${list.orderPrice}"></div>
+                  </div>
+                </div>
+              </div>
             </div>
+
           </div>
-
         </div>
-
-
       </div>
-
-
     </div>
 
 

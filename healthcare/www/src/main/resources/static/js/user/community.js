@@ -19,20 +19,23 @@ file.addEventListener('click',()=>{
     fileInput.click();
 })
 
+document.querySelector('.all-category').addEventListener('click',()=>{
+    // #전체 클릭
+    window.location.reload();
+})
 
 
-
+// 태그로 검색 >> 
 let tags = document.querySelectorAll('.option-tag');
 
 tags.forEach(e=>{
     e.addEventListener('click',()=>{
         let tag = encodeURIComponent(e.getAttribute("data-tag"));
-        console.log(tag);
+
         searchTag(tag).then(result=>{
             if(result.length > 0){
                 let body_div = document.querySelector('.body-div');
                 body_div.innerHTML= "";
-                console.log(result.length+"<<<<<<<<<<<<<<<가져온 값");
                 for(let i=0; i<result.length; i++){
                     console.log(result[i]);
                     let str = `<div class="search-div-value">`;
@@ -55,7 +58,7 @@ tags.forEach(e=>{
     })
 })
         
-
+// 태그로 검색
 async function searchTag(tag){
     try {
         const resp = await fetch("/user/selectTag/"+tag.toString());
@@ -67,12 +70,35 @@ async function searchTag(tag){
 }
 
 
+// input value 로 검색
 let searchITag = document.querySelector('.search-i');
 
 searchITag.addEventListener("click",()=>{
     let searchValue = document.querySelector('.search-input').value;
     
     searchCommunity(searchValue).then(result=>{
+        console.log(result.length+"가져온 리스트 개수");
+        if(result.length > 0){
+            let body_div = document.querySelector('.body-div');
+            body_div.innerHTML= "";
+            for(let i=0; i<result.length; i++){
+                console.log(result[i]);
+                let str = `<div class="search-div-value">`;
+                    str += `<div class="title-zone">`;
+                    str += `<a href="/user/communityDetail?writingNo=${result[i].writingNo}">${result[i].writingTitle}</a>`; 
+                    str += `</div>`;
+                    str += `<div class="writer-zone">`;
+                    str += `<a>${result[i].writingWriter}</a>`;
+                    str += `</div>`;
+                    str += `<div class="etc-zone">`;
+                    str += `<span>${result[i].writingRegDate.slice(0, 10)}</span>`;
+                    str += `<span>${result[i].writingReadCount}</span>`;
+                    str += `</div></div>`;
+                   body_div.innerHTML+=str;
+            }
+        }else if(result.length == 0){
+            alert("검색된 값이 없습니다.");
+        }
         
     })
 })

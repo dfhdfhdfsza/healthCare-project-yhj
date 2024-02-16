@@ -3,6 +3,7 @@ package com.healthcare.www.user.controller;
 
 import com.healthcare.www.handler.FileHandler;
 import com.healthcare.www.handler.FileType;
+import com.healthcare.www.order.domain.Payment;
 import com.healthcare.www.user.domain.*;
 import com.healthcare.www.user.dto.*;
 import com.healthcare.www.user.jwt.JWTUtil;
@@ -58,13 +59,18 @@ public class UserController {
     }
 
     @GetMapping("/myPage")
-    public String moveMyPage(HttpServletRequest request, Model m, @AuthenticationPrincipal UserDetails userDetails){
-
-      int validCommunity = 0;
+    public String moveMyPage(HttpServletRequest request, Model m, @AuthenticationPrincipal UserDetails userDetails,
+    @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo){
 
       /* 현재 로그인한사람 */
       User user = userRepository.findByUserId(userDetails.getUsername());
       m.addAttribute("user",user);
+
+      /* 주문 내역 */
+      List<Payment> paymentList = userService.selectProduct(user.getUserId());
+      m.addAttribute("paymentList", paymentList);
+
+      
 
       /*유저정보*/
       UserInfo info = userService.selectUserInfo(user.getUserNo());
@@ -116,6 +122,7 @@ public class UserController {
     response.addCookie(cookie);
 
 
+
     return "index";
   }
 
@@ -147,7 +154,7 @@ public class UserController {
 
     return "/user/modify";
   }
-  @PostMapping("/modfiy")
+  @PostMapping("/modify")
   public String putModify(UserInfoDTO userInfoDTO){
     UserInfo info = userService.putUserInfo(userInfoDTO);
 
@@ -156,6 +163,7 @@ public class UserController {
 
   @PostMapping("/profileImage")
   public String addImage(@RequestParam(name ="file" ,required = false)MultipartFile[] files, @AuthenticationPrincipal UserDetails userDetails){
+    /* 이미지 등록 */
     if(files[0].getSize() > 0){
       UserFileDTO userFileDTOS = fh.uploadUserFile(files,FileType.USER);
 
@@ -168,11 +176,8 @@ public class UserController {
   }
 
   @GetMapping("/community")
-  public String moveCommunity(@AuthenticationPrincipal UserDetails userDetails,  Model model,
-                              @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo,
-                              @RequestParam(required = false, defaultValue = "createdAt", value = "criteria") String criteria){
-
-
+  public String moveCommunity(@AuthenticationPrincipal UserDetails userDetails,  Model model){
+    /* 게시판 페이지로 이동 */
 
     User user = userRepository.findByUserId(userDetails.getUsername());
     model.addAttribute("user",user);
@@ -188,11 +193,11 @@ public class UserController {
   public  String addCommunity(CommunityDTO communityDTO,
                               @RequestParam(name ="file" ,required = false)MultipartFile[] files,
                               @AuthenticationPrincipal UserDetails userDetails){
+    /* 게시글 작성 */
 
     User user = userRepository.findByUserId(userDetails.getUsername());
 
     Community community = userService.addCommunity(communityDTO);
-    System.out.println(files+"들어온파일<<<<<<<<<<<<");
 
     if(files[0].getSize() > 0){
       CommunityFileDTO communityFileDTO = fh.uploadCommunityFile(files,FileType.COMMUNITY);
@@ -220,7 +225,10 @@ public class UserController {
     // 커뮤니티 사진
     CommunityFile communityFile = userService.findByWritingNo(community.getWritingNo());
     model.addAttribute("cFile",communityFile);
-    System.out.println(communityFile+"<<<<<<<<<<<< 커뮤니티 사진");
+
+    // 댓글 추천
+    List<CommentFavorite> favoriteList = userService.selectFavoriteList(user.getUserNo(), writingNo);
+    model.addAttribute("fList",favoriteList);
 
     List<Comment> commentList = userService.selectCommentList(writingNo);
 
@@ -247,7 +255,7 @@ public class UserController {
   }
   @GetMapping("/communityDelete")
   public String deleteCommunity(@RequestParam("writingNo") long writingNo){
-    System.out.println(writingNo);
+    /* 댓글 삭제 */
 
     userService.deleteCommunity(writingNo);
 
@@ -278,7 +286,6 @@ public class UserController {
   @GetMapping(value = "/selectTag/{tag}" , produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<Community>> searchTag(@PathVariable String tag){
     /* 태그 클릭 */
-    System.out.println(tag+"입력한 태그<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     List<Community> list = userService.selectTag(tag);
 
     return new ResponseEntity<List<Community>>(list,HttpStatus.OK);
@@ -295,6 +302,7 @@ public class UserController {
 
   @GetMapping("/favoriteAdd/{userNo}/{commentNo}")
   public ResponseEntity<String> addFavorite(@PathVariable long userNo,@PathVariable long commentNo){
+    /* 댓글 추천 */
     int isOk = userService.addFavorite(userNo,commentNo);
 
     return new ResponseEntity<>("1", HttpStatus.OK);
@@ -302,9 +310,25 @@ public class UserController {
 
   @GetMapping("/userDelete")
   public String deleteUser(@RequestParam("userNo") long userNo){
+    /* 회원 탈퇴 */
     userService.removeUser(userNo);
 
     return "redirect:/user/logout";
+  }
+
+  @GetMapping("/commentModify")
+  public String commentModify(@RequestParam("commentNo") long commentNo, @RequestParam("commentContent") String commentContent){
+    /* 댓글 수정 */
+    userService.modifyComment(commentNo,commentContent);
+    return "redirect:/user/community";
+  }
+
+  @DeleteMapping(value="/favoriteDelete/{userNo}/{commentNo}")
+  public ResponseEntity<String> deleteFavorite(@PathVariable long userNo, @PathVariable long commentNo){
+    System.out.println("유저번호/글번호"+userNo+"/"+commentNo);
+    userService.removeFavorite(userNo,commentNo);
+
+    return new ResponseEntity<>("1",HttpStatus.OK);
   }
 
 }

@@ -53,13 +53,24 @@ favoriteBtn.forEach(e=>{
     e.addEventListener('click',()=>{
         let commentNo = e.getAttribute('data-commentNo');
         let userNo = e.getAttribute('data-userNo');
-       favoriteComment(userNo,commentNo).then(result=>{
-        if(result == 1){
-            e.classList.add("favorite-add");
-        }
-       })
-    })
 
+        if(e.classList.contains("favorite-add")){
+            deleteFavroite(userNo,commentNo).then(result=>{
+                if(result==1){
+                    alert("추천삭제 성공");
+                    e.classList.remove("favorite-add");
+                    window.location.reload();
+                }
+            })
+        }else{
+            favoriteComment(userNo,commentNo).then(result=>{
+                if(result == 1){
+                    e.classList.add("favorite-add");
+                    window.location.reload();
+                }
+               })
+        }
+    })
 })
 
 
@@ -73,3 +84,60 @@ async function favoriteComment(userNo,commentNo){
     }
 }
 
+
+let modify = document.querySelectorAll(".bi-pencil-fill"); // 수정버튼
+let modifyInput = document.querySelector('.modify-comment-input'); // input
+let background = document.querySelector('.commentModify-modal-background'); // 모달
+let modify_comment_a = document.querySelector('.modify-comment-a'); // 이동경로
+let hiddenInput =  document.querySelector('.modify-comment-hidden'); // 히든값
+
+modify.forEach(e=>{
+    e.addEventListener('click',()=>{
+        background.style.display = "block";
+        let commentNo = e.getAttribute('data-commentNo');
+        let commentContent = e.getAttribute('data-commentContent');
+        hiddenInput.value= commentNo;
+        modifyInput.value= commentContent;
+    })
+})
+
+let closeBtn = document.getElementById('closeBtn');
+closeBtn.addEventListener('click',()=>{
+    background.style.display = "none";
+})
+
+
+let favorite_commentNo = document.querySelectorAll(".favorite-commentNo");
+
+window.onload =function favorite_addList(){
+    let favoriteAddComment = document.querySelectorAll('.favorite-add-comment');
+    // 내가 누른 추천 글 번호 확인  
+    for(let i=0; i<favoriteAddComment.length; i++){
+        
+        // 글 전체
+        for(let j=0; j<favoriteBtn.length; j++){
+            
+            if(Number(favoriteAddComment[i].innerHTML) == Number(favoriteBtn[j].getAttribute("data-commentNo"))){
+                favoriteBtn[j].classList.add("favorite-add");
+            }
+        }
+    }
+}
+
+let favoriteAdd = document.querySelectorAll('.favorite-add');
+
+
+
+async function deleteFavroite(userNo, commentNo){
+    try {
+        const url = "/user/favoriteDelete/"+userNo+"/"+commentNo;
+        const config={
+            method: "delete"
+        }
+        const resp = await fetch(url,config);
+        const result = await resp.text();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}

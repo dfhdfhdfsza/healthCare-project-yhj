@@ -36,15 +36,9 @@ public class Community {
 
   @Column(name="writing_content")
   private String writingContent; // 글내용
-
-  @Column(name="writing_recommend")
-  @ColumnDefault("0")
-  private long writingRecommend; // 추천수
-
   @Column(name="writing_regDate")
   @UpdateTimestamp
   private LocalDateTime writingRegDate; // 작성일
-
   @Column(name="writing_tag")
   private String writingTag; // 태그
 

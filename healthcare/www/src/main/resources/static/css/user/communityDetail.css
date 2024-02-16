@@ -133,6 +133,7 @@ body{
 .list > a{
     text-decoration: none;
     color: black;
+    padding-left: 10px;
 }
 .favorite-add{
     color: blue;
@@ -142,4 +143,64 @@ body{
 .writingContent-image{
     width: 600px;
     height: 350px;
+}
+
+.commentModify-modal-background{
+    display: none;
+    position: fixed;
+    top:0; left: 0; bottom: 0; right: 0;
+    background: rgba(0, 0, 0, 0.8);
+}
+.modal-box{
+    position: absolute;
+    top: calc(50vh - 100px); left: calc(50vw - 200px);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    width: 400px;
+    height: 200px;;
+    gap: 20px;
+  }
+.modal-box > input{
+    width: 70%;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    outline: none;
+    padding-left: 5px;
+}
+.commentModify-btn{
+    width: 280px;
+    height: 40px;
+    background-color: #3498db;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+}
+.modal-box > div{
+    text-align: right;
+    padding-right: 10px;
+    width: 100%;
+}
+
+#closeBtn{
+    cursor: pointer;
+    font-size: 25px;
+    font-weight: 700;
+}
+.hidden-favorite{
+    display: none;
+}
+.hidden-favorite11{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    
 }

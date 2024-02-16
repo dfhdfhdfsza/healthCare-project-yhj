@@ -37,3 +37,25 @@ let user_delete = document.querySelector('.user-delete');
 user_delete.addEventListener('click',()=>{
     userDelete_modal.style.display = "block";
 })
+
+let commentZone = document.querySelector('.commentZone'); // 댓글리스트
+let productZone = document.querySelector('.productZone'); // 구매목록리스트
+
+let writing_me = document.querySelector('.writing-me'); // 작성한글
+let payment_me = document.querySelector('.payment-me'); // 구매목록
+
+payment_me.addEventListener('click',()=>{
+    commentZone.style.display = "none";
+    productZone.style.display = "block";
+
+    writing_me.style.backgroundColor = "#dfdfdf";
+    payment_me.style.backgroundColor = "#fff";
+})
+
+writing_me.addEventListener('click',()=>{
+    commentZone.style.display = "block";
+    productZone.style.display = "none";
+
+    writing_me.style.backgroundColor = "#fff";
+    payment_me.style.backgroundColor = "#dfdfdf";
+})

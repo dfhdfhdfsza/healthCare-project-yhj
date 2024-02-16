@@ -63,13 +63,21 @@
               <div class="favorite">([[${list.commentFavorite}]])</div>
               <!--댓글 삭제-->
               <a th:href="@{/user/commentDelete(commentNo=${list.commentNo})}" th:if="${user.userName == list.commentWriter}">
-                <i class="bi bi-trash"></i>
+                <i class="bi bi-trash" ></i>
               </a >
+              <!--댓글 수정-->
+              <a href="#" th:if="${user.userName == list.commentWriter}">
+                <i class="bi bi-pencil-fill"
+                   th:attr="data-commentNo=${list.commentNo}, data-commentContent=${list.commentContent}"></i>
+              </a>
               <!--댓글 추천-->
-              <a href="#" th:if="${user.userName != list.commentWriter}">
-                <i class="bi bi-hand-thumbs-up favoriteBtn"
+              <a href="#" th:if="${user.userName != list.commentWriter}" >
+                <i class="bi bi-star-fill favoriteBtn"
                    th:attr="data-commentNo=${list.commentNo}, data-userNo=${user.userNo}"></i>
               </a>
+
+
+
             </div>
 
           </div>
@@ -91,6 +99,24 @@
 
     </div>
   </div>
+
+  <div class="commentModify-modal-background">
+    <form action="/user/commentModify">
+      <div class="modal-box">
+        <div>
+          <i class="bi bi-x" id="closeBtn"></i>
+        </div>
+        <strong>댓글수정</strong>
+        <input type="hidden" class="modify-comment-hidden" name="commentNo">
+        <input type="text" class="modify-comment-input" name="commentContent">
+        <button type="submit" class="commentModify-btn">수정</button>
+      </div>
+    </form>
+  </div>
+  <div th:if="${fList != null}" class="hidden-favorite">
+    <div th:each="list : ${fList}" th:text="${list.commentNo}" class="favorite-add-comment"></div>
+  </div>
+
 
 <script type="text/javascript" th:src="@{/js/user/communityDetail.js}"></script>
 </body>

@@ -1,5 +1,11 @@
 package com.healthcare.www.user.service;
 
+import com.healthcare.www.membership.domain.Membership;
+import com.healthcare.www.membership.repository.MembershipRepository;
+import com.healthcare.www.order.domain.Payment;
+import com.healthcare.www.order.repository.PaymentRepository;
+import com.healthcare.www.product.domain.Product;
+import com.healthcare.www.product.repository.ProductRepository;
 import com.healthcare.www.user.domain.*;
 import com.healthcare.www.user.dto.*;
 import com.healthcare.www.user.repository.*;
@@ -22,7 +28,10 @@ public class UserServiceImpl implements UserService{
   private final CommentRepository commentRepository;
   private final CommentFavoriteRepository commentFavoriteRepository;
   private final CommunityFileRepository communityFileRepository;
+  private final PaymentRepository paymentRepository;
+  private final ProductRepository productRepository;
 
+  private final MembershipRepository membershipRepository;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -50,6 +59,14 @@ public class UserServiceImpl implements UserService{
         build();
 
     userRepository.save(user);
+
+    // 멤버쉽 등록
+    Membership membership = Membership.builder()
+        .userId(user.getUserId())
+        .point(0)
+        .build();
+
+    membershipRepository.save(membership);
   }
 
   @Override
@@ -236,12 +253,21 @@ public class UserServiceImpl implements UserService{
 
   @Override
   public int addFavorite(long userNo, long commentNo) {
+
     CommentFavorite favorite = CommentFavorite.builder()
             .userNo(userNo)
             .commentNo(commentNo)
             .build();
 
     commentFavoriteRepository.save(favorite);
+
+    Comment comment = commentRepository.findByCommentNo(commentNo);
+    comment.setCommentFavorite(comment.getCommentFavorite()+1);
+
+    commentRepository.save(comment);
+
+
+
     return 1;
   }
 
@@ -287,6 +313,42 @@ public class UserServiceImpl implements UserService{
   public CommunityFile findByWritingNo(long writingNo) {
     CommunityFile file = communityFileRepository.findByWritingNo(writingNo);
     return file;
+  }
+
+  @Override
+  public List<CommentFavorite> selectFavoriteList(long userNo, long writingNo) {
+    List<CommentFavorite> list = commentFavoriteRepository.findByUserNo(userNo);
+    // userNo = 현재 로그인한 사람 writingNo = 현재 게시글
+
+    return list;
+  }
+
+  @Override
+  public void modifyComment(long commentNo, String commentContent) {
+    Comment comment = commentRepository.findByCommentNo(commentNo);
+    comment.setCommentContent(commentContent);
+
+    commentRepository.save(comment);
+  }
+
+  @Override
+  public int removeFavorite(long userNo, long commentNo) {
+    CommentFavorite commentFavorite = commentFavoriteRepository.findByUserNoAndCommentNo(userNo,commentNo);
+    commentFavoriteRepository.deleteById(commentFavorite.getFavoriteNo());
+
+    return 1;
+  }
+
+  @Override
+  public List<Payment> selectProduct(String userId) {
+
+    List<Payment> paymentList = paymentRepository.findAllByUserId(userId);
+
+
+
+
+
+    return paymentList;
   }
 
 

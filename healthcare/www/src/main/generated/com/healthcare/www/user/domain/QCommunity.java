@@ -27,8 +27,6 @@ public class QCommunity extends EntityPathBase<Community> {
 
     public final NumberPath<Long> writingReadCount = createNumber("writingReadCount", Long.class);
 
-    public final NumberPath<Long> writingRecommend = createNumber("writingRecommend", Long.class);
-
     public final DateTimePath<java.time.LocalDateTime> writingRegDate = createDateTime("writingRegDate", java.time.LocalDateTime.class);
 
     public final StringPath writingTag = createString("writingTag");
