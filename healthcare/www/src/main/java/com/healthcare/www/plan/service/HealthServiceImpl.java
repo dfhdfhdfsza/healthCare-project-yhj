@@ -1,11 +1,11 @@
 package com.healthcare.www.plan.service;
 
 import com.healthcare.www.plan.domain.*;
-import com.healthcare.www.plan.repository.ExerciseSetRepository;
-import com.healthcare.www.plan.repository.PlanCalendarRepository;
-import com.healthcare.www.plan.repository.UserPlanRepository;
+import com.healthcare.www.plan.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +20,9 @@ public class HealthServiceImpl implements HealthService{
     private final UserPlanRepository userPlanRepository;
     private final PlanCalendarRepository planCalendarRepository;
     private final ExerciseSetRepository exerciseSetRepository;
+    private  final HealthInfoRepository healthInfoRepository;
+
+    int isOk;
 
     @Override
     @Transactional
@@ -63,16 +66,16 @@ public class HealthServiceImpl implements HealthService{
     }
 
     @Override
-    public List<FullCalendarVO> getEventList(Long userNo) {
+    public List<FullCalendarDTO> getEventList(Long userNo) {
 
-        List<FullCalendarVO> FullCalendarList=new ArrayList<>();
+        List<FullCalendarDTO> FullCalendarList=new ArrayList<>();
 
         List<UserPlan>userPlanList=userPlanRepository.findByUserNo(userNo);
         log.info("유저플랜리스트:"+userPlanList);
 
         //FullCalendarList 만들기
         for (int i=0;i<userPlanList.size();i++){
-            FullCalendarVO fcvo=new FullCalendarVO();
+            FullCalendarDTO fcvo=new FullCalendarDTO();
 
             //FullCalendarVO value들 불러오기
             UserPlan userPlan=userPlanList.get(i);
@@ -108,4 +111,63 @@ public class HealthServiceImpl implements HealthService{
         //user plan 삭제
         userPlanRepository.deleteByUserPlanNo(userPlanNo);
     }
+
+    @Override
+    public int modPlan(FullCalendarDTO fcdto)
+    {
+        try {
+            // PlanCalendar 저장
+            planCalendarRepository.save(fcdto.getPlanCalendar());
+
+            // ExerciseSet 저장
+            List<ExerciseSet> setlist = fcdto.getExerciseSetList();
+
+            for (ExerciseSet exerciseSet : setlist) {
+                exerciseSetRepository.save(exerciseSet);
+            }
+            return 1;   // 모든 저장 작업이 성공하면 1 반환
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;   // 저장 작업 중 실패한 경우 0 반환
+        }
+    }
+
+    @Override
+    public int modPlanDate(UserPlan userPlan)
+    {
+        try {
+            userPlanRepository.save(userPlan);
+            return 1;   // 모든 저장 작업이 성공하면 1 반환
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;  // 저장 작업 중 실패한 경우 0 반환
+        }
+    }
+
+    @Override
+    public void saveHealthInfo(HealthInfo healthInfo) {
+        healthInfoRepository.save(healthInfo);
+    }
+
+    @Override
+    public void resetHealthInfo() {
+        healthInfoRepository.resetHealthInfo();
+    }
+
+    @Override
+    public Page<HealthInfo> getExerciseInfo(String equipment,String bodypart,int page, int size)
+    {
+        PageRequest pageable = PageRequest.of(page, size);
+        if(equipment.isEmpty()) //bodypart값만 들어왔을때
+        {
+            if(bodypart.equals("all")){
+                return healthInfoRepository.findAll(pageable);
+            }
+            return healthInfoRepository.findByTarget(bodypart, pageable);
+        }
+        //equipment값만 들어왔을때
+        return healthInfoRepository.findByEquipment(equipment,pageable);
+    }
+
+
 }
