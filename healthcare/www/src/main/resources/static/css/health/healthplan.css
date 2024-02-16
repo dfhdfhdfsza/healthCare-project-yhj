@@ -83,6 +83,9 @@
 .exercise-add,.setBtn,.submit{
     color: green;
 }
+.modBtn{
+    color:white;
+}
 
 .backBtn{
     color: red;
@@ -151,6 +154,10 @@
     border-radius: 10px;
     background-color: darkgrey;
     padding: 5px 5px 5px 5px;
+}
+
+#planModifyBtn{
+    display: none;
 }
 
 #next-page,#previous-page{
