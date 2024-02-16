@@ -2,9 +2,109 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>HealthInfo</title>
+  <link rel="stylesheet" th:href="@{/css/health/healthInfo.css}" />
+  <!--슬라이드 라이브러리-->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+  <!--폰트어썸-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 <body>
+    <div class="healthInfo-container">
+      <!--검색영역-->
+      <form method="post" class="search-form" action="/health/searchInfo">
+      <input type="text" id="keyword">
+        <button type="submit">검색</button>
+      </form>
+      <div class="bodyPart-div">
+        <div class="muscle">근육</div>
+        <div class="slide-wrapper">
+          <div><button class="target-select" data-target="all">모든 부위</button></div>
+          <div><button class="target-select" data-target="abductors">외전근</button></div>  <!--abductors-->
+          <div><button class="target-select" data-target="abs">복근</button></div>  <!--abs-->
+          <div><button class="target-select" data-target="adductors">내전근</button></div>  <!--adductors-->
+          <div><button class="target-select" data-target="biceps">이두</button></div>  <!--biceps-->
+          <div><button class="target-select" data-target="triceps">삼두</button></div>  <!--triceps-->
+          <div><button class="target-select" data-target="calves">대퇴근</button></div>  <!--calves-->
+          <div><button class="target-select" data-target="cardiovascular system">심혈관계</button></div>  <!--cardiovascular system-->
+          <div><button class="target-select" data-target="delts">삼각근</button></div>  <!--delts-->
+          <div><button class="target-select" data-target="forearms">팔뚝</button></div>  <!--forearms-->
+          <div><button class="target-select" data-target="glutes">둔부</button></div>  <!--glutes-->
+          <div><button class="target-select" data-target="hamstrings">햄스트링</button></div>  <!--hamstrings-->
+          <div><button class="target-select" data-target="lats">lats</button></div>  <!--lats-->
+          <div><button class="target-select" data-target="levator scapulae">견갑거근</button></div>  <!--levator scapulae-->
+          <div><button class="target-select" data-target="pectorals">가슴 근육</button></div>  <!--pectorals-->
+          <div><button class="target-select" data-target="quads">기복근</button></div>  <!--quads-->
+          <div><button class="target-select" data-target="serratus anterior">전거근</button></div>  <!--serratus anterior-->
+          <div><button class="target-select" data-target="spine">척추</button></div> <!--spine-->
+          <div><button class="target-select" data-target="traps">승모</button></div>  <!--traps-->
+          <div><button class="target-select" data-target="upper back">등 위쪽</button></div> <!--upper back-->
+        </div>
+      </div>
 
+      <div class="equipment-div">
+        <div class="equipment">장비</div>
+        <div class="slide-wrapper">
+          <div><button class="equipment-select" data-equipment="assisted">assisted</button></div>
+          <div><button class="equipment-select" data-equipment="band">band</button></div>
+          <div><button class="equipment-select" data-equipment="barbell">barbell</button></div>
+          <div><button class="equipment-select" data-equipment="body weight">body weight</button></div>
+          <div><button class="equipment-select" data-equipment="bosu ball">bosu ball</button></div>
+          <div><button class="equipment-select" data-equipment="cable">cable</button></div>
+          <div><button class="equipment-select" data-equipment="dumbbell">dumbbell</button></div>
+          <div><button class="equipment-select" data-equipment="elliptical machine">elliptical machine</button></div>
+          <div><button class="equipment-select" data-equipment="ez barbell">ez barbell</button></div>
+          <div><button class="equipment-select" data-equipment="hammer">hammer</button></div>
+          <div><button class="equipment-select" data-equipment="kettlebell">kettlebell</button></div>
+          <div><button class="equipment-select" data-equipment="leverage machine">leverage machine</button></div>
+          <div><button class="equipment-select" data-equipment="medicine ball">medicine ball</button></div>
+          <div><button class="equipment-select" data-equipment="olympic barbell">olympic barbell</button></div>
+          <div><button class="equipment-select" data-equipment="resistance band">resistance band</button></div>
+          <div><button class="equipment-select" data-equipment="rope">rope</button></div>
+          <div><button class="equipment-select" data-equipment="roller">roller</button></div>
+          <div><button class="target-select" data-equipment="skierg machine">skierg machine</button></div>
+          <div><button class="target-select" data-equipment="sled machine">sled machine</button></div>
+          <div><button class="target-select" data-equipment="smith machine">smith machine</button></div>
+          <div><button class="target-select" data-equipment="stability ball">stability ball</button></div>
+          <div><button class="target-select" data-equipment="stationary bike">stationary bike</button></div>
+          <div><button class="target-select" data-equipment="stepmill machine">stepmill machine</button></div>
+          <div><button class="target-select" data-equipment="tire">tire</button></div>
+          <div><button class="target-select" data-equipment="trap bar">trap bar</button></div>
+          <div><button class="target-select" data-equipment="upper body ergometer">upper body ergometer</button></div>
+          <div><button class="target-select" data-equipment="weighted">weighted</button></div>
+          <div><button class="target-select" data-equipment="wheel roller">wheel roller</button></div>
+        </div>
+      </div>
+
+      <!--보기 방식영역-->
+<!--      <div class="view-div">-->
+<!--        <div class="bookmark"><button>북마크만 보기</button></div>-->
+<!--        <div class="row-view">-->
+<!--          <button>한 줄</button>-->
+<!--          <button>여러 줄</button>-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="totalCount-div"><span class="totalCount-div-span"></span></div>
+
+      <div class="list-div"></div>
+
+      <div class="paging-div"></div>
+    </div>
+
+    <div id="modal" class="modal-overlay" >
+        <div class="modal-window">
+          <div class="title">
+            <h2>모달</h2>
+          </div>
+          <div class="close-area">X</div>
+          <div class="content">zz</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- slide 라이브러리 js -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/health/healthInfo.js}"></script>
 </body>
 </html>

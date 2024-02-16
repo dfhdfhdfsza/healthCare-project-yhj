@@ -1,0 +1,148 @@
+.healthplan-container{
+    width: 100%;
+    margin-left: 30px;
+}
+
+/* search-form 영역 */
+.search-form{
+    display: flex;
+    justify-content: center;
+}
+
+.search-form input{
+    margin-right: 10px;
+    width: 250px;
+    height: 35px;
+    border-radius: 10px;
+}
+
+.search-form input:focus {
+    outline:none;
+}
+
+/* bodyPart-div,equipment-div 영역 */
+.bodyPart-div,.equipment-div{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.equipment,.muscle{
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.slide-wrapper{
+    width: 90%;
+    margin-top: 30px;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+}
+
+.slide-wrapper button{
+    border: none;
+    background-color: #fff;
+}
+.target-select,.equipment-select{
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+
+
+
+/* view-div 영역 */
+.view-div{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+/* list-div 영역 */
+.list-div{
+    width: 100%;
+}
+.exercise-item{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.exercise-image{
+    margin-right: 30px;
+}
+.eximg{
+    width: 100px;
+    height: 100px;
+}
+
+/* paging-div 영역 */
+.paging-div{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 100px;
+}
+
+.pageNo-span{
+    margin-left: 25px;
+    margin-right: 25px;
+    cursor: pointer;
+}
+
+
+/* modal 영역 */
+#modal.modal-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(1.5px);
+    z-index: 9999;
+}
+
+#modal .modal-window {
+    background: black;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 500px;
+    /* height: 600px; */
+    position: relative;
+    padding: 10px;
+}
+#modal .title {
+    padding-left: 10px;
+    display: inline;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+
+}
+
+#modal .title h2 {
+    display: inline;
+}
+
+#modal .close-area,#modal .close-setdetail {
+    display: inline;
+    float: right;
+    padding-right: 10px;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+}
+
+#modal .content {
+    margin-top: 20px;
+    padding: 0px 10px;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+}

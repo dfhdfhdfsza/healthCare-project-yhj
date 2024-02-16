@@ -9,7 +9,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class FullCalendarVO {
+public class FullCalendarDTO {
     private String title;   //제목(운동명)
     private String start;   //시작날짜
 
