@@ -12,8 +12,7 @@ $(document).ready(function () {
 let speradPlanList;
 
 //계획리스트 불러오기
-function getEventList()
-{
+function getEventList() {
     $.ajax({
         type: "GET",            // HTTP method type(GET, POST) 형식이다.
         url: "/health/getEventList?userNo=1",      // 컨트롤러에서 대기중인 URL 주소이다.  로그인한 id(수정할예정)
@@ -35,22 +34,22 @@ function getEventList()
                 //표준속성
                 plan.title = res[i].title;
                 plan.start = res[i].start;
-    
+
                 //비표준속성객체
                 let extendedProps = new Object();
-    
+
                 //userPlan
                 let userPlanJSON = new Object();
                 userPlanJSON.userPlanNo = res[i].userPlan.userPlanNo;
                 userPlanJSON.planDate = res[i].userPlan.planDate;
                 userPlanJSON.userNo = res[i].userPlan.userNo;
                 userPlanJSON.planNo = res[i].userPlan.planNo;
-    
+
                 //planCalendar
                 let planCalendarJSON = new Object();
                 planCalendarJSON.planNo = res[i].planCalendar.planNo;
                 planCalendarJSON.exerciseName = res[i].planCalendar.exerciseName;
-    
+
                 //exerciseSetList
                 let exerciseSetListJSONARRAY = new Array();
                 for (let j = 0; j < res[i].exerciseSetList.length; j++) {
@@ -62,20 +61,20 @@ function getEventList()
                     exerciseSetListJSON.exerciseCheck = res[i].exerciseSetList[j].exerciseCheck;
                     exerciseSetListJSONARRAY.push(exerciseSetListJSON);
                 }
-    
+
                 //만든 JSON객체들을 비표준속성 객체에 추가
                 extendedProps.userPlan = userPlanJSON;
                 extendedProps.planCalendar = planCalendarJSON;
                 extendedProps.exerciseSetList = exerciseSetListJSONARRAY;
-    
+
                 plan.extendedProps = extendedProps;
-    
+
                 speradPlanList.push(plan);
 
             }
             calendar.setOption('events', speradPlanList);
             calendar.render();
-    
+
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
             alert("통신 실패.");
@@ -111,15 +110,44 @@ let calendar = new FullCalendar.Calendar(calendarEl, {
     // dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
     locale: 'ko', // 한국어 설정
 
-    eventAdd: function (obj) { // 이벤트가 추가되면 발생하는 이벤트
-        console.log(obj);
-    },
-    eventChange: function (obj) { // 이벤트가 수정되면 발생하는 이벤트
-        console.log(obj);
-    },
-    eventRemove: function (obj) { // 이벤트가 삭제되면 발생하는 이벤트
-        console.log(obj);
-        getEventList();
+    // eventAdd: function (obj) { // 이벤트가 추가되면 발생하는 이벤트
+    //     console.log(obj);
+    // },
+    // eventChange: function (obj) { // 이벤트가 수정되면 발생하는 이벤트
+    //     console.log(obj);
+    // },
+    // eventRemove: function (obj) { // 이벤트가 삭제되면 발생하는 이벤트
+    //     console.log(obj);
+    //     getEventList();
+    // },
+    eventDrop: function (info) {    //드래그로 이벤트 수정하기
+        
+        let userPlanObj=new Object(info.oldEvent._def.extendedProps.userPlan); //드래그한 플랜객체
+        let newdate = new Date(info.event._instance.range.start);   //드래그한 새로운날짜
+
+        // YYYY-MM-DD 형식으로 만들어주기
+        let year = newdate.getFullYear();
+        let month = ('0' + (newdate.getMonth() + 1)).slice(-2); // 월은 0부터 시작하므로 1을 더하고, 두 자리로 표현
+        let day = ('0' + newdate.getDate()).slice(-2); // 일자를 두 자리로 표현
+        let formattednewdate = year + '-' + month + '-' + day;
+
+        userPlanObj.planDate=formattednewdate;
+        
+        //비동기로 유저플랜객체의 날짜 수정
+        $.ajax({
+            async: true,
+            type: 'post',
+            url: '/health/modPlanDate',
+            data: JSON.stringify(userPlanObj),
+            contentType: 'application/json',
+            success: function () {
+                alert('날짜변경성공');
+                getEventList();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                alert("통신 실패.");
+            }
+        });
     },
     dateClick: function (info) {
         //모달창 띄우기
@@ -160,8 +188,9 @@ let calendar = new FullCalendar.Calendar(calendarEl, {
 calendar.render();
 
 let exerciseSelectDiv = document.querySelector('.exercise-select'); //운동선택div
-let planlistDiv = document.querySelector('.planlist');  //
+let planlistDiv = document.querySelector('.planlist');  //플랜 리스트 div
 let setsettingdiv = document.querySelector('.set-setting'); //세트설정div
+let setDetailDiv = document.querySelector('.set-detail');//플랜 디테일 div
 
 let nextPageExerciseListBtn = document.getElementById('next-page'); //운동리스트 다음페이지버튼
 let previousPageExerciseListBtn = document.getElementById('previous-page'); //운동리스트 이전페이지버튼
@@ -176,7 +205,7 @@ function spreadPlanListContent(clickedEventlist) {
             content.innerHTML += `<div>
             <span>${clickedEventlist[i].title}</span>
             <button type="button" class="setDetail" data-ep='${extendedProps}'>자세히 보기</button>
-            <button type="button" class="planModify">수정</button>
+            <button type="button" class="planModify" data-ep='${extendedProps}'>수정</button>
             <button type="button" class="planDelete" 
                 data-upn='${clickedEventlist[i].extendedProps.userPlan.userPlanNo}'>삭제</button>
             </div>`;
@@ -194,23 +223,128 @@ function spreadPlanListContent(clickedEventlist) {
         setDetailBtn.addEventListener('click', (e) => {
             let setDetailDiv = document.querySelector('.set-detail');
             setDetailDiv.style.display = 'flex';
+            planlistDiv.style.display = "none";
 
             //json으로 파싱해서 function에 매개변수로 전달
             let extendedProps = JSON.parse(setDetailBtn.dataset.ep);
             spreadSetDetail(extendedProps);
+            //수정button 숨기기
+            let modifyBtn = document.getElementById('mod-complete');
+            modifyBtn.style.display = 'none';
+            let exerciseModBtn = document.querySelector('.exerciseMod');
+            exerciseModBtn.style.display = 'none';
         });
     });
 
-    //플랜 삭제
-    let planDeleteBtns = document.querySelectorAll('.planDelete');
-    planDeleteBtns.forEach(function (planDeleteBtn) {
-        planDeleteBtn.addEventListener('click', (e) => {
-            let userPlanNo = planDeleteBtn.dataset.upn;
-            DeletePlan(userPlanNo);
+    //플랜 수정div 열기
+    let planModifyBtns = document.querySelectorAll('.planModify');
+    planModifyBtns.forEach(function (planModifyBtn) {
+        planModifyBtn.addEventListener('click', (e) => {
+            let setDetailDiv = document.querySelector('.set-detail');
+            setDetailDiv.style.display = 'flex';
+            planlistDiv.style.display = "none";
+
+            //json으로 파싱해서 function에 매개변수로 전달
+            let extendedProps = JSON.parse(planModifyBtn.dataset.ep);
+            spreadSetDetail(extendedProps);
+
+            //수정버튼 보여주기
+            let modifyBtn = document.getElementById('mod-complete');
+            modifyBtn.style.display = 'flex';
+            let exerciseModBtn = document.querySelector('.exerciseMod');
+            exerciseModBtn.style.display = 'flex';
+
+            //중량,개수 수정가능하게 바꾸기
+            let setDetailWeights = document.querySelectorAll('.setDetailWeight');
+            setDetailWeights.forEach(function (setDetailWeight) {
+                setDetailWeight.readOnly = false;
+            })
+
+            let setDetailCounts = document.querySelectorAll('.setDetailCount');
+            setDetailCounts.forEach(function (setDetailCount) {
+                setDetailCount.readOnly = false;
+            })
         });
     });
 
 }
+
+let modifyBtn = document.getElementById('mod-complete');
+modifyBtn.addEventListener('click', modifyPlan);
+
+
+//플랜 수정
+function modifyPlan() {
+
+    let planCalendar = new Object();
+    let planNo = document.querySelector('.planNo').value;
+    planCalendar.planNo = planNo;
+    let exerciseName = document.querySelector('.exerciseName').value;
+    planCalendar.exerciseName = exerciseName;
+
+
+    // tbody 요소 선택
+    let setDetailList = document.querySelector('.set-detail .set-table tbody');
+
+    // tbody 내의 모든 tr 요소 선택
+    let rows = setDetailList.querySelectorAll('tr');
+
+    let exerciseSetJSONARRAY = new Array();
+
+
+    // 각 <tr> 요소를 순회하며 데이터 추출
+    rows.forEach(row => {
+        let setNo = row.getAttribute('data-setNo');
+        let rowPlanNo = row.getAttribute('data-planNo');
+        let weight = row.querySelector('.setDetailWeight').value;
+        let count = row.querySelector('.setDetailCount').value;
+        let isChecked = row.querySelector('[type="checkbox"]').checked;
+
+        // 추출한 데이터를 객체로 추가
+        let exerciseSetJSON = new Object();
+        exerciseSetJSON.exerciseSetNo = setNo;
+        exerciseSetJSON.planNo = rowPlanNo;
+        exerciseSetJSON.exerciseWeight = weight;
+        exerciseSetJSON.exerciseCount = count;
+        exerciseSetJSON.exerciseCheck = isChecked;
+        exerciseSetJSONARRAY.push(exerciseSetJSON);
+    });
+
+
+    let modExtendedProps = {
+
+        planCalendar: planCalendar,
+        exerciseSetList: exerciseSetJSONARRAY
+    };
+
+    console.log(modExtendedProps);
+
+    $.ajax({
+        async: true,
+        type: 'post',
+        url: '/health/modPlan',
+        data: JSON.stringify(modExtendedProps),
+        contentType: 'application/json',
+        // processData: false,
+        success: function (modExtendedProps) {
+            alert('수정성공');
+            getEventList();
+            closeModal();
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+            alert("통신 실패.");
+        }
+    });
+}
+
+//플랜 삭제
+let planDeleteBtns = document.querySelectorAll('.planDelete');
+planDeleteBtns.forEach(function (planDeleteBtn) {
+    planDeleteBtn.addEventListener('click', (e) => {
+        let userPlanNo = planDeleteBtn.dataset.upn;
+        DeletePlan(userPlanNo);
+    });
+});
 
 //모달창 닫기
 let closeBtns = modal.querySelectorAll(".close-area")
@@ -272,6 +406,10 @@ function closeModal() {
     let setDetailDiv = document.querySelector('.set-detail');
     setDetailDiv.style.display = 'none';
 
+    //수정button 숨기기
+    let modifyBtn = document.getElementById('mod-complete');
+    modifyBtn.style.display = 'none';
+
 }
 
 //모달창 운동추가 버튼눌렀을때 div변경
@@ -280,6 +418,25 @@ exaddBtn.addEventListener('click', (e) => {
     exerciseSelectDiv.style.display = 'flex'
     $('.slide-wrapper').slick('setPosition');
     planlistDiv.style.display = "none";
+
+    let addFooterDiv = document.querySelector('.add-footer');
+    addFooterDiv.style.display = "flex";
+
+    let modFooterDiv = document.querySelector('.mod-footer');
+    modFooterDiv.style.display = "none";
+})
+
+//플랜 디테일창에서 운동교체 버튼눌렀을때 div표시
+let exerciseModBtn = document.querySelector('.exerciseMod');
+exerciseModBtn.addEventListener('click', (e) => {
+    exerciseSelectDiv.style.display = 'flex'
+    $('.slide-wrapper').slick('setPosition');
+
+    let addFooterDiv = document.querySelector('.add-footer');
+    addFooterDiv.style.display = "none";
+
+    let modFooterDiv = document.querySelector('.mod-footer');
+    modFooterDiv.style.display = "flex";
 })
 
 //세팅설정 버튼을 눌렀을때
@@ -293,6 +450,12 @@ setBtn.addEventListener('click', (e) => {
     else {
         alert('운동을 선택해주세요!');
     }
+})
+
+//운동 선택 창에서 교체 버튼눌렀을때
+let modBtn = document.querySelector('.modBtn');
+modBtn.addEventListener('click', (e) => {
+    exerciseSelectDiv.style.display = "none";
 })
 
 
@@ -309,6 +472,10 @@ backBtns.forEach(function (backBtn) {
         else if (setsettingdiv.style.display == "flex") {   //현재 modal창이 set-setting div일때
             exerciseSelectDiv.style.display = "flex";
             setsettingdiv.style.display = "none";
+        }
+        else if (setDetailDiv.style.display == "flex") {
+            planlistDiv.style.display = "flex";
+            setDetailDiv.style.display = "none";
         }
     })
 })
@@ -454,6 +621,7 @@ let exerciseSelect = document.querySelector('.exercise-select');
 document.addEventListener('click', (e) => {
     if (exerciseSelect.style.display == 'flex')//현재div가 운동선택div일때만
     {
+
         let selectDiv;
         if (e.target.classList.contains('exercise-item')) {   //운동div를 눌렀을때
             selectDiv = e.target; //현재 타겟을 selectDiv에 저장
@@ -477,6 +645,14 @@ document.addEventListener('click', (e) => {
             let exerciseName = selectDiv.dataset.name;
             let exerciseNameInpunt = document.getElementById('exercise-name-input');
             exerciseNameInpunt.value = `${exerciseName}`;
+
+            if (setDetailDiv.style.display == 'flex') {
+                let setH2 = document.querySelector('.set-detail .title h2')
+                setH2.innerHTML = exerciseNameInpunt.value;
+
+                let exerciseNameInp = document.querySelector('.exerciseName');
+                exerciseNameInp.value = exerciseNameInpunt.value;
+            }
         }
     }
 })
@@ -564,26 +740,37 @@ submitBtn.addEventListener('click', (e) => {
 
 //set detail창에 뿌려주기
 function spreadSetDetail(extendedProps) {
+    console.log(extendedProps)
 
-    let setH2 = document.querySelector('.set-detail .title h2')
+    let planNoInp = document.querySelector('.planNo');
+    planNoInp.value = `${extendedProps.planCalendar.planNo}`;
+    let exerciseNameInp = document.querySelector('.exerciseName');
+    exerciseNameInp.value = `${extendedProps.planCalendar.exerciseName}`;
+
+    let setH2 = document.querySelector('.set-detail .title h2');
     setH2.innerHTML = `${extendedProps.planCalendar.exerciseName}`
 
+    //tbody 초기화
     let setDetailList = document.querySelector('.set-detail .set-table tbody');
     setDetailList.innerHTML = '';
 
     for (let i = 0; i < extendedProps.exerciseSetList.length; i++) {
-        setDetailList.innerHTML += `<td>${i + 1}</td>
-        <td><input type="text" name="Weight" value=${extendedProps.exerciseSetList[i].exerciseWeight} readonly="readonly"> kg</td>
-        <td><input type="text" name="count" value=${extendedProps.exerciseSetList[i].exerciseCount} readonly="readonly"></td>
-        <td><input type="checkbox" value=${extendedProps.exerciseSetList[i].exerciseCheck} name="check"></td>`;
+        let checked=extendedProps.exerciseSetList[i].exerciseCheck ? "checked":"";
+
+        setDetailList.innerHTML += `<tr data-setNo=${extendedProps.exerciseSetList[i].exerciseSetNo} data-planNo=${extendedProps.exerciseSetList[i].planNo}><td>${i + 1}</td>
+        <td><input type="text" class="setDetailWeight" name="Weight" value=${extendedProps.exerciseSetList[i].exerciseWeight} readonly="readonly"> kg</td>
+        <td><input type="text" class="setDetailCount" name="count" value=${extendedProps.exerciseSetList[i].exerciseCount} readonly="readonly"></td>
+        <td><input type="checkbox" name="check" ${checked}></td></tr>`;
     }
 }
+
+
 
 function DeletePlan(userPlanNo) {
     $.ajax({
         type: 'get',
         url: `/health/delPlan?userPlanNo=${userPlanNo}`,
-        async:true,
+        async: true,
         success: function () {
             alert('삭제성공');
             getEventList();

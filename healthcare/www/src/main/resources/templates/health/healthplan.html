@@ -41,11 +41,14 @@
       </div>
     </div>
 
-    <div class="set-detail">
+    <div class="set-detail">  <!--운동 detail-->
       <div class="modal-window">
 
         <div class="title">
           <h2>모달</h2>
+          <input type="hidden" class="planNo">
+          <input type="hidden" class="exerciseName">
+          <button type="button" class="exerciseMod">운동교체</button>
         </div>
 
         <div class="close-setdetail">X</div>
@@ -63,6 +66,8 @@
             <tbody></tbody>
           </table>
         </div>
+        <div><button type="button" id="mod-complete">수정</button></div>
+        <button type="button" class="backBtn">뒤로가기</button>
       </div>
     </div>
 
@@ -106,8 +111,11 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button"  class="setBtn">세트 설정</button>
-          <button type="button"  class="backBtn">뒤로가기</button>
+          <div class="add-footer">
+            <button type="button"  class="setBtn">세트 설정</button>
+            <button type="button"  class="backBtn">뒤로가기</button>
+          </div>
+          <div class="mod-footer"><button type="button" class="modBtn">교체</button></div>
         </div>
       </div>
     </div>
