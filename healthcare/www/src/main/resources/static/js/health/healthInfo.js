@@ -159,6 +159,7 @@ function spreadPaging(pageable, totalPages) {
             selectSpan(pageEnd + 1);
         });
     }
+    selectSpan(pageable.pageNumber);
 
 }
 // let selectedSpan = document.querySelector([data-pageNo="${pageNo}"]);
@@ -168,7 +169,7 @@ function selectSpan(pageNo) {
     let pageNoSpans = document.querySelectorAll('.pageNo-span');
     let selectedSpan = document.querySelector(`[data-pageNo="${pageNo}"]`);
     // console.log(selectedSpan);
-
+    console.log("시ㅣㅣㅋㅋ발");
     pageNoSpans.forEach(function (pageNoSpan) {
         pageNoSpan.style.color = 'black';
     });
