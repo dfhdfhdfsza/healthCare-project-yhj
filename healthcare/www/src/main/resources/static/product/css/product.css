@@ -2,6 +2,14 @@
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: none;
 }
+/* 변수선언 */
+:root{
+/* item-section */
+    --item-section-width:81.25rem;
+    --container-margin-top:60px;
+    --container-margin-left:250px;
+    --container-margin-bottom:12.5rem;
+}
 body, h1{
     margin:0;
 }
@@ -353,7 +361,10 @@ select option:hover {
 
 /* productList page */
 .product-list-container{
+    box-sizing:border-box;
     width: 100%;
+    padding-left:var(--container-margin-left);
+    padding-top:var(--container-margin-top);
     margin-bottom: var(--container-margin-bottom);
 }
 .box{
@@ -363,7 +374,7 @@ select option:hover {
 }
 .category-box{
     position: sticky;
-    top: 0px;
+    top: 60px;
     width: 100%;
     display:flex;
     justify-content:space-between;
@@ -402,14 +413,7 @@ select option:hover {
     transition: 0.5s;
 }
 
-/* 변수선언 */
-:root{
-    /* item-section */
-    --item-section-width:81.25rem;
-    --container-margin-top:10rem;
-    --container-margin-bottom:12.5rem;
 
-}
 .item-section{
     margin: 5rem auto 0;
     width: var(--item-section-width);
@@ -514,13 +518,15 @@ span.price{
 
 /* 상품 상세 페이지 */
 .product-detail-container{
-    margin-top: var(--container-margin-top);
+/*    padding-top: var(--container-margin-top);*/
+    padding-top: 10rem;
+    padding-left:var(--container-margin-left);
     margin-bottom: var(--container-margin-bottom);
+    box-sizing:border-box;
 }
 .product-info{
     width: var(--item-section-width);
     margin: 0 auto;
-    
 }
 .order-box{
     border: 1px solid #eee;
@@ -692,7 +698,10 @@ button.buy:hover{
 
 /* cart page 장바구니 */
 .cart-container{
+    box-sizing:border-box;
     width: 100%;
+    padding-top:var(--container-margin-top);
+    padding-left:var(--container-margin-left);
     margin-bottom: var(--container-margin-bottom);
 }
 .cart-container h2{
@@ -849,6 +858,9 @@ button.buy:hover{
 
 /* orderList page 주문목록 */
 .order-container{
+    box-sizing:border-box;
+    padding-top:var(--container-margin-top);
+    padding-left:var(--container-margin-left);
     width: 100%;
     margin-bottom: var(--container-margin-bottom);
 }
