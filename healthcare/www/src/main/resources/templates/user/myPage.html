@@ -26,7 +26,7 @@
             <div class="profileInfo-editor">
               <span th:text="${user.userId}" class="userId"></span>
               <a th:href="@{/user/modify(userNo=${user.userNo})}" class="profileModify" th:if="${info != null}">
-                <span class="profile-span profile-modify">프로필 편집</span>
+                <span class="profile-span profile-modify">프로필 수정</span>
               </a>
 
               <a th:href="@{/user/information(userNo=${user.userNo})}" class="infoAdd" th:if="${info == null}">
@@ -34,7 +34,7 @@
               </a>
 
               <a href="#" class="infoAdd">
-                <span class="profile-span">개인정보 변경</span>
+                <span class="profile-span" id="userInfo-modify-modal-open">회원정보 수정</span>
               </a>
 
               <a href="#" class="infoAdd">
@@ -45,7 +45,7 @@
             <!--개인정보 입력했을때만 출력-->
             <div class="detail-div">
               <!--개인정보 들어갈 div-->
-              <div class="detail-information" th:if="${info != null}">
+              <div class="detail-information" th:if="${info ne null}">
                 <div>
                   <strong>성별</strong>
                   <span>[[${user.userMail}]]</span>
@@ -72,7 +72,7 @@
                 </div>
               </div>
               <!--개인정보 입력 안했을때 -->
-              <div th:if="${info == null}">
+              <div th:if="${info eq null}">
                 <i class="bi bi-person-exclamation noProfile"></i>
                 <span>아직 정보를 입력하지 않았습니다. 정보를 입력해주세요</span>
               </div>
@@ -95,12 +95,14 @@
           <div class="mid">
             <div class="commentZone">
               <!--작성한 게시글이 없는 경우-->
-              <div th:if="${communityList.size() < 1}" class="no-community">
-                <img src="/image/user/글없음.png" class="no-community-image">
-                <span>작성하신 게시글이 없습니다.</span>
+              <div th:if="${communityList.size() == 0}" class="no-community">
+                <div class="no-commentList">
+                  <img src="/image/user/글없음.png" class="no-community-image">
+                  <span>작성하신 게시글이 없습니다.</span>
+                </div>
               </div>
               <!--작성한 게시글이 있는 경우-->
-              <div th:if="${communityList.size() >= 1}" class="community-list-div">
+              <div th:if="${communityList.size() > 0}" class="community-list-div">
                 <div th:each="list : ${communityList}" class="community-list">
                   <div  class="community-title">
                     <a th:href="@{@{/user/communityDetail(writingNo=${list.writingNo})}}" th:text="${list.writingTitle}"></a>
@@ -114,16 +116,30 @@
             </div>
             <div class="productZone">
               <div class="community-list-div">
-                <div th:if="${paymentList == null}">구매하신 상품이 없습니다.</div>
-
-                <div th:if="${paymentList != null}">
-                  <div th:each="list : ${paymentList}" >
-                    <div>
-                      <img th:src="@{|/productFile/${dir}/${fileName}|}"></a>
-                    </div>
-                    <div th:text="${list.orderPrice}"></div>
+                <div th:if="${paymentList.size() == 0}" class="no-payment">
+                  <div class="no-payment-div">
+                    <i class="bi bi-cart-x-fill"></i>
+                    <span>구매하신 상품이 없습니다.</span>
                   </div>
                 </div>
+
+                <div th:if="${paymentList.size() > 1}">
+                  <!--상품정보-->
+                  <div>
+                    <div th:each="i : ${#numbers.sequence(0, paymentList.size()-1)}" class="product-payment-list">
+                      <img class="product-image" th:src="@{|/productFile/${productFileList[i].productFileSaveDir}/${productFileList[i].productFileName}|}">
+                      <div th:text="${productList[i].productName}" class="payment-productName"></div>
+                      <div th:text="${productList[i].price}"></div>
+                      <div th:text="${paymentList[i].orderQty}"></div>
+                      <div th:text="${productList[i].productType}"></div>
+                      <div th:text="${#strings.substring(paymentList[i].orderDate, 0, 10)}"></div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
               </div>
             </div>
 
@@ -172,6 +188,67 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!--개인정보 변경 모달 / 비밀번호 변경 , 전화번호 변경 , 주소 변경-->
+    <div class="modify-userInfo-modal">
+      <form action="/user/userModify" method="post">
+       <div  class="modify-userInfo-modal-div">
+          <div class="modify-userInfo-modal-header">
+            <strong>회원정보 수정</strong>
+            <i class="bi bi-x-lg modify-modal-close"></i>
+          </div>
+          <div class="modify-modal-body">
+            <input type="hidden" name="userNo" th:value="${user.userNo}">
+            <input type="hidden" name="userRole" th:value="${user.userRole}">
+            <div class="modify-id">
+              <strong>아이디</strong>
+              <input type="text" name="userId" th:value="${user.userId}" readonly="readonly">
+            </div>
+            <div class="modify-password">
+              <strong>비밀번호</strong>
+              <input type="password" name="userPassword" placeholder="비밀번호 입력" class="modify-password-input">
+
+              <strong>비밀번호 재입력</strong>
+              <input type="password" placeholder="비밀번호 재입력" class="modify-rePassword-input">
+              <p class="no-password">비밀번호가 동일하지 않습니다</p>
+            </div>
+            <div class="modify-name">
+              <strong>이름</strong>
+              <input type="text" name="userName" th:value="${user.userName}" class="modify-userName-input">
+              <p class="no-name">이름에는 특수문자/영어/숫자가 들어갈 수 없습니다.</p>
+            </div>
+            <div class="modify-phone">
+              <strong>전화번호</strong>
+              <input type="text" name="userNumber" th:value="${user.userNumber}" class="modify-userNumber-input">
+              <p class="no-number-phone">숫자만 입력할 수 있습니다.</p>
+            </div>
+            <div class="modify-address">
+              <strong>주소</strong>
+              <input type="text" name="userAddress" th:value="${user.userAddress}">
+            </div>
+            <div class="modify-age">
+              <strong>나이</strong>
+              <input type="text" name="userAge" th:value="${user.userAge}" class="modify-userAge-input">
+              <p class="no-number-age">숫자만 입력할 수 있습니다.</p>
+            </div>
+            <div class="modify-mail">
+              <strong>성별</strong>
+              <div>
+                남자 <input type="radio" value="남자" name="userMail" class="singup-input-radio" th:checked="${user.userMail == '남자'}">
+                여자 <input type="radio" value="여자" name="userMail" class="singup-input-radio" th:checked="${user.userMail == '여자'}">
+              </div>
+            </div>
+          </div>
+          <div class="modify-modal-footer">
+            <div>
+              <button type="submit" class="modify-modal-button">수정</button>
+              <button type="button" class="modify-modal-close modify-modal-closeBtn">취소</button>
+            </div>
+          </div>
+
+        </div>
+      </form>
     </div>
 
 

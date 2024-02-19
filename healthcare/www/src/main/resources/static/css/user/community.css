@@ -1,21 +1,26 @@
 body{
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 .main-container{
-    width: 1200px;
+    /* width: 1200px;
     position: absolute;
     transform: translate(-50%,-50%);
     top: 40%;
-    left: 55%;
-    /* width: 100%;
+    left: 55%; */
+    width: 100%;
+    height: 100vh;
     padding-left: 250px;
     padding-top: 60px;
-    box-sizing: border-box; */
+    box-sizing: border-box;
 }
 .sub-container{
-    padding: 20px;
+    height: 100%;
+    padding-top: 60px;
+    padding-left: 15%;
+    padding-right: 15%;
     background-color: #fff;
     border-radius: 10px;
     border: 1px solid #ccc;
@@ -29,7 +34,7 @@ body{
     flex-direction: row;
     justify-content: flex-end;
     gap: 10px;
-    padding-right: 50px;
+    padding-right: 55px;
 }
 .search-div{
     border: 1px solid #ccc;
@@ -37,16 +42,18 @@ body{
 }
 .open-register{
     border: 1px solid #ccc;
-    background-color: #fff;
+    background-color: black;
+    color: #fff;
     padding: 5px;
     cursor: pointer;
     width: 130px;
-    height: 33px;
+    height: 40px;
     box-sizing: border-box;
 }
 .search-input{
     border: none;
     outline: none;
+    height: 25px;
 }
 .xBtn{
     padding: 10px;
@@ -182,6 +189,7 @@ body{
     border-bottom: 1px solid #ccc;
     margin-top: 30px;
     width: 1000px;
+    height: 400px;
     margin-left: 80px;
 }
 .body-list{

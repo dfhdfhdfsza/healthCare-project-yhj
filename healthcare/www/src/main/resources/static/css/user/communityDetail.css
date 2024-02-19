@@ -4,21 +4,25 @@ body{
     overflow: auto;
 }
 .main-container{
-    width: 1200px;
-    height: 700px;
+    width: 100%;
+    height: 100vh;
     box-sizing: border-box;
-    position: absolute;
-    transform: translate(-50%,-50%);
-    top: 55%;
-    left: 55%;
-
+    padding-left: 250px;
+    padding-top: 60px;
 }
 .sub-container{
-    padding: 20px 60px;
+    padding-left: 20%;
+    padding-right: 20%;
     padding-top: 50px;
+    padding-bottom: 200px;
     background-color: #fff;
     border-radius: 10px;
     border: 1px solid #ccc;
+}
+.community-all-div{
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
 }
 .writer-header{
     display: flex;
@@ -47,6 +51,7 @@ body{
 .writing-body{
     padding-top: 40px;
     padding-bottom: 40px;
+    padding-left: 30px;
     border-bottom: 1px solid #ccc;
 }
 .writing-footer{

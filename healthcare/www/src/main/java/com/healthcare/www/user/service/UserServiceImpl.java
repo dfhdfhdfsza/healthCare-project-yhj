@@ -5,6 +5,8 @@ import com.healthcare.www.membership.repository.MembershipRepository;
 import com.healthcare.www.order.domain.Payment;
 import com.healthcare.www.order.repository.PaymentRepository;
 import com.healthcare.www.product.domain.Product;
+import com.healthcare.www.product.domain.ProductFile;
+import com.healthcare.www.product.repository.ProductFileRepository;
 import com.healthcare.www.product.repository.ProductRepository;
 import com.healthcare.www.user.domain.*;
 import com.healthcare.www.user.dto.*;
@@ -14,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,8 +33,9 @@ public class UserServiceImpl implements UserService{
   private final CommunityFileRepository communityFileRepository;
   private final PaymentRepository paymentRepository;
   private final ProductRepository productRepository;
-
+  private final ProductFileRepository productFileRepository;
   private final MembershipRepository membershipRepository;
+
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -55,7 +59,7 @@ public class UserServiceImpl implements UserService{
         userAge(joinDTO.getUserAge()).
         userNumber(joinDTO.getUserNumber()).
         userMail(joinDTO.getUserMail()).
-        userRole("ROLE_ADMIN").
+        userRole("ROLE_USER").
         build();
 
     userRepository.save(user);
@@ -275,6 +279,8 @@ public class UserServiceImpl implements UserService{
   public void removeUser(long userNo) {
     // 커뮤니티, 댓글, 프로필사진, 개인정보 , 좋아요 기록 전부삭제
 
+    User user = userRepository.findByUserNo(userNo);
+
     // 회원 삭제
     userRepository.deleteById(userNo);
     // 회원 정보삭제
@@ -289,6 +295,8 @@ public class UserServiceImpl implements UserService{
     commentRepository.deleteByUserNo(userNo);
     // 댓글 추천
     commentFavoriteRepository.deleteByUserNo(userNo);
+    // 멤버쉽
+    membershipRepository.deleteById(user.getUserId());
 
   }
 
@@ -334,6 +342,10 @@ public class UserServiceImpl implements UserService{
   @Override
   public int removeFavorite(long userNo, long commentNo) {
     CommentFavorite commentFavorite = commentFavoriteRepository.findByUserNoAndCommentNo(userNo,commentNo);
+    Comment comment = commentRepository.findByCommentNo(commentNo);
+    comment.setCommentFavorite(comment.getCommentFavorite()-1);
+    commentRepository.save(comment);
+
     commentFavoriteRepository.deleteById(commentFavorite.getFavoriteNo());
 
     return 1;
@@ -344,11 +356,60 @@ public class UserServiceImpl implements UserService{
 
     List<Payment> paymentList = paymentRepository.findAllByUserId(userId);
 
-
-
-
-
     return paymentList;
+  }
+
+
+
+  @Override
+  public Membership selectMembership(String userId) {
+    Membership membership = membershipRepository.findByUserId(userId);
+    return membership;
+  }
+
+  @Override
+  public List<Product> selectProductList(String userId){
+    List<Product> list = new ArrayList<>();
+
+    List<Payment> paymentList = paymentRepository.findAllByUserId(userId);
+    for(int i = 0; i < paymentList.size(); i++){
+      Payment payment = paymentList.get(i);
+      long productNo = payment.getProductNo();
+      List<Product> productList = productRepository.findByProductNo(productNo);
+      if (!productList.isEmpty()) {
+        Product product = productList.get(0); // 제품 리스트에서 첫 번째 제품을 가져옴
+        list.add(product);
+      }
+    }
+
+    return list;
+  }
+
+  @Override
+  public List<ProductFile> selectProductFile(String userId) {
+    /* 상품 이미지 */
+    List<ProductFile> fileList = new ArrayList<>();
+
+    List<Payment> paymentList = paymentRepository.findAllByUserId(userId);
+    for(int i = 0; i < paymentList.size(); i++){
+      Payment payment = paymentList.get(i);
+      long productNo = payment.getProductNo();
+
+      List<ProductFile> productFileList = productFileRepository.findByProductNo(productNo);
+      if (!productFileList.isEmpty()) {
+        ProductFile productFile = productFileList.get(0); // 제품 리스트에서 첫 번째 제품을 가져옴
+        fileList.add(productFile);
+      }
+    }
+
+
+    return fileList;
+  }
+
+  @Override
+  public void modifyUser(User user) {
+    user.setUserPassword(bCryptPasswordEncoder.encode(user.getUserPassword()));
+    userRepository.save(user);
   }
 
 

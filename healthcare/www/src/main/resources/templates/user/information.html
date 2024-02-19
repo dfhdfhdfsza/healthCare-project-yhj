@@ -13,48 +13,53 @@
   <div>
     <form action="/user/information" method="post">
       <input type="hidden" name="userNo" th:value="${userNo}">
-      <div>
-        <div>
-          <strong>개인정보를 입력합니다.</strong>
-        </div>
-        <div>
-          <strong>키</strong>
+      <div class="information-all-div">
+        <div class="information-sub-div">
           <div>
-            <input type="text" name="infoHeight">
-            <span>cm</span>
-          </div>
-        </div>
-        <div>
-          <strong>몸무게</strong>
-          <div>
-            <input type="text" name="infoWeight">
-            <span>kg</span>
+            <strong class="info-comment">개인정보를 입력해주세요.</strong>
           </div>
 
-        </div>
-        <div>
-          <strong>골격근량</strong>
-          <div>
-            <input type="text" name="infoSkeletal">
-            <span>kg</span>
+          <div class="height-div">
+            <strong>키</strong>
+            <div>
+              <input type="text" name="infoHeight" class="info-input">
+              <span>cm</span>
+            </div>
           </div>
-        </div>
-        <div>
-          <strong>체지방률</strong>
-          <div>
-            <input type="text" name="infoBody">
-            <span>%</span>
-          </div>
-        </div>
-        <div>
-          <strong>기초대사량</strong>
-          <div>
-            <input type="text" name="infoMetabolic">
-            <span>kcal/day</span>
-          </div>
-        </div>
-        <button type="submit">저장</button>
 
+          <div class="weight-div">
+            <strong>몸무게</strong>
+            <div>
+              <input type="text" name="infoWeight" class="info-input">
+              <span>kg</span>
+            </div>
+          </div>
+
+          <div class="skeletal-div">
+            <strong>골격근량</strong>
+            <div>
+              <input type="text" name="infoSkeletal" class="info-input">
+              <span>kg</span>
+            </div>
+          </div>
+
+          <div class="body-div">
+            <strong>체지방률</strong>
+            <div>
+              <input type="text" name="infoBody" class="info-input">
+              <span>%</span>
+            </div>
+          </div>
+
+          <div class="metabolic-div">
+            <strong>기초대사량</strong>
+            <div>
+              <input type="text" name="infoMetabolic" class="info-input">
+              <span>kcal/day</span>
+            </div>
+          </div>
+          <button type="submit" class="submitBtn">저장</button>
+        </div>
       </div>
     </form>
   </div>

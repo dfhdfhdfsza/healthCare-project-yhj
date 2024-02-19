@@ -1,6 +1,9 @@
 package com.healthcare.www.user.service;
 
+import com.healthcare.www.membership.domain.Membership;
 import com.healthcare.www.order.domain.Payment;
+import com.healthcare.www.product.domain.Product;
+import com.healthcare.www.product.domain.ProductFile;
 import com.healthcare.www.user.domain.*;
 import com.healthcare.www.user.dto.*;
 
@@ -72,4 +75,15 @@ public interface UserService {
 
 
   List<Payment> selectProduct(String userId);
+
+
+
+  Membership selectMembership(String userId);
+
+
+  List<Product> selectProductList(String userId);
+
+  List<ProductFile> selectProductFile(String userId);
+
+  void modifyUser(User user);
 }

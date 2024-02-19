@@ -29,10 +29,10 @@
         <li class="list-health"><a th:href="@{/health/healthInfoList}">운동리스트</a></li>
 
         <li class="myPage">
-            <img src="/image/user/프로필기본.png" class="profile-image-nav" th:if="${file == null}">
+            <img src="/image/user/프로필기본.png" class="profile-image-nav" th:if="${userProfile eq null}">
             <img class="item-main-img-nav profile-image-nav" th:src=
-                "@{|/userFile/${#strings.replace(file.userFileSaveDir, '\\', '/')}/${file.userUUID + '_' + file.userFileName}|}"
-                 th:if="${file != null}">
+                "@{|/userFile/${#strings.replace(userProfile.userFileSaveDir, '\\', '/')}/${userProfile.userUUID + '_' + userProfile.userFileName}|}"
+                 th:if="${userProfile ne null}">
             <a th:href="@{/user/myPage}">프로필</a>
         </li>
     </ul>

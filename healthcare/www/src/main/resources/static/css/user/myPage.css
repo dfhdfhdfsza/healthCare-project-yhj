@@ -286,3 +286,124 @@ body{
 .community-tag{
     width: 100px;
 }
+
+.product-payment-list{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted #ccc;
+}
+.product-image{
+    width: 60px;
+    height: 60px;
+}
+.payment-productName{
+    width: 500px;
+}
+.no-payment{
+    height: 200px;
+}
+.no-payment-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 25px;
+}
+
+.modify-userInfo-modal{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    width: 800px;
+    height: 800px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.modify-userInfo-modal-div{
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.modify-userInfo-modal-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.modify-userInfo-modal-header > strong , .modify-userInfo-modal-header > i{
+    font-size: 20px;
+}
+.modify-userInfo-modal-header > i{
+    cursor: pointer;
+}
+.modify-password,.modify-id,.modify-name,.modify-phone,.modify-mail,.modify-address,.modify-age{
+    display: flex;
+    flex-direction: column;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.modify-password > input,.modify-id > input,.modify-name > input,.modify-phone > input,.modify-address > input,.modify-age > input{
+    width: 95%;
+    height: 40px;
+    border: 1px solid #ccc;
+    padding-left: 7px;
+}
+.modify-password-input{
+    margin-bottom: 6px;
+}
+.modify-modal-body{
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.no-password , .no-name ,.no-number-phone , .no-number-age{
+    display: none;
+    color: red;
+}
+.modify-modal-footer{
+    display: flex;
+    justify-content: center;
+}
+.modify-modal-button{
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #3498db;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 700;
+}
+.modify-modal-closeBtn{
+    width: 200px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 700;
+}
+.modify-userInfo-modal{
+    display: none;
+}
+.no-commentList{
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.no-commentList > span{
+    font-size: 25px;
+}

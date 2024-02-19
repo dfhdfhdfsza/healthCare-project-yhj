@@ -3,7 +3,10 @@ package com.healthcare.www.user.controller;
 
 import com.healthcare.www.handler.FileHandler;
 import com.healthcare.www.handler.FileType;
+import com.healthcare.www.membership.domain.Membership;
 import com.healthcare.www.order.domain.Payment;
+import com.healthcare.www.product.domain.Product;
+import com.healthcare.www.product.domain.ProductFile;
 import com.healthcare.www.user.domain.*;
 import com.healthcare.www.user.dto.*;
 import com.healthcare.www.user.jwt.JWTUtil;
@@ -70,7 +73,19 @@ public class UserController {
       List<Payment> paymentList = userService.selectProduct(user.getUserId());
       m.addAttribute("paymentList", paymentList);
 
-      
+      /* 멤버쉽 / 포인트 조회용도 */
+      Membership membership = userService.selectMembership(user.getUserId());
+      m.addAttribute("membership",membership);
+
+      /* 상품 내역 */
+      List<Product> productList = userService.selectProductList(user.getUserId());
+      m.addAttribute("productList",productList);
+
+
+      /* 상품 파일 */
+      List<ProductFile> productFileList = userService.selectProductFile(user.getUserId());
+      m.addAttribute("productFileList",productFileList);
+
 
       /*유저정보*/
       UserInfo info = userService.selectUserInfo(user.getUserNo());
@@ -329,6 +344,12 @@ public class UserController {
     userService.removeFavorite(userNo,commentNo);
 
     return new ResponseEntity<>("1",HttpStatus.OK);
+  }
+
+  @PostMapping("/userModify")
+  public String userModify(User user){
+    userService.modifyUser(user);
+    return "redirect:/user/myPage";
   }
 
 }
