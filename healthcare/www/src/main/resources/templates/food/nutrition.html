@@ -12,27 +12,91 @@
     <input type="hidden" id="selectedDateInput" placeholder="선택날짜" />
     <input type="hidden" id="userNO" th:value="${user.userNo}">
     <div id="calendar"></div>
-    <div id="search_box" style="display : none">
-        <input type="text" id="keywordInput" onkeyup="findFood()"> 음식 검색
-        <div id="serchresult"> </div>
+
+
+    <!--모달창-->
+    <div id="modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="title">
+                <h2>식단추가</h2>  <input type="text" id="keywordInput" onkeyup="findFood()"> 음식 검색
+            </div>
+            <div class="close-area">X</div>
+            <div class="content">
+                <div id="search_box">
+
+                    <div id="serchresult"> </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+            <div class="eat_food_box">
 
+                <div class="food_box_1">
+                    <div>
+                        <h1> <span id="selectDate"></span>  <span th:text="${user.userName}"> </span>님의 식단 알아보기</h1>
+                        <div class="circle_progress_wrap">
+                            <svg class="circle_progress" width="120" height="120" viewBox="0 0 120 120">
+                                <circle class="frame" cx="60" cy="60" r="54" stroke-width="12" />
+                                <circle class="bar" id="bar0" cx="60" cy="60" r="54" stroke-width="12" />
+                            </svg>
+                            <strong class="value_name">칼로리</strong>
+                            <strong class="value" id="value0"></strong>
+                            <div class="set_nutrition">목표 1,964Kcal</div>
+                        </div>
+                    </div>
 
-        <div class="eat_food_box">
-            <h1><span id="selectDate"></span>  <span th:text="${user.userName}"> </span>님의 식사</h1>
-            <div id="breakfast_box"><strong>아침</strong>
-                <div id="breakfast"> </div>
-            </div>
-            <div id="lunch_box"><strong>점심</strong>
-                <div id="lunch"> </div>
-            </div>
-            <div id="dinner_box"><strong>저녁</strong>
-                <div id="dinner"> </div>
-            </div>
-            <div id="dessert_box"><strong>간식</strong>
-                <div id="dessert"> </div>
-            </div>
+                    <div >
+                        <h1>하루 영양소</h1>
+                        <div class="todayNutrition_box">
+                            <div class="circle_progress_wrap">
+                                <svg class="circle_progress" width="120" height="120" viewBox="0 0 120 120">
+                                    <circle class="frame" cx="60" cy="60" r="54" stroke-width="12" />
+                                    <circle class="bar" id="bar1" cx="60" cy="60" r="54" stroke-width="12" />
+                                </svg>
+                                <strong class="value_name">탄수화물</strong>
+                                <strong class="value" id="value1"></strong>
+                                <div class="set_nutrition">목표 270.2g</div>
+                            </div>
+                            <div class="circle_progress_wrap">
+                                <svg class="circle_progress" width="120" height="120" viewBox="0 0 120 120">
+                                    <circle class="frame" cx="60" cy="60" r="54" stroke-width="12" />
+                                    <circle class="bar" id="bar2" cx="60" cy="60" r="54" stroke-width="12" />
+                                </svg>
+                                <strong class="value_name">단백질</strong>
+                                <strong class="value" id="value2"></strong>
+                                <div class="set_nutrition">목표 98.3g</div>
+                            </div>
+                            <div class="circle_progress_wrap">
+                                <svg class="circle_progress" width="120" height="120" viewBox="0 0 120 120">
+                                    <circle class="frame" cx="60" cy="60" r="54" stroke-width="12" />
+                                    <circle class="bar" id="bar3" cx="60" cy="60" r="54" stroke-width="12" />
+                                </svg>
+                                <strong class="value" id="value3"></strong>
+                                <strong class="value_name">지방</strong>
+                                <div class="set_nutrition">목표 54.6g</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h1>나의 식사</h1>
+                <div class="eat_list_box">
+                    <div id="breakfast_box"><strong class="fs-3">아침</strong>
+                        <div id="breakfast"> </div>
+                    </div>
+
+                    <div id="lunch_box"><strong class="fs-3">점심</strong>
+                        <div id="lunch"> </div>
+                    </div>
+
+                    <div id="dinner_box"><strong class="fs-3">저녁</strong>
+                        <div id="dinner"> </div>
+                    </div>
+
+                    <div id="dessert_box"><strong class="fs-3">간식</strong>
+                        <div id="dessert"> </div>
+                    </div>
+                </div>
         </div>
 </div>
 </body>
