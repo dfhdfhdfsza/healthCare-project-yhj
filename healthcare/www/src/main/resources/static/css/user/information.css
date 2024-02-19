@@ -1,6 +1,53 @@
-.test{
-    position: absolute;
-    transform: translate(-50%,-50%);
-    top: 50%;
-    left: 50%;
+body{
+    overflow-x: hidden;
+}
+.main-container{
+    padding-left: 250px;
+    padding-top: 60px;
+    height: 100vh;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+
+}
+
+.information-all-div{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.submitBtn{
+    background-color: #3498db;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 500px;
+    height: 60px;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 40px;
+}
+.information-sub-div{
+    border: 1px solid #ccc;
+    width: 500px;
+    height: 500px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.info-comment{
+    font-size: 20px;
+}
+
+.info-input{
+    border-radius: 10px;
+    width: 250px;
+    height: 40px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
 }

@@ -34,6 +34,4 @@ public class UserInfo {
   @Column(name="info_metabolic")
   private double infoMetabolic; // 유저 기초대사량
 
-  @Column(name="info_profile")
-  private String infoProfile; // 유저 프로필사진
 }

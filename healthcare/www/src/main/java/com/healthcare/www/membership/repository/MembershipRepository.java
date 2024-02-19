@@ -17,4 +17,6 @@ public interface MembershipRepository extends JpaRepository<Membership, String> 
     @Modifying
     @Query("update Membership m set m.point = m.point - ?1 where m.userId = ?2")
     void updatePointByUserId(Integer point, String userId);
+
+  Membership findByUserId(String userId);
 }

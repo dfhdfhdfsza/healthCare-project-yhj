@@ -25,8 +25,6 @@ public class QUserInfo extends EntityPathBase<UserInfo> {
 
     public final NumberPath<Double> infoMetabolic = createNumber("infoMetabolic", Double.class);
 
-    public final StringPath infoProfile = createString("infoProfile");
-
     public final NumberPath<Double> infoSkeletal = createNumber("infoSkeletal", Double.class);
 
     public final NumberPath<Double> infoWeight = createNumber("infoWeight", Double.class);

@@ -1,15 +1,13 @@
 package com.healthcare.www.product.domain;
 
-import com.healthcare.www.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.naming.Name;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @ToString
 @NoArgsConstructor
