@@ -14,13 +14,16 @@
     <div class="main-container">
 
       <div class="sub-container">
-        <img src="/image/logo.png" class="logo" alt="사진없음">
+
+        <div class="logo-div">
+          <img src="/image/logo.png" class="logo" alt="사진없음">
+        </div>
 
         <div class="loginDiv">
           <form th:action="@{/user/login}" th:object="${loginDTO}" method="post">
 
-          <input type="text" placeholder="아이디" th:field="*{id}"> <br>
-          <input type="password" placeholder="비밀번호" th:field="*{pwd}"> <br>
+          <input type="text" placeholder="아이디" th:field="*{id}" class="login-input"> <br>
+          <input type="password" placeholder="비밀번호" th:field="*{pwd}" class="login-input"> <br>
 
           <button type="submit" id="loginBtn">로그인</button>
           </form>
@@ -31,8 +34,11 @@
 
     <!-- 로그인 실패시 뜨는 모달창 -->
     <div  class="loginErrModal">
-      <i class="bi bi-x" id="xBtn"></i>
-      <div>
+      <div class="close-div">
+       <i class="bi bi-x" id="xBtn"></i>
+      </div>
+
+      <div class="err-msg">
           <p>로그인 아이디 또는 비밀번호가 틀렸습니다.</p>
       </div>
     </div>
