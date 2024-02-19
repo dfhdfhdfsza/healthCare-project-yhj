@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Modify</title>
+  <link rel="stylesheet" th:href="@{/css/user/modify.css}" />
+</head>
+<body>
+<div th:replace="common/nav.html :: nav"></div>
+
+<div class="main-container">
+  <div class="sub-container">
+    <form action="/user/modify" method="post">
+      <input type="hidden" name="userNo" th:value="${info.userNo}">
+      <div class="info-all-div">
+
+        <div class="height-div">
+          <strong>키</strong>
+          <div>
+            <input type="text" name="infoHeight" th:value="${info.infoHeight}">
+            <span>cm</span>
+          </div>
+        </div>
+
+        <div class="weight-div">
+          <strong>몸무게</strong>
+          <div>
+            <input type="text" name="infoWeight" th:value="${info.infoWeight}">
+            <span>kg</span>
+          </div>
+        </div>
+
+        <div class="skeletal-div">
+          <strong>골격근량</strong>
+          <div>
+            <input type="text" name="infoSkeletal" th:value="${info.infoSkeletal}">
+            <span>kg</span>
+          </div>
+        </div>
+
+        <div class="body-div">
+          <strong>체지방률</strong>
+          <div>
+            <input type="text" name="infoBody" th:value="${info.infoBody}">
+            <span>%</span>
+          </div>
+        </div>
+
+        <div class="metabolic-div">
+          <strong>기초대사량</strong>
+          <div>
+            <input type="text" name="infoMetabolic" th:value="${info.infoMetabolic}">
+            <span>kcal/day</span>
+          </div>
+        </div>
+        <button type="submit" class="submit-button">저장</button>
+
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+
+</body>
+</html>

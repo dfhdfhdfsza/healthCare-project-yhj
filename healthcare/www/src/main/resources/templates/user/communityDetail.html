@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail</title>
+  <link rel="stylesheet" th:href="@{/css/user/communityDetail.css}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<div th:replace="common/nav.html :: nav"></div>
+
+  <div class="main-container">
+    <div class="sub-container">
+      <div class="community-all-div">
+        <!--게시글 정보-->
+        <div class="writer-header">
+          <strong th:text="${community.writingTitle}" class="title"></strong>
+          <div class="writer-info">
+            <div>
+              <img th:if="${file == null}" src="/image/user/프로필기본.png" class="profile-image">
+              <img class="profile-image" th:src=
+                  "@{|/userFile/${#strings.replace(file.userFileSaveDir, '\\', '/')}/${file.userUUID + '_' + file.userFileName}|}"
+                   th:if="${file != null}">
+              <a th:href="@{/user/myPage(userNo=${community.userNo})}" th:text="${community.writingWriter}"></a>
+            </div>
+            <span th:text="${#strings.substring(community.writingRegDate, 0, 10)}"></span>
+          </div>
+        </div>
+        <!--게시글 내용-->
+        <div class="writing-body">
+          <img th:src=
+                   "@{|/communityFile/${#strings.replace(cFile.writingFileSaveDir, '\\', '/')}/${cFile.writingUUID + '_' + cFile.writingFileName}|}"
+               th:if="${cFile != null}" class="writingContent-image">
+
+          <div th:text="${community.writingContent}"></div>
+
+        </div>
+        <!--목록 -->
+        <div class="writing-footer">
+          <div>
+            <a href="/user/community"><button class="moveList footerBtn">목록</button></a>
+
+            <a th:href="@{/user/communityDelete(writingNo=${community.writingNo})}"
+               th:if="${validNumber == 0}"><button class="moveList footerBtn">삭제</button>
+            </a>
+          </div>
+
+
+        </div>
+        <!--댓글-->
+        <div class="comment-zone">
+          <div th:if="${commentList.size() < 1}">
+            <strong>등록된 댓글이 없습니다.</strong>
+          </div>
+
+          <div th:if="${commentList.size() >= 1}" class="comment-list-zone">
+            <strong>댓글 </strong>
+            <span th:text="${commentList.size()}"></span>
+
+            <div th:each="list : ${commentList}" class="list">
+              <div th:text="${list.commentWriter}" class="writer"></div>
+              <div th:text="${list.commentContent}" class="content"></div>
+              <div th:text="${#strings.substring(list.commentRegDate, 0, 10)}" class="date"></div>
+              <div class="favorite">([[${list.commentFavorite}]])</div>
+              <!--댓글 삭제-->
+              <a th:href="@{/user/commentDelete(commentNo=${list.commentNo})}" th:if="${user.userName == list.commentWriter}">
+                <i class="bi bi-trash" ></i>
+              </a >
+              <!--댓글 수정-->
+              <a href="#" th:if="${user.userName == list.commentWriter}">
+                <i class="bi bi-pencil-fill"
+                   th:attr="data-commentNo=${list.commentNo}, data-commentContent=${list.commentContent}"></i>
+              </a>
+              <!--댓글 추천-->
+              <a href="#" th:if="${user.userName != list.commentWriter}" >
+                <i class="bi bi-star-fill favoriteBtn"
+                   th:attr="data-commentNo=${list.commentNo}, data-userNo=${user.userNo}"></i>
+              </a>
+
+
+
+            </div>
+
+          </div>
+        </div>
+
+        <!--댓글등록-->
+        <div class="comment-add-div">
+          <!--글번호-->
+          <input type="hidden" th:value="${community.writingNo}" class="writingNumber">
+          <input type="hidden" th:value="${user.userNo}" class="userNo">
+          <div class="comment-div">
+            <input type="text" th:value="${user.userName}" readonly="readonly" class="userName">
+            <textarea cols="50" rows="10" class="add-text writingContent"></textarea>
+          </div>
+          <div>
+            <button type="button" class="add-btn">작성</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="commentModify-modal-background">
+    <form action="/user/commentModify">
+      <div class="modal-box">
+        <div>
+          <i class="bi bi-x" id="closeBtn"></i>
+        </div>
+        <strong>댓글수정</strong>
+        <input type="hidden" class="modify-comment-hidden" name="commentNo">
+        <input type="text" class="modify-comment-input" name="commentContent">
+        <button type="submit" class="commentModify-btn">수정</button>
+      </div>
+    </form>
+  </div>
+  <div th:if="${fList != null}" class="hidden-favorite">
+    <div th:each="list : ${fList}" th:text="${list.commentNo}" class="favorite-add-comment"></div>
+  </div>
+
+
+<script type="text/javascript" th:src="@{/js/user/communityDetail.js}"></script>
+</body>
+</html>
