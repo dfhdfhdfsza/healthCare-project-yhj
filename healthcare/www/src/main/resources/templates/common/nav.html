@@ -29,10 +29,8 @@
         <li class="list-health"><a th:href="@{/health/healthInfoList}">운동리스트</a></li>
 
         <li class="myPage">
-            <img src="/image/user/프로필기본.png" class="profile-image-nav" th:if="${userProfile eq null}">
-            <img class="item-main-img-nav profile-image-nav" th:src=
-                "@{|/userFile/${#strings.replace(userProfile.userFileSaveDir, '\\', '/')}/${userProfile.userUUID + '_' + userProfile.userFileName}|}"
-                 th:if="${userProfile ne null}">
+<!--            <img src="/image/user/프로필기본.png" class="profile-image-nav" th:if="${userProfile eq null}">-->
+            <img class="item-main-img-nav profile-image-nav">
             <a th:href="@{/user/myPage}">프로필</a>
         </li>
     </ul>
@@ -40,6 +38,9 @@
 
     <link rel="stylesheet" th:href="@{/css/common/nav.css}" />
     <script type="text/javascript" th:src="@{/js/common/nav.js}"></script>
+    <script>
+        viewImage();
+    </script>
     </div>
     <div id="alarm-box">
         <div id="alarm-content">

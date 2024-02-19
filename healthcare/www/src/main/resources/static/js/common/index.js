@@ -1,5 +1,3 @@
-console.log("jsIns");
-
 
 
 function getCookie(name) {
@@ -27,4 +25,7 @@ window.onload = function() {
         document.querySelector('.modify-product').style.display = 'none'; // 상품수정
         document.querySelector('.list-health').style.display = 'none'; // 운동리스트
     }
+
+    
 }
+
