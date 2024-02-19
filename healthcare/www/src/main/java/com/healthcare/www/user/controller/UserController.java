@@ -62,8 +62,7 @@ public class UserController {
     }
 
     @GetMapping("/myPage")
-    public String moveMyPage(HttpServletRequest request, Model m, @AuthenticationPrincipal UserDetails userDetails,
-    @RequestParam(required = false, defaultValue = "0", value = "page") int pageNo){
+    public String moveMyPage(HttpServletRequest request, Model m, @AuthenticationPrincipal UserDetails userDetails){
 
       /* 현재 로그인한사람 */
       User user = userRepository.findByUserId(userDetails.getUsername());
@@ -352,4 +351,15 @@ public class UserController {
     return "redirect:/user/myPage";
   }
 
+  @GetMapping(value = "/selectProfileImage",produces =  MediaType.APPLICATION_JSON_VALUE )
+  public ResponseEntity<UserFile> selectProfileImage(@AuthenticationPrincipal UserDetails userDetails){
+    User user = userRepository.findByUserId(userDetails.getUsername());
+    if(user != null){
+      UserFile file = userService.selectUserFile(user.getUserNo());
+      return new ResponseEntity<>(file,HttpStatus.OK);
+    }else{
+      return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+  }
 }

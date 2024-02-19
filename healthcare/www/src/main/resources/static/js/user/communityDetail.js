@@ -109,7 +109,7 @@ closeBtn.addEventListener('click',()=>{
 
 let favorite_commentNo = document.querySelectorAll(".favorite-commentNo");
 
-window.onload =function favorite_addList(){
+function favorite_addList(){
     let favoriteAddComment = document.querySelectorAll('.favorite-add-comment');
     // 내가 누른 추천 글 번호 확인  
     for(let i=0; i<favoriteAddComment.length; i++){
