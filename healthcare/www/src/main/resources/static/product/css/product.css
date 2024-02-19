@@ -406,7 +406,7 @@ select option:hover {
 :root{
     /* item-section */
     --item-section-width:81.25rem;
-    --container-margin-top:10rem;
+    --container-margin-top:60px;
     --container-margin-bottom:12.5rem;
 
 }
