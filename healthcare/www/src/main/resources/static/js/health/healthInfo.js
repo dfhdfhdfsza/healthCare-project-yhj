@@ -168,7 +168,7 @@ function selectSpan(pageNo) {
     let pageNoSpans = document.querySelectorAll('.pageNo-span');
     let selectedSpan = document.querySelector(`[data-pageNo="${pageNo}"]`);
     // console.log(selectedSpan);
-
+ㅋㅋㅋ
     pageNoSpans.forEach(function (pageNoSpan) {
         pageNoSpan.style.color = 'black';
     });
