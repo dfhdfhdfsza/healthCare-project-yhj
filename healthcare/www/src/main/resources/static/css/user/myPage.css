@@ -65,7 +65,7 @@ body{
 }
 .detail-div{
     padding-top: 40px;
-    display: none;
+
 }
 
 .noProfile{
@@ -127,25 +127,7 @@ body{
     width: 50px;
     height: 50px;
 }
-.detail-information{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-}
-.detail-information > div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 200px;
-    height: 40px;
-    cursor: pointer;
-    gap: 10px;
-    border-radius: 10px;
-}
+
 .no-community{
     display: flex;
     justify-content: center;
@@ -296,13 +278,8 @@ body{
     padding-bottom: 10px;
     border-bottom: 1px dotted #ccc;
 }
-.product-image{
-    width: 60px;
-    height: 60px;
-}
-.payment-productName{
-    width: 500px;
-}
+
+
 .no-payment{
     height: 200px;
 }
@@ -406,4 +383,131 @@ body{
 }
 .no-commentList > span{
     font-size: 25px;
+}
+.payment-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    height: 50px;
+}
+
+.product-image{
+    width: 5%;
+    height: 60px;
+}
+.product-image-div{
+    width: 5%;
+}
+.payment-productName,.product-name-div{
+    width: 40%;
+    text-align: center;
+}
+.product-price,.product-price-div{
+    width: 20%;
+    text-align: center;
+}
+.product-qty,.product-qty-div{
+    width: 5%;
+    text-align: center;
+}
+.product-type,.product-type-div{
+    width: 10%;
+    text-align: center;
+}
+.product-date,.product-paymentDate-div{
+    width: 10%;
+    text-align: center;
+}
+
+.information-add-div{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    width: 800px;
+    height: 700px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.information-add-header{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 30px;
+}
+.information-add-header > strong{
+    font-size: 20px;
+}
+.information-add-header-closeButton{
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.info-input{
+    width: 400px;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+    padding-left: 10px;
+}
+.info-input-text{
+    color: rgb(63, 63, 63);
+}
+.info-button{
+    width: 300px;
+    height: 50px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: 700;
+}
+.info-button-add{
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+}
+.info-button-close{
+    background-color: #ccc;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+}
+.information-div-addZone{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 550px;
+}
+.add-zone{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 550px;
+}
+.button-zone{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+}
+.add-zone > div{
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 580px;
+    margin-bottom: 10px;
+}
+.add-zone > div > strong{
+    display: block;
+    width: 80px;
+    padding-bottom: 5px;
+}
+.information-add-div{
+    display: none;
 }

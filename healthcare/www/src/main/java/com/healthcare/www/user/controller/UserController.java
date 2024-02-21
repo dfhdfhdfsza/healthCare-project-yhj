@@ -155,11 +155,6 @@ public class UserController {
 
     return "index";
   }
-  @GetMapping("/information")
-  public String moveInformation(@RequestParam("userNo") long userNo,Model model){
-    model.addAttribute("userNo",userNo);
-    return "/user/information";
-  }
 
   @GetMapping("/modify")
   public String moveModify(@RequestParam("userNo") long userNo , Model model){

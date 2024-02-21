@@ -146,3 +146,20 @@ modify_modal_button.addEventListener('click',(e)=>{
         alert("변경하실 비빌번호를 입력해주세요");
     }
 })
+
+let info_button_close = document.querySelector('.info-button-close');
+let information_add_div = document.querySelector('.information-add-div');
+let information_add_header_closeButton = document.querySelector('.information-add-header-closeButton');
+
+info_button_close.addEventListener('click',()=>{
+    information_add_div.style.display = "none";
+})
+
+information_add_header_closeButton.addEventListener('click',()=>{
+    information_add_div.style.display = "none";
+})
+
+let open_information_div = document.querySelector('.open-information-div');
+open_information_div.addEventListener('click',()=>{
+    information_add_div.style.display = "block";
+})
