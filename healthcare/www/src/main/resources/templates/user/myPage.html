@@ -29,7 +29,7 @@
                 <span class="profile-span profile-modify">프로필 수정</span>
               </a>
 
-              <a th:href="@{/user/information(userNo=${user.userNo})}" class="infoAdd" th:if="${info == null}">
+              <a class="infoAdd open-information-div" th:if="${info == null}">
                 <span class="profile-span profile-add">프로필 입력</span>
               </a>
 
@@ -47,28 +47,7 @@
               <!--개인정보 들어갈 div-->
               <div class="detail-information" th:if="${info ne null}">
                 <div>
-                  <strong>성별</strong>
-                  <span>[[${user.userMail}]]</span>
-                </div>
-                <div>
-                  <strong>신장</strong>
-                  <span>[[${info.infoHeight}]] cm</span>
-                </div>
-                <div>
-                  <strong>체중</strong>
-                  <span>[[${info.infoWeight}]] kg</span>
-                </div>
-                <div>
-                  <strong>골격근량</strong>
-                  <span>[[${info.infoSkeletal}]] kg</span>
-                </div>
-                <div>
-                  <strong>체지방률</strong>
-                  <span>[[${info.infoBody}]] %</span>
-                </div>
-                <div>
-                  <strong>기초대사량</strong>
-                  <span>[[${info.infoMetabolic}]] kcal/day</span>
+                  <span th:text="${user.userName}"></span>
                 </div>
               </div>
               <!--개인정보 입력 안했을때 -->
@@ -126,14 +105,21 @@
                 <div th:if="${paymentList.size() > 1}">
                   <!--상품정보-->
                   <div>
+                    <div class="payment-header">
+                      <div class="product-image-div">이미지</div>
+                      <div class="product-name-div">상품명</div>
+                      <div class="product-price-div">가격</div>
+                      <div class="product-qty-div">수량</div>
+                      <div class="product-type-div">상품 타입</div>
+                      <div class="product-paymentDate-div">구매일</div>
+                    </div>
                     <div th:each="i : ${#numbers.sequence(0, paymentList.size()-1)}" class="product-payment-list">
                       <img class="product-image" th:src="@{|/productFile/${productFileList[i].productFileSaveDir}/${productFileList[i].productFileName}|}">
                       <div th:text="${productList[i].productName}" class="payment-productName"></div>
-                      <div th:text="${productList[i].price}"></div>
-                      <div th:text="${paymentList[i].orderQty}"></div>
-                      <div th:text="${productList[i].productType}"></div>
-                      <div th:text="${#strings.substring(paymentList[i].orderDate, 0, 10)}"></div>
-
+                      <div th:text="${productList[i].price}" class="product-price"></div>
+                      <div th:text="${paymentList[i].orderQty}" class="product-qty"></div>
+                      <div th:text="${productList[i].productType}" class="product-type"></div>
+                      <div th:text="${#strings.substring(paymentList[i].orderDate, 0, 10)}" class="product-date"></div>
                     </div>
 
                   </div>
@@ -250,6 +236,52 @@
         </div>
       </form>
     </div>
+    <!--회원정보 입력 모달-->
+    <div class="information-add-div" th:if="${info eq null}">
+      <div class="information-add-header">
+        <strong>개인정보 입력</strong>
+        <i class="bi bi-x-lg information-add-header-closeButton"></i>
+      </div>
+      <form action="/user/information" method="post">
+        <div class="information-div-addZone">
+          <div class="add-zone">
+            <input type="hidden" name="userNo" th:value="${user.userNo}">
+            <div>
+              <strong>키</strong>
+              <input type="text" name="infoHeight" class="info-input">
+              <span class="info-input-text">cm</span>
+            </div>
+            <div>
+              <strong>몸무게</strong>
+              <input type="text" name="infoWeight" class="info-input">
+              <span class="info-input-text">kg</span>
+            </div>
+            <div>
+              <strong>골격근량</strong>
+              <input type="text" name="infoSkeletal" class="info-input">
+              <span class="info-input-text">kg</span>
+            </div>
+            <div>
+              <strong>체지방률</strong>
+              <input type="text" name="infoBody" class="info-input">
+              <span class="info-input-text">%</span>
+            </div>
+            <div>
+              <strong>기초대사량</strong>
+              <input type="text" name="infoMetabolic" class="info-input">
+              <span class="info-input-text">kcal/day</span>
+            </div>
+          </div>
+          <div class="button-zone">
+            <button type="submit" class="info-button info-button-add">작성</button>
+            <button type="button" class="info-button info-button-close">취소</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+
 
 
 
