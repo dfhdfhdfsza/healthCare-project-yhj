@@ -61,3 +61,27 @@ document.getElementById('alarm-li').addEventListener('click', function() {
             showHeart = !showHeart;
         }
 
+
+
+
+
+async function selectProfileImage(){
+    try {
+        const resp = await fetch("/user/selectProfileImage");
+        const result = await resp.json();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function viewImage(){
+    selectProfileImage().then(result=>{
+        if(result != null){
+            let image = document.querySelector('.item-main-img-nav');
+            let filePath = `/userFile/${result.userFileSaveDir}/${result.userUUID + "_" + result.userFileName}`;
+            image.src = filePath;
+            console.log(result);
+        }
+    })
+}

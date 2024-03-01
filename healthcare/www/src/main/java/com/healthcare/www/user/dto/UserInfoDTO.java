@@ -12,5 +12,5 @@ public class UserInfoDTO {
   private double infoSkeletal; // 유저 골격근량
   private double infoBody; // 유저 체지방률
   private double infoMetabolic; // 유저 기초대사량
-  private String infoProfile; // 유저 프로필사진
+
 }

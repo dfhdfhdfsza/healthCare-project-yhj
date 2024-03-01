@@ -10,7 +10,7 @@ import lombok.*;
 @ToString
 @Entity
 @Builder
-@Table(name = "product_file")
+@Table(name = "product_file", indexes = @Index(name = "IDX_no_fk_product_no", columnList = "product_no")) // 테이블명 및 인덱스 설정
 public class ProductFile extends BaseTimeEntity {
     // 파일 고유번호(PK)
     @Id @Column(name = "product_UUID")

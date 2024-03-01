@@ -115,7 +115,7 @@ public class ProductServiceImpl implements ProductService{
         return product.stream().map(ProductDTO::new).collect(Collectors.toList());
     }
 
-    // 상품목록 조회 메서드
+    // 상품목록 조회 메서드 v1
     @Override
     public List<ProductDTO> getList() {
         List<Product> productList = productRepository.findAll(); // 상품 전체 목록
@@ -129,5 +129,17 @@ public class ProductServiceImpl implements ProductService{
         return productDTOList;
     }
 
+    // 상품목록 조회 메서드 v2(productType 및 페이징 검색 기능 추가)
+    @Override
+    public Page<ProductDTO> getProductListAndPaging(ProductDTO productDTO, Pageable pageable) {
+        return productQueryRepository.getProductListAndPaging(productDTO, pageable);
+    }
 
+    // 상품 상세정보 조회 메서드(상품 및 첨부파일)
+    @Override
+    public ProductDTO getProduct(Long productNo) {
+        Product product = productRepository.findByProductNo(productNo).get(0);
+        List<ProductFileDTO> productFileDTOList = productFileRepository.findByProductNo(productNo).stream().map(ProductFileDTO::new).toList();
+        return new ProductDTO(product, productFileDTOList);
+    }
 }

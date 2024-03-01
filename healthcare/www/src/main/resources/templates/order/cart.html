@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/product/css/product.css}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,100,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+</head>
+<body>
+<div th:replace="common/nav.html :: nav"></div>
+    <div class="cart-container">
+
+        <!--/* 카테고리 영역 */-->
+        <div class="category-box">
+            <span th:each="typed: ${productTyped}">
+                <a th:href="@{/product/productList(productType=${typed.type}, page=, size=)}" th:text="${typed.type}"></a>
+            </span>
+        </div>
+        <div class="cart-list">
+            <h2>장바구니</h2>
+            <table class="cart-table">
+                <tr>
+                    <td></td>
+                    <td>상품명</td>
+                    <td>가격</td>
+                    <td>수량</td>
+                    <td>예상적립금</td>
+                    <td></td>
+                </tr>
+                <!--/* 장바구니가 비어있으면... */-->
+                <tr th:if="${orderDTOList.isEmpty()}">
+                    <td style="text-align:center" colspan="6">장바구니가 비어있습니다.</td>
+                </tr>
+
+                <!--/* 주문정보 data로 입력 */-->
+                <tr th:each="order : ${orderDTOList}" class="order-list" th:if="${orderDTOList.size() > 0}"
+                    th:data-orderno="${order.orderNo}" th:data-productno="${order.productDTO.productNo}" th:data-realprice="${order.productDTO.realPrice}"
+                    th:data-orderqty="${order.orderQty > 1 ? order.orderQty : 1}" th:data-orderprice="${order.orderPrice}" th:data-point="${order.point}" th:data-accrualrate="${order.accrualRate}">
+
+                    <td th:with="dir=${order.productDTO.productFileList.get(0).productFileSaveDir},
+                                fileName=${order.productDTO.productFileList.get(0).productFileName}">
+                        <div class="order-thumb"><a th:href="@{/product/productDetail(productNo=${order.productDTO.productNo})}"><img th:src="@{|/productFile/${dir}/${fileName}|}"></a></div>
+                    </td>
+
+                    <td><div><a th:href="@{/product/productDetail(productNo=${order.productDTO.productNo})}" th:text="${order.productDTO.productName}" class="product-link"></a></div></td>
+
+                    <td><div th:text="${#numbers.formatInteger(order.orderPrice,3,'COMMA')+'원'}" class="price-value"></div></td>
+
+                    <td>
+                        <div class="qty">
+                            <span class="material-symbols-outlined" id="orderMinus">remove</span>
+                            <span class="qty-value" th:utext="${order.orderQty}">1</span>
+                            <span class="material-symbols-outlined" id="orderPlus">add</span>
+                        </div>
+                    </td>
+
+                    <td><div th:text="${#numbers.formatInteger(order.point,3,'COMMA')+'원'   }" class="point-value"></div></td>
+
+                    <td><button class="order-remove-btn" id="remove" type="button">삭제</button></td>
+                </tr>
+            </table>
+
+            <div class="order-result">
+                <div>
+                    <button class="clear-cart" th:classappend="${orderDTOList.isEmpty()}? 'clear-disabled'" type="button" id="clearCart">장바구니 비우기</button>
+                    <div class="result-info">
+                        <div class="total-price">
+                            <span>결제 금액</span>
+                            <span th:data-totalprice="${0}" class="total-price-value"></span>
+                        </div>
+                        <div class="total-point">
+                            <span>예상 적립금</span>
+                            <span th:data-totalpoint="${0}" class="total-point-value"></span>
+                        </div>
+                        <div class="held-point">
+                            <span>보유적립금</span>
+                            <span class="held-point-value" th:text="${userPoint}+'P'"></span>
+                        </div>
+                        <div class="use-point">
+                            <span>사용적립금</span>
+                            <span class="use-point-value">0P</span>
+                        </div>
+                        <div class="use-point">
+                            <span>적립금사용</span>
+                            <span><input type="text" class="use-point-input" name="usePoint"><button id="usePointBtn" type="button">사용</button></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="result-payment">
+                        <div>
+                            <div class="select-wrap">
+                                <select name="select-pg" id="selectPg">
+                                    <option value="">결제선택</option>
+                                    <option value="kakaopay">카카오페이</option>
+                                    <option value="tosspay">토스페이</option>
+                                </select>
+                                <i class="fa-solid fa-caret-down"></i>
+                            </div>
+                            <div>
+                                <a th:href="@{/product/productList}"><button class="continue-shopping" type="button">계속 쇼핑하기</button></a>
+                                <button type="button" id="reqPay" onclick="requestPay()">주문하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<script th:inline="javascript">
+    let heldPoint = [[${userPoint}]];
+</script>
+<script th:src="@{/js/order/payment.js}"></script>
+<script th:inline="javascript">
+    getResultOrder();
+</script>
+
+</body>
+</html>

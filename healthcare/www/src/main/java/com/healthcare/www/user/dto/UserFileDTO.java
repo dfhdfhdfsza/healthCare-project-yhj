@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserFileDTO {
-
+  private long userNo; 
   private String userUUID;
   private String userFileName;
   private long userFileSize;

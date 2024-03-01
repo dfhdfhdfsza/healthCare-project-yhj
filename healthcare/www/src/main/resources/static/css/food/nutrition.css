@@ -1,5 +1,146 @@
 .mainContainer{
     width: 80%;
-    padding-left: 280px;
-    padding-top: 100px;
+    padding: 100px 0 100px 280px;
+
+}
+.fs-3{
+    font-size : 20px;
+}
+#breakfast_box ,#lunch_box ,#dinner_box ,#dessert_box{
+    width: 70%;
+    height: 100px;
+    /* background-color: yellow; */
+    margin: 0 10px;
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0 0 0 0.5px #aaa;
+
+}
+#breakfast ,#lunch ,#dinner ,#dessert{
+    padding-left : 15px;
+     overflow : auto;
+    height: 75%;
+}
+.eat_list_box{
+    display : flex;
+
+}
+.food_box_1{
+display : flex;
+padding-bottom: 30px;
+}
+.food_box_1 > div {
+    width : 50%;
+    margin : 0 10px;
+}
+
+/*모달*/
+#modal.modal-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(1.5px);
+    z-index: 9999;
+}
+
+#modal .modal-window {
+    background: black;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 500px;
+    /* height: 600px; */
+    position: relative;
+    padding: 10px;
+}
+
+#modal .title {
+    padding-left: 10px;
+    display: inline;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+
+}
+
+#modal .title h2 {
+    display: inline;
+}
+
+#modal .close-area,#modal .close-setdetail {
+    display: inline;
+    float: right;
+    padding-right: 10px;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+}
+
+#modal .content {
+    margin-top: 20px;
+    padding: 0px 10px;
+    text-shadow: 1px 1px 2px gray;
+    color: white;
+}
+
+.modal-footer,.set-adddel{
+    display: flex;
+    justify-content: center;
+}
+.modal-footer button,.set-adddel button{
+    border: none;
+    font-size: 20px;
+    font-weight: 800;
+    background-color: black;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.circle_progress_wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-right: 15px;
+}
+.circle_progress { transform: rotate(-90deg); }
+.frame, .bar { fill: none; }
+.frame { stroke: #e6e6e6; }
+.bar {
+  stroke: #03c75a;
+  stroke-linecap: round;
+  transition: 1s;
+}
+.value {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 10px;
+  text-align: center;
+  color: #888;
+  font-size: 16px;
+  line-height: 120px;
+}
+.todayNutrition_box{display:flex; }
+.set_nutrition{
+  margin : auto;
+     text-align: center;
+     color: #888;
+     font-size: 16px;
+     font-weight: bold;
+    }
+.value_name{
+ position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: -8px;
+  text-align: center;
+  color: #888;
+  font-size: 16px;
+  line-height: 120px;
 }
