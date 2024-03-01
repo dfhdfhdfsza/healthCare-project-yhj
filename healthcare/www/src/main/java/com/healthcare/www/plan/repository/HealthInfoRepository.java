@@ -21,4 +21,6 @@ public interface HealthInfoRepository extends JpaRepository<HealthInfo, Long>, P
     Page<HealthInfo> findByTarget(String bodypart, PageRequest pageable);
 
     Page<HealthInfo> findByEquipment(String equipment, PageRequest pageable);
+
+    HealthInfo findByName(String name);
 }

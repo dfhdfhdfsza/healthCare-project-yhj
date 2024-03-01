@@ -169,5 +169,11 @@ public class HealthServiceImpl implements HealthService{
         return healthInfoRepository.findByEquipment(equipment,pageable);
     }
 
+    @Override
+    public HealthInfo getOneExerciseInfo(String name) {
+
+        return healthInfoRepository.findByName(name);
+    }
+
 
 }

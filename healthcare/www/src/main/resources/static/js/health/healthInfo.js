@@ -138,7 +138,7 @@ function spreadPaging(pageable, totalPages) {
         pageNoSpan.addEventListener('click', function () {
             let pageNo = pageNoSpan.getAttribute('data-pageNo');
             getExerciseInfo(equipment, target, pageNo, 10);
-            selectSpan(pageNo);
+            
         })
     })
 
@@ -147,7 +147,7 @@ function spreadPaging(pageable, totalPages) {
     if (prevPageBtn) {
         prevPageBtn.addEventListener('click', () => {
             getExerciseInfo(equipment, target, pageStart - 1, 10);
-            selectSpan(pageStart - 1);
+            
         });
     }
 
@@ -155,10 +155,11 @@ function spreadPaging(pageable, totalPages) {
     let nextPageBtn = document.querySelector('.nextPageBtn');
     if (nextPageBtn) {
         nextPageBtn.addEventListener('click', () => {
-            getExerciseInfo(equipment, target, pageEnd + 1, 10);
-            selectSpan(pageEnd + 1);
+            getExerciseInfo(equipment, target, pageEnd, 10);
+            
         });
     }
+    selectSpan(pageable.pageNumber);
 
 }
 // let selectedSpan = document.querySelector([data-pageNo="${pageNo}"]);
@@ -180,21 +181,51 @@ function selectSpan(pageNo) {
 
 
 document.addEventListener('click', (e) => {
-
+    let name;
     if (e.target.classList.contains('exercise-item')) {   //운동div를 눌렀을때
         modal.style.display = "flex";
+        name=e.target.getAttribute('data-name');
+        getOneExerciseInfo(name);
     }
     else if (e.target.parentNode.classList.contains('exercise-item')) {//운동div의 하위div를 눌렀을때
         modal.style.display = "flex";
+        name=e.target.parentNode.getAttribute('data-name');
+        getOneExerciseInfo(name);
     }
     else if (e.target.parentNode.parentNode.classList.contains('exercise-item')) {//운동div의 하위div의 하위div를 눌렀을때
         modal.style.display = "flex";
+        name=e.target.parentNode.parentNode.getAttribute('data-name');
+        getOneExerciseInfo(name);
     }
+
 })
 
 //모달창 값 가져오는 function
+function getOneExerciseInfo(ename)
+{
+    console.log(ename);
+    $.ajax({
+        async: true,
+        method: 'GET',
+        url: `/health/getOneExerciseInfo?name=${ename}`,
+        success: function (res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+            console.log(res);
+            spreadOneExerciseInfo(res);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+            alert("통신 실패.");
+        }
+    })
+}
+
 
 //모달창에 값 뿌려주는 function
+function spreadOneExerciseInfo(eInfo)
+{
+    let title=document.querySelector('.title h2');
+    title.innerHTML=eInfo.name;
+}
+
 
 //모달창 닫기
 let closeBtns = modal.querySelectorAll(".close-area")

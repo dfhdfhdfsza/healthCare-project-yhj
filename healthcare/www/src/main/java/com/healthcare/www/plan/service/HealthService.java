@@ -22,4 +22,6 @@ public interface HealthService {
     void resetHealthInfo();
 
     Page<HealthInfo> getExerciseInfo(String equipment,String bodypart,int page, int size);
+
+    HealthInfo getOneExerciseInfo(String name);
 }

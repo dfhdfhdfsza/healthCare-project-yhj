@@ -80,6 +80,14 @@ public class HealthController {
 
     return new ResponseEntity<Page<HealthInfo>>(healthInfos, HttpStatus.OK);
   }
+  @GetMapping("/getOneExerciseInfo")
+  public ResponseEntity<HealthInfo> getOneExerciseInfo(@RequestParam("name")String name)
+  {
+    HealthInfo healthInfo=hsv.getOneExerciseInfo(name);
+
+    return  new ResponseEntity<HealthInfo>(healthInfo,HttpStatus.OK);
+  }
+
 
 
 }
