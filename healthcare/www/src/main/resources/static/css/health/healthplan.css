@@ -163,3 +163,18 @@
 #next-page,#previous-page{
     display: none;
 }
+
+/* 페이징 div */
+
+.paging-div{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.pageNo-span{
+    margin-left: 25px;
+    margin-right: 25px;
+    cursor: pointer;
+    color: white;
+}

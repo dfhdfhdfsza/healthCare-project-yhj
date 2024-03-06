@@ -1,3 +1,4 @@
+let searchkeyword;
 $(document).ready(function () {
     $('.slide-wrapper').slick({
         infinite: true, //무한반복 옵션
@@ -10,13 +11,13 @@ $(document).ready(function () {
 
 
 //운동리스트 불러오기
-function getExerciseInfo(equipment, bodypart, page, size) {
+function getExerciseInfo(equipment, bodypart, page, size,keyword) {
     $.ajax({
         async: true,
         type: 'get',
-        url: `/health/getExerciseInfo?bodypart=${bodypart}&equipment=${equipment}&page=${page}&size=${size}`,
+        url: `/health/getExerciseInfo?bodypart=${bodypart}&equipment=${equipment}&page=${page}&size=${size}&keyword=${keyword}`,
         success: function (res) {
-            // console.log(res);
+            console.log(res);
             spreadExerciseInfo(res.content);
             spreadPaging(res.pageable, res.totalPages);
         },
@@ -41,7 +42,7 @@ function spreadExerciseInfo(list) {
         str += `<div>secondary muscles : ${list[i].secondaryMuscles}</div>`
         str += `<div>equipment : ${list[i].equipment}</div>`
         str += `</div></div>`
-
+        console.log(list[i].imgUrl);
         listDiv.innerHTML += str;
     }
 
@@ -54,6 +55,7 @@ let equipmentSelectBtns = document.querySelectorAll('.equipment-select');
 targetSelectBtns.forEach(function (targetSelectBtn) {
     targetSelectBtn.addEventListener('click', function () {
         let target = targetSelectBtn.getAttribute('data-target');
+        searchkeyword="";
 
         //모든 장비버튼 검은색으로 초기화
         equipmentSelectBtns.forEach(function (equipmentSelectBtn) {
@@ -67,7 +69,7 @@ targetSelectBtns.forEach(function (targetSelectBtn) {
         //누른 부위버튼 빨간색으로 변경
         targetSelectBtn.style.color = 'red';
 
-        getExerciseInfo("", target, 0, 10);
+        getExerciseInfo("", target, 0, 10,searchkeyword);
 
     })
 })
@@ -76,6 +78,7 @@ targetSelectBtns.forEach(function (targetSelectBtn) {
 equipmentSelectBtns.forEach(function (equipmentSelectBtn) {
     equipmentSelectBtn.addEventListener('click', function () {
         let equipment = equipmentSelectBtn.getAttribute('data-equipment');
+        searchkeyword="";
 
         //모든 장비버튼 검은색으로 초기화
         equipmentSelectBtns.forEach(function (equipmentSelectBtn) {
@@ -89,7 +92,7 @@ equipmentSelectBtns.forEach(function (equipmentSelectBtn) {
         //누른 장비버튼 빨간색으로 변경
         equipmentSelectBtn.style.color = 'red';
 
-        getExerciseInfo(equipment, "", 0, 10);
+        getExerciseInfo(equipment, "", 0, 10,searchkeyword);
 
     })
 })
@@ -137,7 +140,7 @@ function spreadPaging(pageable, totalPages) {
     pageNoSpans.forEach(function (pageNoSpan) {
         pageNoSpan.addEventListener('click', function () {
             let pageNo = pageNoSpan.getAttribute('data-pageNo');
-            getExerciseInfo(equipment, target, pageNo, 10);
+            getExerciseInfo(equipment, target, pageNo, 10,searchkeyword);
             
         })
     })
@@ -146,7 +149,7 @@ function spreadPaging(pageable, totalPages) {
     let prevPageBtn = document.querySelector('.prevPageBtn');
     if (prevPageBtn) {
         prevPageBtn.addEventListener('click', () => {
-            getExerciseInfo(equipment, target, pageStart - 1, 10);
+            getExerciseInfo(equipment, target, pageStart - 1, 10,searchkeyword);
             
         });
     }
@@ -155,7 +158,7 @@ function spreadPaging(pageable, totalPages) {
     let nextPageBtn = document.querySelector('.nextPageBtn');
     if (nextPageBtn) {
         nextPageBtn.addEventListener('click', () => {
-            getExerciseInfo(equipment, target, pageEnd, 10);
+            getExerciseInfo(equipment, target, pageEnd, 10,searchkeyword);
             
         });
     }
@@ -169,7 +172,7 @@ function selectSpan(pageNo) {
     let pageNoSpans = document.querySelectorAll('.pageNo-span');
     let selectedSpan = document.querySelector(`[data-pageNo="${pageNo}"]`);
     // console.log(selectedSpan);
-ㅋㅋㅋ
+
     pageNoSpans.forEach(function (pageNoSpan) {
         pageNoSpan.style.color = 'black';
     });
@@ -179,7 +182,7 @@ function selectSpan(pageNo) {
 
 
 
-
+//운동을 눌렀을때의 이벤트
 document.addEventListener('click', (e) => {
     let name;
     if (e.target.classList.contains('exercise-item')) {   //운동div를 눌렀을때
@@ -224,6 +227,24 @@ function spreadOneExerciseInfo(eInfo)
 {
     let title=document.querySelector('.title h2');
     title.innerHTML=eInfo.name;
+
+    let img=document.querySelector('.modal-exercise-image img');
+    img.src=`${eInfo.imgUrl}`
+
+    let bodypart=document.querySelector('.content .modal-bodypart');
+    bodypart.innerHTML="bodypart : "+eInfo.bodypart;
+
+    let secondaryMuscles=document.querySelector('.content .modal-secondaryMuscles');
+    secondaryMuscles.innerHTML="secondaryMuscles : "+eInfo.secondaryMuscles;
+
+    let target=document.querySelector('.content .modal-target');
+    target.innerHTML="target : "+eInfo.target;
+
+    let equipment=document.querySelector('.content .modal-equipment');
+    equipment.innerHTML="equipment : "+eInfo.equipment;
+
+    let instructions=document.querySelector('.content .modal-instructions');
+    instructions.innerHTML=eInfo.instructions;
 }
 
 
@@ -242,3 +263,10 @@ modal.addEventListener("click", (e) => {
     }
 })
 
+
+//검색
+let searchBtn=document.querySelector('.searchBtn');
+searchBtn.addEventListener('click',(e)=>{
+    searchkeyword=document.getElementById('keyword').value;
+    getExerciseInfo("","", 0, 10,searchkeyword);
+})

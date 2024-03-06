@@ -4,19 +4,19 @@
 }
 
 /* search-form 영역 */
-.search-form{
+.search{
     display: flex;
     justify-content: center;
 }
 
-.search-form input{
+.search input{
     margin-right: 10px;
     width: 250px;
     height: 35px;
     border-radius: 10px;
 }
 
-.search-form input:focus {
+.search input:focus {
     outline:none;
 }
 
@@ -146,3 +146,10 @@
     text-shadow: 1px 1px 2px gray;
     color: white;
 }
+
+.modal-bodypart,.modal-secondaryMuscles,.modal-target,.modal-equipment,.modal-instructions{
+
+    margin-bottom: 10px;
+}
+
+

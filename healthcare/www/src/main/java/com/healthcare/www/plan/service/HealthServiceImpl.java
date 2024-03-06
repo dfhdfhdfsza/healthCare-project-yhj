@@ -155,10 +155,13 @@ public class HealthServiceImpl implements HealthService{
     }
 
     @Override
-    public Page<HealthInfo> getExerciseInfo(String equipment,String bodypart,int page, int size)
+    public Page<HealthInfo> getExerciseInfo(String equipment,String bodypart,int page, int size,String keyword)
     {
         PageRequest pageable = PageRequest.of(page, size);
-        if(equipment.isEmpty()) //bodypart값만 들어왔을때
+        if(!keyword.isEmpty()){
+            return healthInfoRepository.findByNameContaining(keyword,pageable);
+        }
+        else if(equipment.isEmpty()) //bodypart값만 들어왔을때
         {
             if(bodypart.equals("all")){
                 return healthInfoRepository.findAll(pageable);
@@ -174,6 +177,8 @@ public class HealthServiceImpl implements HealthService{
 
         return healthInfoRepository.findByName(name);
     }
+
+
 
 
 }

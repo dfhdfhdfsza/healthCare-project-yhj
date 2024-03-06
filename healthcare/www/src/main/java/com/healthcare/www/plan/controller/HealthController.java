@@ -71,12 +71,13 @@ public class HealthController {
   public String moveHealthInfoList(){return "health/healthinfo";}
 
   @GetMapping("/getExerciseInfo")
-  public ResponseEntity<Page<HealthInfo>>getExerciseInfo(@RequestParam("equipment")String equipment,@RequestParam("bodypart")String bodypart,@RequestParam("page")int page,@RequestParam("size")int size)
+  public ResponseEntity<Page<HealthInfo>>getExerciseInfo(@RequestParam("equipment")String equipment,@RequestParam("bodypart")String bodypart,@RequestParam("page")int page,@RequestParam("size")int size,@RequestParam("keyword")String keyword)
   {
     log.info("bodypart::"+bodypart);
     log.info("equipment::"+equipment);
+    log.info("keyword::"+keyword);
 
-    Page<HealthInfo> healthInfos=hsv.getExerciseInfo(equipment,bodypart,page,size);
+    Page<HealthInfo> healthInfos=hsv.getExerciseInfo(equipment,bodypart,page,size,keyword);
 
     return new ResponseEntity<Page<HealthInfo>>(healthInfos, HttpStatus.OK);
   }
@@ -87,7 +88,5 @@ public class HealthController {
 
     return  new ResponseEntity<HealthInfo>(healthInfo,HttpStatus.OK);
   }
-
-
 
 }

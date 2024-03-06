@@ -12,10 +12,11 @@
 <body>
     <div class="healthInfo-container">
       <!--검색영역-->
-      <form method="post" class="search-form" action="/health/searchInfo">
+      <div class="search">
       <input type="text" id="keyword">
-        <button type="submit">검색</button>
-      </form>
+        <button type="button" class="searchBtn">검색</button>
+      </div>
+
       <div class="bodyPart-div">
         <div class="muscle">근육</div>
         <div class="slide-wrapper">
@@ -97,6 +98,9 @@
             <h2>모달</h2>
           </div>
           <div class="close-area">X</div>
+          <div class="modal-exercise-image">
+            <img src="" alt="no image">
+          </div>
           <div class="content">
             <div class="modal-bodypart"></div>
             <div class="modal-secondaryMuscles"></div>

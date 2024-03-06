@@ -375,11 +375,22 @@ function closeModal() {
     exerciseSelectDiv.style.display = "none";
     setsettingdiv.style.display = "none";
 
-    //모든 부위버튼 배경색 검은색으로 초기화
+    //모든 부위버튼 흰색으로 초기화
     let targetSelectBtns = document.querySelectorAll('.target-select');
     targetSelectBtns.forEach(function (targetSelectBtn) {
-        targetSelectBtn.style.backgroundColor = 'black';
+        targetSelectBtn.style.color = 'white';
     })
+
+    //모든 장비버튼 흰색으로 초기화
+    let equipmentSelectBtns = document.querySelectorAll('.equipment-select');
+    equipmentSelectBtns.forEach(function (equipmentSelectBtn) {
+        equipmentSelectBtn.style.color = 'white';
+    })
+
+    //페이징 div 초기화
+    let pagingDiv = document.querySelector('.paging-div');
+    pagingDiv.innerHTML = '';
+
 
 
     //운동 list 지우기
@@ -480,55 +491,72 @@ backBtns.forEach(function (backBtn) {
     })
 })
 
-//운동부위 선택해서 불러오기
 let targetSelectBtns = document.querySelectorAll('.target-select');
+let equipmentSelectBtns = document.querySelectorAll('.equipment-select');
+
+//운동부위 선택해서 불러오기
 targetSelectBtns.forEach(function (targetSelectBtn) {
     targetSelectBtn.addEventListener('click', function () {
-        let targetinput = document.getElementById('target');
-        let offsetinput = document.getElementById('offset');
         let target = targetSelectBtn.getAttribute('data-target');
 
-        targetinput.value = target;
-        offsetinput.value = 0;   //페이지번호 0으로 초기화
 
         //모든 부위버튼 배경색 검은색으로 초기화
         targetSelectBtns.forEach(function (targetSelectBtn) {
-            targetSelectBtn.style.backgroundColor = 'black';
+            targetSelectBtn.style.color = 'white';
         })
+        //모든 장비버튼 흰색으로 초기화
+        equipmentSelectBtns.forEach(function (equipmentSelectBtn) {
+            equipmentSelectBtn.style.color = 'white';
+        })
+
         //누른 부위버튼 배경색 빨간색으로 변경
-        targetSelectBtn.style.backgroundColor = 'red';
+        targetSelectBtn.style.color = 'red';
 
-        //다음페이지 버튼 보이게하기
-        nextPageExerciseListBtn.style.display = "block";
-
-        $.ajax({
-            async: true,
-            crossDomain: true,
-            method: 'GET',
-            url: `https://exercisedb.p.rapidapi.com/exercises/target/${targetinput.value}?limit=5`,
-            headers: {
-                'X-RapidAPI-Key': '9b7b13c7f5mshfd8b94a88797e77p1a4080jsnd904ca818f96',
-                'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
-            },
-            success: function (res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-                console.log(res);
-                spreadExerciseList(res);
-                let nextPageDiv = document.querySelector('.next-page-div');
-                nextPageDiv.style.display = "flex";
-
-                if (res.length < 5) {   //받아온 배열의길이가 5보다 작으면(=마지막페이지)
-                    nextPageDiv.style.display = "none";
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-                alert("통신 실패.");
-            }
-        });
+        getExerciseInfo("", target, 0, 5);
 
     })
 })
 
-//api로 받아온 운동리스트 div에 뿌려주는 function
+
+equipmentSelectBtns.forEach(function (equipmentSelectBtn) {
+    equipmentSelectBtn.addEventListener('click', function () {
+        let equipment = equipmentSelectBtn.getAttribute('data-equipment');
+
+        //모든 장비버튼 흰색으로 초기화
+        equipmentSelectBtns.forEach(function (equipmentSelectBtn) {
+            equipmentSelectBtn.style.color = 'white';
+        })
+        //모든 부위버튼 흰색으로 초기화
+        targetSelectBtns.forEach(function (targetSelectBtn) {
+            targetSelectBtn.style.color = 'white';
+        })
+
+        //누른 장비버튼 빨간색으로 변경
+        equipmentSelectBtn.style.color = 'red';
+
+        getExerciseInfo(equipment, "", 0, 5);
+
+    })
+})
+
+function getExerciseInfo(equipment, bodypart, page, size) {
+    $.ajax({
+        async: true,
+        type: 'get',
+        url: `/health/getExerciseInfo?bodypart=${bodypart}&equipment=${equipment}&page=${page}&size=${size}`,
+        success: function (res) {
+            // console.log(res);
+            spreadExerciseList(res.content);
+            spreadPaging(res.pageable, res.totalPages);
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+            alert("통신 실패.");
+        }
+    });
+}
+
+
+// 운동리스트 div에 뿌려주는 function
 function spreadExerciseList(list) {
     let exerciseListDiv = document.querySelector('.exercise-list');
     exerciseListDiv.innerHTML = '';
@@ -537,83 +565,96 @@ function spreadExerciseList(list) {
         str += `<div class="exercise-image"><image src="${list[i].gifUrl}" class="eximg"/></div>`
         str += `<div class="exercise-detail">`
         str += `<div class="exercise-name">${list[i].name}</div>`
-        str += `<div>${list[i].secondaryMuscles.join(",")}</div>`
+        str += `<div>${list[i].secondaryMuscles}</div>`
         str += `</div></div>`
 
         exerciseListDiv.innerHTML += str;
     }
 }
 
-//다음 페이지의 운동리스트 받아오기
 
 
-nextPageExerciseListBtn.addEventListener('click', (e) => {
-    let targetinput = document.getElementById('target');
-    let offsetinput = document.getElementById('offset');
-    offsetinput.value = parseInt(offsetinput.value) + 1;
+//페이징
+function spreadPaging(pageable, totalPages) {
+    const qty = 5;
+    let targetSelectBtn = document.querySelector('.bodyPart-div .target-select[style="color: red;"]');  //선택된 부위의 button
+    let equipmentSelectBtn = document.querySelector('.equipment-div .equipment-select[style="color: red;"]');  //선택된 장비의 button
+    let equipment, target;
 
-    $.ajax({
-        async: true,
-        crossDomain: true,
-        method: 'GET',
-        url: `https://exercisedb.p.rapidapi.com/exercises/target/${targetinput.value}?limit=5&offset=${offsetinput.value}`,
-        headers: {
-            'X-RapidAPI-Key': '9b7b13c7f5mshfd8b94a88797e77p1a4080jsnd904ca818f96',
-            'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
-        },
-        success: function (res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-            spreadExerciseList(res);
-
-            //이전페이지 버튼 활성화
-            previousPageExerciseListBtn.style.display = "block";
-
-            if (res.length < 5) {   //받아온 배열의길이가 5보다 작으면(=마지막페이지)
-                nextPageExerciseListBtn.style.display = "none";
-            }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-            alert("통신 실패.");
-        }
-    });
-})
-
-//이전 페이지의 운동리스트 받아오기
-previousPageExerciseListBtn.addEventListener('click', (e) => {
-    let targetinput = document.getElementById('target');
-    let offsetinput = document.getElementById('offset');
-    console.log(offsetinput);
-    if (offsetinput.value > 0) {
-        offsetinput.value = parseInt(offsetinput.value) - 1;
-        $.ajax({
-            async: true,
-            crossDomain: true,
-            method: 'GET',
-            url: `https://exercisedb.p.rapidapi.com/exercises/target/${targetinput.value}?limit=5&offset=${offsetinput.value}`,
-            headers: {
-                'X-RapidAPI-Key': '9b7b13c7f5mshfd8b94a88797e77p1a4080jsnd904ca818f96',
-                'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
-            },
-            success: function (res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-                spreadExerciseList(res);
-
-                //다음페이지 버튼 활성화
-                nextPageExerciseListBtn.style.display = "block";
-
-                //현재페이지가 0이면 이전페이지버튼 비활성화
-                if (offsetinput.value == 0) {
-                    previousPageExerciseListBtn.style.display = "none";
-
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) { // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-                alert("통신 실패.");
-            }
-        });
+    if (targetSelectBtn) {
+        target = targetSelectBtn.getAttribute('data-target');
+        equipment = "";
+    } else if (equipmentSelectBtn) {
+        equipment = equipmentSelectBtn.getAttribute('data-equipment');
+        target = "";
     }
 
 
+    let pagingDiv = document.querySelector('.paging-div');
+    pagingDiv.innerHTML = '';
 
-})
+    //시작페이지 엔드페이지 계산
+    let pageEnd = Math.ceil((pageable.pageNumber + 1) / qty) * qty;
+    let pageStart = pageEnd - qty;
+    pageEnd = Math.min(pageEnd, totalPages);
+    console.log("시작:" + pageStart + " 끝:" + pageEnd + " 현재:" + (pageable.pageNumber));
+
+    if (pageStart > 1) {
+        pagingDiv.innerHTML += `<button type="button" class="prevPageBtn"><i class="fa-solid fa-caret-left"></i></button>`
+    }
+
+    for (let i = pageStart; i < pageEnd; i++) {
+        let str = `<span class="pageNo-span" data-pageNo=${i}>${i + 1}</span>`;
+        pagingDiv.innerHTML += str;
+    }
+
+    if (pageEnd < totalPages) {
+        pagingDiv.innerHTML += `<button type="button" class="nextPageBtn"><i class="fa-solid fa-caret-right"></i></i></button>`
+    }
+    //paging span을 눌렀을때의 이벤트
+    let pageNoSpans = document.querySelectorAll('.pageNo-span');
+    pageNoSpans.forEach(function (pageNoSpan) {
+        pageNoSpan.addEventListener('click', function () {
+            let pageNo = pageNoSpan.getAttribute('data-pageNo');
+            getExerciseInfo(equipment, target, pageNo, qty);
+            
+        })
+    })
+
+    //이전 버튼을 눌렀을때의 이벤트
+    let prevPageBtn = document.querySelector('.prevPageBtn');
+    if (prevPageBtn) {
+        prevPageBtn.addEventListener('click', () => {
+            getExerciseInfo(equipment, target, pageStart - 1, qty);
+            
+        });
+    }
+
+    //다음 버튼을 눌렀을때의 이벤트
+    let nextPageBtn = document.querySelector('.nextPageBtn');
+    if (nextPageBtn) {
+        nextPageBtn.addEventListener('click', () => {
+            getExerciseInfo(equipment, target, pageEnd, qty);
+            
+        });
+    }
+    selectSpan(pageable.pageNumber);
+
+}
+
+
+function selectSpan(pageNo) {
+    console.log(pageNo);
+    let pageNoSpans = document.querySelectorAll('.pageNo-span');
+    let selectedSpan = document.querySelector(`[data-pageNo="${pageNo}"]`);
+    console.log(selectedSpan);
+
+    pageNoSpans.forEach(function (pageNoSpan) {
+        pageNoSpan.style.color = 'white';
+    });
+
+    selectedSpan.style.color = 'red';
+}
 
 
 //운동 선택 이벤트

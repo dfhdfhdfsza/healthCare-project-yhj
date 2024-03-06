@@ -1,8 +1,7 @@
 let userNO = document.getElementById("userNO").value; // 유저번호
 let selectedDateInput = document.getElementById('selectedDateInput'); // 날짜 선택하면 날짜 넣어줄 값
 let today = new Date();
-let searchBOxSwitch = true;
-console.log(getUserEatFoodName[0].date);    
+let searchBOxSwitch = true;  
 // 연, 월, 일을 추출하기
 let year = today.getFullYear();
 let month = today.getMonth() + 1; // 월은 0부터 시작하므로 1을 더합니다.
